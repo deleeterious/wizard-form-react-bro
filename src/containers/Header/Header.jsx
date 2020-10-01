@@ -8,8 +8,8 @@ import { ReactComponent as ListUsersIcon } from './assets/icons/list-users.svg'
 
 // components
 import HeaderButton from '../../components/HeaderButton'
-
-const concatStyles = (...classesArr) => classesArr.join(' ')
+// utils
+import { concatStyles } from '../../utils/utils'
 
 const Header = () => {
   return (
