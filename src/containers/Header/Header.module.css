@@ -1,0 +1,16 @@
+.header {
+  height: 60px;
+  background: radial-gradient(
+    50% 28800% at 50% 68.33%,
+    #4e86e4 0%,
+    #2f68c8 100%
+  );
+  box-shadow: 0px 1px 5px #c1cede;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+}

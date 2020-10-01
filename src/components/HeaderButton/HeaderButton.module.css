@@ -1,0 +1,14 @@
+.icon {
+  margin-right: 10px;
+}
+
+.button {
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button:first-child {
+  margin-right: 60px;
+}
