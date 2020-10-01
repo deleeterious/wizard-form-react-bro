@@ -2,9 +2,9 @@ import React from 'react'
 // css
 import classes from './Header.module.css'
 // assets
-import { ReactComponent as HeaderLogo } from './assets/logo/header-logo.svg'
-import { ReactComponent as NewUserIcon } from './assets/icons/new-user.svg'
-import { ReactComponent as ListUsersIcon } from './assets/icons/list-users.svg'
+import { ReactComponent as HeaderLogo } from '../../assets/logo/header-logo.svg'
+import { ReactComponent as NewUserIcon } from '../../assets/icons/new-user.svg'
+import { ReactComponent as ListUsersIcon } from '../../assets/icons/list-users.svg'
 
 // components
 import HeaderButton from '../../components/HeaderButton'

@@ -1,0 +1,98 @@
+.form {
+  display: flex;
+  padding: 0 calc(50% - 385px);
+}
+
+.flexCont {
+  width: 100%;
+}
+
+.leftCont {
+  display: flex;
+  justify-content: left;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #e7f0ff;
+  outline: none;
+  padding-left: 10px;
+}
+
+.inputLabel {
+  font-size: 14px;
+  color: #657c9a;
+  position: absolute;
+  top: -20px;
+}
+
+.inputCont {
+  position: relative;
+  margin-top: 45px;
+}
+
+.inputCont:first-child {
+  margin-top: 0;
+}
+
+.fileInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.fileLabel {
+  font-size: 14px;
+  color: #9bb0cb;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.avatarCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatarIconCont {
+  position: relative;
+  width: 172px;
+  height: 172px;
+  border: 3px solid #5e97f3;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatarIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+}
+
+.addIcon {
+  margin-right: 5px;
+}
+
+.btnCont {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.forwardBtn {
+  margin-top: 100px;
+  width: 100px;
+  height: 40px;
+  border: none;
+  background: #5e97f3;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}

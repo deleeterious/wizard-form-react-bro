@@ -2,8 +2,9 @@ import React from 'react'
 // css
 import classes from './AddNewUserPage.module.css'
 // containers
-import NewUserAccount from '../../containers/NewUserAccount'
-import NewUserNav from '../../containers/NewUserNav/NewUserNav'
+import NewUserNav from '../../containers/NewUserNav'
+import NewUserAccount from '../../containers/NewUserForms/NewUserAccount'
+// import NewUserProfile from '../../containers/NewUserForms/NewUserProfile'
 // utils
 import { concatStyles } from '../../utils/utils'
 
@@ -15,6 +16,7 @@ const AddNewUserPage = () => {
       </div>
       <NewUserNav />
       <NewUserAccount />
+      {/* <NewUserProfile /> */}
     </main>
   )
 }

@@ -4,12 +4,12 @@ import './App.css'
 // containers
 import Header from '../Header'
 // pages
-// import UserListPage from '../../pages/UserListPage'
 import AddNewUserPage from '../../pages/AddNewUserPage'
+// import UserListPage from '../../pages/UserListPage'
 
 const App = () => {
   return (
-    <div>
+    <div className="app">
       <Header />
       {/* <UserListPage /> */}
       <AddNewUserPage />
