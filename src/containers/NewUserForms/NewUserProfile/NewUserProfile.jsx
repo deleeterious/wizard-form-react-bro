@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form'
 // css
 import 'react-datepicker/dist/react-datepicker.css'
 import classes from './NewUserProfile.module.css'
-// utils
-import { concatStyles } from '../../../utils/utils'
 // components
 import WrappedInput from '../../../components/WrappedInput'
 import ForwardButton from '../../../components/ForwardButton'
@@ -38,7 +36,7 @@ const NewUserProfile = () => {
         <BirthDateInput control={control} />
       </div>
 
-      <div className={concatStyles(classes.flexCont, classes.rightCont)}>
+      <div className={classes.flexCont}>
         <WrappedInput
           type="email"
           name="email"
