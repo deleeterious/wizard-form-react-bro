@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 // useForm
 import { useForm } from 'react-hook-form'
+// assets
+import { ReactComponent as AddIcon } from '../../../assets/icons/add.svg'
 // css
 import classes from './NewUserContacts.module.css'
 // components
@@ -12,6 +14,10 @@ import PhoneInput from '../../../components/PhoneInput/PhoneInput'
 const NewUserContacts = () => {
   const { register, handleSubmit, errors, control } = useForm()
   const onSubmit = (data) => console.log(data)
+
+  const [phoneNumbers, setPhoneNumbers] = useState([
+    <PhoneInput key={+new Date().toString()} control={control} />
+  ])
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -52,7 +58,21 @@ const NewUserContacts = () => {
           errors={errors}
         />
 
-        <PhoneInput control={control} />
+        {phoneNumbers}
+
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            setPhoneNumbers((prev) => [
+              ...prev,
+              <PhoneInput key={+new Date()} control={control} />
+            ])
+          }}
+          className={classes.addPhoneBtn}
+        >
+          <AddIcon />
+          <span>add phone number</span>
+        </button>
 
         <ForwardButton />
       </div>

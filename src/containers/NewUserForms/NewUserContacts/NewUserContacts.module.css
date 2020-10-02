@@ -8,3 +8,14 @@
   max-width: 300px;
   width: 100%;
 }
+
+.addPhoneBtn {
+  display: flex;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 14px;
+  color: #9bb0cb;
+  margin-left: 5px;
+  margin-top: 10px;
+}

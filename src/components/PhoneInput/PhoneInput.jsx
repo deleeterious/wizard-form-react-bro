@@ -16,6 +16,8 @@ const PhoneInput = ({ control }) => {
         <Controller
           as={ReactInputMask}
           name="phone"
+          defaultValue=""
+          placeholder="+38 099 999 99"
           className={classes.input}
           mask="+38 (999) 999 99 99"
           control={control}
