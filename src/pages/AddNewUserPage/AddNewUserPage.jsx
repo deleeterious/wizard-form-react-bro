@@ -4,7 +4,7 @@ import classes from './AddNewUserPage.module.css'
 // containers
 import NewUserNav from '../../containers/NewUserNav'
 import NewUserAccount from '../../containers/NewUserForms/NewUserAccount'
-// import NewUserProfile from '../../containers/NewUserForms/NewUserProfile'
+import NewUserProfile from '../../containers/NewUserForms/NewUserProfile'
 // utils
 import { concatStyles } from '../../utils/utils'
 
@@ -16,7 +16,7 @@ const AddNewUserPage = () => {
       </div>
       <NewUserNav />
       <NewUserAccount />
-      {/* <NewUserProfile /> */}
+      <NewUserProfile />
     </main>
   )
 }

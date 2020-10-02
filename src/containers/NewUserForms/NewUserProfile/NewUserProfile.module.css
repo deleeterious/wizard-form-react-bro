@@ -1,4 +1,11 @@
+.form {
+  display: flex;
+  padding: 0 calc(50% - 385px);
+  justify-content: space-between;
+}
+
 .flexCont {
+  max-width: 300px;
   width: 100%;
 }
 
@@ -6,18 +13,4 @@
   display: flex;
   justify-content: flex-end;
 }
-
-.input {
-  width: 300px;
-  height: 40px;
-  border: 1px solid #e7f0ff;
-  outline: none;
-  padding-left: 10px;
-}
-
-.inputCont {
-  position: relative;
-  margin-top: 45px;
-  display: flex;
-  justify-content: flex-end;
-}
+/* ======================================== */

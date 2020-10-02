@@ -1,0 +1,16 @@
+.btnCont {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.forwardBtn {
+  margin-top: 100px;
+  width: 100px;
+  height: 40px;
+  border: none;
+  background: #5e97f3;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}

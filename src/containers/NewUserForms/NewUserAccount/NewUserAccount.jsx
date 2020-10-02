@@ -1,73 +1,51 @@
 import React from 'react'
+// useForm
+import { useForm } from 'react-hook-form'
 // css
 import classes from './NewUserAccount.module.css'
-// assets
-import { ReactComponent as AvatarIcon } from '../../../assets/icons/avatar.svg'
-import { ReactComponent as AddIcon } from '../../../assets/icons/add.svg'
 // utils
 import { concatStyles } from '../../../utils/utils'
+// components
+import WrappedInput from '../../../components/WrappedInput/WrappedInput'
+import AvatarInput from '../../../components/AvatarInput/AvatarInput'
+import ForwardButton from '../../../components/ForwardButton/ForwardButton'
 
 const NewUserAccount = () => {
-  return (
-    <form className={classes.form}>
-      <div className={concatStyles(classes.flexCont, classes.leftCont)}>
-        <div className={classes.avatarCont}>
-          <div className={classes.avatarIconCont}>
-            <AvatarIcon className={classes.avatarIcon} />
-          </div>
+  const { register, handleSubmit, errors } = useForm()
+  const onSubmit = (data) => console.log(data)
 
-          <label htmlFor="avatar" className={classes.fileLabel}>
-            <input
-              type="file"
-              name="avatar"
-              id="avatar"
-              className={classes.fileInput}
-            />
-            <AddIcon className={classes.addIcon} />
-            <div>add avatar</div>
-          </label>
-        </div>
+  return (
+    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+      <div className={concatStyles(classes.flexCont, classes.leftCont)}>
+        <AvatarInput />
       </div>
 
       <div className={classes.flexCont}>
-        <div className={classes.inputCont}>
-          <label htmlFor="userName">
-            <div className={classes.inputLabel}>User name</div>
-            <input
-              type="text"
-              name="userName"
-              id="userName"
-              className={classes.input}
-            />
-          </label>
-        </div>
+        <WrappedInput
+          type="text"
+          name="userName"
+          title="User Name"
+          refRegister={register({ required: true })}
+          errors={errors}
+        />
 
-        <div className={classes.inputCont}>
-          <label htmlFor="password">
-            <div className={classes.inputLabel}>Password</div>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className={classes.input}
-            />
-          </label>
-        </div>
+        <WrappedInput
+          type="password"
+          name="password"
+          title="Password"
+          refRegister={register({ required: true })}
+          errors={errors}
+        />
 
-        <div className={classes.inputCont}>
-          <label htmlFor="passwordRepeat">
-            <div className={classes.inputLabel}>Repeat Password</div>
-            <input
-              type="password"
-              name="passwordRepeat"
-              id="passwordRepeat"
-              className={classes.input}
-            />
-          </label>
-        </div>
-        <div className={classes.btnCont}>
-          <input type="button" value="Forward" className={classes.forwardBtn} />
-        </div>
+        <WrappedInput
+          type="password"
+          name="passwordRepeat"
+          title="Repeat password"
+          refRegister={register({ required: true })}
+          errors={errors}
+        />
+
+        <ForwardButton />
       </div>
     </form>
   )
