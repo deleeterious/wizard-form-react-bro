@@ -6,6 +6,7 @@ import NewUserNav from '../../containers/NewUserNav'
 import NewUserAccount from '../../containers/NewUserForms/NewUserAccount'
 import NewUserProfile from '../../containers/NewUserForms/NewUserProfile'
 import NewUserContacts from '../../containers/NewUserForms/NewUserContacts'
+import CapabilitiesForm from '../../containers/NewUserForms/CapabilitiesForm/CapabilitiesForm'
 
 const AddNewUserPage = () => {
   return (
@@ -14,9 +15,10 @@ const AddNewUserPage = () => {
         <h2>Adding new user</h2>
       </div>
       <NewUserNav />
-      <NewUserAccount />
-      <NewUserProfile />
-      <NewUserContacts />
+      {/* <NewUserAccount /> */}
+      {/* <NewUserProfile /> */}
+      {/* <NewUserContacts /> */}
+      <CapabilitiesForm />
     </main>
   )
 }
