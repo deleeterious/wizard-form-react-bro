@@ -6,7 +6,7 @@ import { Controller } from 'react-hook-form'
 // react-datepicker
 import ReactInputMask from 'react-input-mask'
 // css
-import classes from '../WrappedInput/WrappedInput.module.css'
+import classes from '../TextInput/TextInput.module.css'
 
 const PhoneInput = ({ control }) => {
   return (

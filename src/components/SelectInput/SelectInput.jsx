@@ -6,7 +6,7 @@ import { Controller } from 'react-hook-form'
 // react-datepicker
 import ReactSelect from 'react-select'
 // css
-import classes from '../WrappedInput/WrappedInput.module.css'
+import classes from '../TextInput/TextInput.module.css'
 
 const options = [
   { value: 'en', label: 'English' },

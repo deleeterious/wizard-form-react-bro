@@ -2,7 +2,7 @@ import React from 'react'
 // prop-types
 import PropTypes from 'prop-types'
 // css
-import classes from '../WrappedInput/WrappedInput.module.css'
+import classes from '../TextInput/TextInput.module.css'
 import radioClasses from './RadioInput.module.css'
 
 const RadioInput = ({ refRegister }) => {

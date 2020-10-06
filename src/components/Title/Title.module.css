@@ -1,0 +1,12 @@
+.title {
+  height: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475666;
+}
+
+.title h1 {
+  font-weight: 700;
+  font-size: 35px;
+}
