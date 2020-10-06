@@ -1,17 +1,17 @@
 import React from 'react'
 // react-redux
 import { useDispatch } from 'react-redux'
+import { changeActiveFormStage } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
+// components
+import TextInput from 'components/TextInput'
+import FormButton from 'components/FormButton'
+import DateInput from 'components/DateInput/DateInput'
+import RadioInput from 'components/RadioInput/RadioInput'
 // css
 import 'react-datepicker/dist/react-datepicker.css'
 import classes from './ProfileForm.module.css'
-// components
-import TextInput from '../../../components/TextInput'
-import FormButton from '../../../components/FormButton'
-import DateInput from '../../../components/DateInput/DateInput'
-import RadioInput from '../../../components/RadioInput/RadioInput'
-import { changeActiveFormStage } from '../../../redux/actions'
 
 const ProfileForm = () => {
   const NEXT_STAGE = 3

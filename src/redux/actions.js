@@ -1,4 +1,9 @@
-import { ADD_USER, CHANGE_ACTIVE_FORM_STAGE, LOAD_USERS } from './types'
+import {
+  ADD_USER,
+  CHANGE_ACTIVE_FORM_STAGE,
+  LOAD_USERS,
+  GET_USER
+} from './types'
 import db from '../db'
 
 export const loadUsers = () => {
@@ -9,6 +14,19 @@ export const loadUsers = () => {
         dispatch({
           type: LOAD_USERS,
           payload: users
+        })
+      })
+  }
+}
+
+export const getUser = (id) => {
+  return (dispatch) => {
+    db.table('users')
+      .get(+id)
+      .then((user) => {
+        dispatch({
+          type: GET_USER,
+          payload: user
         })
       })
   }

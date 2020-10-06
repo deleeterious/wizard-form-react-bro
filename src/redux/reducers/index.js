@@ -1,4 +1,9 @@
-import { ADD_USER, CHANGE_ACTIVE_FORM_STAGE, LOAD_USERS } from '../types'
+import {
+  ADD_USER,
+  CHANGE_ACTIVE_FORM_STAGE,
+  GET_USER,
+  LOAD_USERS
+} from '../types'
 
 export const rootReducer = (state, { type, payload }) => {
   switch (type) {
@@ -8,6 +13,11 @@ export const rootReducer = (state, { type, payload }) => {
         users: payload
       }
     }
+    case GET_USER:
+      return {
+        ...state,
+        user: payload
+      }
     case ADD_USER:
       return {
         ...state,

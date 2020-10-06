@@ -1,8 +1,8 @@
 import React from 'react'
+// utils
+import { concatStyles } from 'utils'
 // css
 import classes from './FormNav.module.css'
-// utils
-import { concatStyles } from '../../utils/utils'
 
 const FormNav = () => {
   return (

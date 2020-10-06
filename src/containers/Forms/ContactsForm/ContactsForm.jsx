@@ -2,17 +2,16 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 // useForm
 import { useForm } from 'react-hook-form'
+import { changeActiveFormStage } from 'redux/actions'
 // assets
-import { ReactComponent as AddIcon } from '../../../assets/icons/add.svg'
+import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
+// components
+import TextInput from 'components/TextInput'
+import FormButton from 'components/FormButton'
+import SelectInput from 'components/SelectInput/SelectInput'
+import PhoneInput from 'components/PhoneInput/PhoneInput'
 // css
 import classes from './ContactsForm.module.css'
-// components
-import TextInput from '../../../components/TextInput'
-import FormButton from '../../../components/FormButton'
-import SelectInput from '../../../components/SelectInput/SelectInput'
-import PhoneInput from '../../../components/PhoneInput/PhoneInput'
-
-import { changeActiveFormStage } from '../../../redux/actions'
 
 const ContactsForm = () => {
   const NEXT_STAGE = 4

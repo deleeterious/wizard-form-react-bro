@@ -19,5 +19,3 @@ ReactDOM.render(
 )
 
 serviceWorker.unregister()
-
-// FIXME CODE REFACTORING, COMPONENT SPLITTING, component? or container? then structure refactor

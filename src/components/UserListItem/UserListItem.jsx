@@ -1,4 +1,6 @@
 import React from 'react'
+// router
+import { Link } from 'react-router-dom'
 // prop-types
 import PropTypes from 'prop-types'
 // icons
@@ -8,7 +10,7 @@ import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg'
 import classes from './UserListItem.module.css'
 
 const UserListItem = ({ user }) => {
-  const { userName, firstName, lastName, company, email } = user
+  const { userName, firstName, lastName, company, email, id } = user
   return (
     <div className={classes.listItem}>
       <div className={classes.avatar} />
@@ -23,7 +25,9 @@ const UserListItem = ({ user }) => {
       <div className={classes.contacts}>{email}</div>
       <div className={classes.updates}>last updates</div>
       <div className={classes.buttons}>
-        <EditIcon />
+        <Link to={`/profile/${id}`}>
+          <EditIcon />
+        </Link>
         <div className={classes.deleteBtn}>
           <DeleteIcon />
         </div>
@@ -38,7 +42,8 @@ UserListItem.propTypes = {
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     company: PropTypes.string,
-    email: PropTypes.string
+    email: PropTypes.string,
+    id: PropTypes.number
   })
 }
 

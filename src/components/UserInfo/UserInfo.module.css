@@ -1,0 +1,51 @@
+.userInfo {
+  display: flex;
+  font-size: 14px;
+}
+
+.avatarCont {
+  width: 30%;
+}
+
+.infoCont {
+  width: 70%;
+}
+
+.sectionCont {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.sectionCont:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  width: 33%;
+  color: #475666;
+  font-weight: 500;
+}
+
+.infoList {
+  width: 67%;
+}
+
+.infoListItem {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.infoListItem:last-child {
+  margin-bottom: 0;
+}
+
+.infoListItemTitle {
+  width: 50%;
+  color: #475666;
+  font-weight: 500;
+}
+
+.infoListItemValue {
+  width: 50%;
+  color: #657c9a;
+}

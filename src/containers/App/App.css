@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 * {
   padding: 0;
@@ -9,4 +9,8 @@
 
 .container {
   padding: 0 calc(50% - 485px);
+}
+
+.container:last-child {
+  margin-bottom: 50px;
 }

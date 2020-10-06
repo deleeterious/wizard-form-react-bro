@@ -1,13 +1,15 @@
 import React from 'react'
 // react-hook-form
 import { Controller, useForm } from 'react-hook-form'
+// redux
 import { useDispatch } from 'react-redux'
+import { addUser } from 'redux/actions'
 // react-datepicker
 import ReactSelect from 'react-select'
+// component
+import FormButton from 'components/FormButton'
 // css
 import classes from './CapabilitiesForm.module.css'
-import FormButton from '../../../components/FormButton'
-import { addUser } from '../../../redux/actions'
 
 const CapabilitiesForm = () => {
   const dispatch = useDispatch()
@@ -46,6 +48,8 @@ const CapabilitiesForm = () => {
     { value: 'aws lambda', label: 'AWS Lambda' },
     { value: 'firebase', label: 'Firebase' }
   ]
+
+  // TODO remove <br /> and split components
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>

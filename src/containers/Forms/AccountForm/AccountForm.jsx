@@ -1,16 +1,17 @@
 import React from 'react'
+// redux
 import { useDispatch } from 'react-redux'
+import { changeActiveFormStage } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
+// utils
+import { concatStyles } from 'utils'
+// components
+import TextInput from 'components/TextInput/TextInput'
+import AvatarInput from 'components/AvatarInput/AvatarInput'
+import FormButton from 'components/FormButton/FormButton'
 // css
 import classes from './AccountForm.module.css'
-// utils
-import { concatStyles } from '../../../utils/utils'
-// components
-import TextInput from '../../../components/TextInput/TextInput'
-import AvatarInput from '../../../components/AvatarInput/AvatarInput'
-import FormButton from '../../../components/FormButton/FormButton'
-import { changeActiveFormStage } from '../../../redux/actions'
 
 const AccountForm = () => {
   const NEXT_STAGE = 2

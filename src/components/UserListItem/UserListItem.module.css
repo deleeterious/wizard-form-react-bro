@@ -6,6 +6,7 @@
   align-items: center;
   color: #475666;
   font-size: 14px;
+  text-decoration: none;
 }
 
 .listItem:nth-child(2n) {
@@ -40,6 +41,8 @@
 
 .buttons {
   width: 10%;
+  z-index: 100;
+
   display: flex;
   justify-content: space-evenly;
 }

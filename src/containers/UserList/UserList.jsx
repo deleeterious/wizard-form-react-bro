@@ -1,8 +1,6 @@
 import React from 'react'
 // react-redux
 import { useSelector } from 'react-redux'
-// prop-types
-import PropTypes from 'prop-types'
 // components
 import UserListItem from 'components/UserListItem/UserListItem'
 // css
@@ -10,7 +8,7 @@ import classes from './UserList.module.css'
 
 const UserList = () => {
   const users = useSelector((state) => state.users)
-  console.log(users)
+
   return (
     <section>
       <div className={classes.listHeader}>
@@ -26,10 +24,6 @@ const UserList = () => {
       ))}
     </section>
   )
-}
-
-UserList.propTypes = {
-  users: PropTypes.array
 }
 
 export default UserList
