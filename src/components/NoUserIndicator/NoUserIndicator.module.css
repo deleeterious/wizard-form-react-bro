@@ -1,0 +1,33 @@
+.indicatorCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+}
+
+.indicatorTitle {
+  font-size: 35px;
+  font-weight: 700;
+  color: #9bb0cb;
+}
+
+.newUserBtn {
+  width: 160px;
+  height: 40px;
+  border: none;
+  background: #5e97f3;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 65px;
+}
+
+.link {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}

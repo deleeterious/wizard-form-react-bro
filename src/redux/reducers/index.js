@@ -2,6 +2,7 @@ import {
   ADD_USER,
   CHANGE_ACTIVE_FORM_STAGE,
   GET_USER,
+  LOAD_AVATAR,
   LOAD_USERS
 } from '../types'
 
@@ -27,6 +28,11 @@ export const rootReducer = (state, { type, payload }) => {
       return {
         ...state,
         activeFormStage: payload
+      }
+    case LOAD_AVATAR:
+      return {
+        ...state,
+        avatar: payload
       }
 
     default:

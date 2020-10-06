@@ -1,14 +1,10 @@
 import React from 'react'
-// react-redux
-import { useSelector } from 'react-redux'
 // components
 import UserListItem from 'components/UserListItem/UserListItem'
 // css
 import classes from './UserList.module.css'
 
-const UserList = () => {
-  const users = useSelector((state) => state.users)
-
+const UserList = ({ users }) => {
   return (
     <section>
       <div className={classes.listHeader}>

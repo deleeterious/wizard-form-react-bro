@@ -20,14 +20,21 @@ const AccountForm = () => {
   const dispatch = useDispatch()
   const onSubmit = (data) => {
     console.log(data)
-    localStorage.setItem('account', JSON.stringify(data))
+
+    localStorage.setItem(
+      'account',
+      JSON.stringify({
+        ...data,
+        avatar: window.URL.createObjectURL(data.avatar[0])
+      })
+    )
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
-        <AvatarInput />
+        <AvatarInput refRegister={register()} />
       </div>
 
       <div className={classes.flexCont}>

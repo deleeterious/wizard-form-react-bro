@@ -1,14 +1,19 @@
 import React from 'react'
-
+// react-redux
+import { useSelector } from 'react-redux'
+// components
 import Title from 'components/Title'
+import NoUserIndicator from 'components/NoUserIndicator'
 
 import UserList from 'containers/UserList'
 
 const UserListPage = () => {
+  const users = useSelector((state) => state.users)
+
   return (
     <main className="container">
       <Title content="List of users" />
-      <UserList />
+      {users.length ? <UserList users={users} /> : <NoUserIndicator />}
     </main>
   )
 }

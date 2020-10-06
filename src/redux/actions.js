@@ -2,7 +2,8 @@ import {
   ADD_USER,
   CHANGE_ACTIVE_FORM_STAGE,
   LOAD_USERS,
-  GET_USER
+  GET_USER,
+  LOAD_AVATAR
 } from './types'
 import db from '../db'
 
@@ -47,5 +48,10 @@ export const addUser = (user) => {
 
 export const changeActiveFormStage = (payload) => ({
   type: CHANGE_ACTIVE_FORM_STAGE,
+  payload
+})
+
+export const loadAvatar = (payload) => ({
+  type: LOAD_AVATAR,
   payload
 })

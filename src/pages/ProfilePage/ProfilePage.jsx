@@ -3,10 +3,12 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 // components
 import Title from 'components/Title'
-import UserInfo from 'components/UserInfo/UserInfo'
+import UserInfo from 'components/UserInfo'
 // import db from 'db'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from 'redux/actions'
+
+// TODO add missing params error handler
 
 const ProfilePage = ({ match }) => {
   // BD request
