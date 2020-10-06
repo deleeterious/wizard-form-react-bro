@@ -47,8 +47,6 @@ const CapabilitiesForm = () => {
     { value: 'firebase', label: 'Firebase' }
   ]
 
-  // TODO styling checkbox and code splitting
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <div className={classes.flexCont}>

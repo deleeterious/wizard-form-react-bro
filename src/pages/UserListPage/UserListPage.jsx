@@ -1,17 +1,14 @@
 import React from 'react'
-// react-redux
-import { useSelector } from 'react-redux'
 
-import Title from 'components/Title/Title'
+import Title from 'components/Title'
 
-import UserList from 'containers/UserList/UserList'
+import UserList from 'containers/UserList'
 
 const UserListPage = () => {
-  const users = useSelector((state) => state.users)
   return (
     <main className="container">
       <Title content="List of users" />
-      <UserList users={users} />
+      <UserList />
     </main>
   )
 }

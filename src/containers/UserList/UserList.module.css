@@ -1,4 +1,32 @@
 .listHeader {
   height: 45px;
   background: #4e86e4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.avatar {
+  width: 6%;
+}
+
+.name {
+  width: 23%;
+}
+
+.company {
+  width: 20%;
+}
+
+.contacts {
+  width: 23%;
+}
+
+.updates {
+  width: 10%;
+}
+
+.buttons {
+  width: 10%;
 }
