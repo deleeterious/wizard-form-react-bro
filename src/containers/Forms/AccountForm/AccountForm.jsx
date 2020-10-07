@@ -6,10 +6,12 @@ import { changeActiveFormStage } from 'redux/actions'
 import { useForm } from 'react-hook-form'
 // utils
 import { concatStyles } from 'utils'
+// helpers
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 // components
 import TextInput from 'components/TextInput/TextInput'
 import AvatarInput from 'components/AvatarInput/AvatarInput'
-import FormButton from 'components/FormButton/FormButton'
+import Button from 'components/Button/Button'
 // css
 import classes from './AccountForm.module.css'
 
@@ -17,17 +19,18 @@ const AccountForm = () => {
   const NEXT_STAGE = 2
 
   const { register, handleSubmit, errors } = useForm()
+
   const dispatch = useDispatch()
+
   const onSubmit = (data) => {
     console.log(data)
-
-    localStorage.setItem(
-      'account',
-      JSON.stringify({
-        ...data,
-        avatar: window.URL.createObjectURL(data.avatar[0])
-      })
-    )
+    const avatarObjectURL = data.avatar[0]
+      ? window.URL.createObjectURL(data.avatar[0])
+      : null
+    setToLocalStorage('account', {
+      ...data,
+      avatar: avatarObjectURL
+    })
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
 
@@ -62,7 +65,7 @@ const AccountForm = () => {
           errors={errors}
         />
 
-        <FormButton />
+        <Button />
       </div>
     </form>
   )

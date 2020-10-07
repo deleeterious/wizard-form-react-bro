@@ -5,9 +5,11 @@ import { useForm } from 'react-hook-form'
 import { changeActiveFormStage } from 'redux/actions'
 // assets
 import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
+// helpers
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 // components
 import TextInput from 'components/TextInput'
-import FormButton from 'components/FormButton'
+import Button from 'components/Button'
 import SelectInput from 'components/SelectInput/SelectInput'
 import PhoneInput from 'components/PhoneInput/PhoneInput'
 // css
@@ -20,7 +22,7 @@ const ContactsForm = () => {
   const dispatch = useDispatch()
   const onSubmit = (data) => {
     console.log(data)
-    localStorage.setItem('contacts', JSON.stringify(data))
+    setToLocalStorage('contacts', data)
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
 
@@ -83,7 +85,7 @@ const ContactsForm = () => {
           <span>add phone number</span>
         </button>
 
-        <FormButton />
+        <Button />
       </div>
     </form>
   )

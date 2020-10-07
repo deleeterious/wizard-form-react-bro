@@ -10,7 +10,7 @@ const UserInfo = ({ user }) => {
     lastName,
     birthDate,
     email,
-    Address,
+    address,
     company,
     fax,
     facebookLink,
@@ -56,7 +56,7 @@ const UserInfo = ({ user }) => {
             </div>
             <div className={classes.infoListItem}>
               <div className={classes.infoListItemTitle}>Address:</div>
-              <div className={classes.infoListItemValue}>{Address}</div>
+              <div className={classes.infoListItemValue}>{address}</div>
             </div>
           </div>
         </div>

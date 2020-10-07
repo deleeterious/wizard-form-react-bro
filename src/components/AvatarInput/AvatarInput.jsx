@@ -1,11 +1,14 @@
 import React from 'react'
-// css
-import classes from './AvatarInput.module.css'
-// assets
-import { ReactComponent as AvatarIcon } from '../../assets/icons/avatar.svg'
-import { ReactComponent as AddIcon } from '../../assets/icons/add.svg'
+// prop-types
+import PropTypes from 'prop-types'
+// redux
 import { useDispatch, useSelector } from 'react-redux'
 import { loadAvatar } from 'redux/actions'
+// assets
+import { ReactComponent as AvatarIcon } from 'assets/icons/avatar.svg'
+import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
+// css
+import classes from './AvatarInput.module.css'
 
 const AvatarInput = ({ refRegister }) => {
   const dispatch = useDispatch()
@@ -41,6 +44,10 @@ const AvatarInput = ({ refRegister }) => {
       </label>
     </div>
   )
+}
+
+AvatarInput.propTypes = {
+  refRegister: PropTypes.func
 }
 
 export default AvatarInput

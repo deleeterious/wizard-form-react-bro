@@ -1,53 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 // react-hook-form
 import { Controller, useForm } from 'react-hook-form'
 // redux
 import { useDispatch } from 'react-redux'
 import { addUser } from 'redux/actions'
+// router
+import { Redirect } from 'react-router-dom'
+// helpers
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 // react-datepicker
 import ReactSelect from 'react-select'
 // component
-import FormButton from 'components/FormButton'
+import Button from 'components/Button'
+// constants
+import { skills } from 'constants.js'
 // css
 import classes from './CapabilitiesForm.module.css'
 
 const CapabilitiesForm = () => {
+  const [isFinish, setIsFinish] = useState(false)
   const dispatch = useDispatch()
 
   const { register, handleSubmit, control } = useForm()
   const onSubmit = (data) => {
-    localStorage.setItem('capabilities', JSON.stringify(data))
+    setToLocalStorage('capabilities', data)
 
-    const account = JSON.parse(localStorage.getItem('account'))
-    const profile = JSON.parse(localStorage.getItem('profile'))
-    const contacts = JSON.parse(localStorage.getItem('contacts'))
-    const capabilities = JSON.parse(localStorage.getItem('capabilities'))
+    const account = getFromLocalStorage('account')
+    const profile = getFromLocalStorage('profile')
+    const contacts = getFromLocalStorage('contacts')
+    const capabilities = getFromLocalStorage('capabilities')
 
     dispatch(addUser({ ...account, ...profile, ...contacts, ...capabilities }))
 
     localStorage.clear()
-  }
 
-  const options = [
-    { value: 'html', label: 'HTML' },
-    { value: 'css', label: 'CSS' },
-    { value: 'js', label: 'Javascript' },
-    { value: 'react', label: 'React' },
-    { value: 'angular', label: 'Angular' },
-    { value: 'jquery', label: 'jQuery' },
-    { value: 'nodejs', label: 'NodeJS' },
-    { value: 'python', label: 'Python' },
-    { value: 'php', label: 'PHP' },
-    { value: 'ruby', label: 'Ruby On Rails' },
-    { value: 'sql', label: 'SQL' },
-    { value: 'backbonejs', label: 'BackboneJS' },
-    { value: 'design', label: 'Web Design' },
-    { value: 'pm', label: 'Project management' },
-    { value: 'git', label: 'Git' },
-    { value: 'docker', label: 'Docker' },
-    { value: 'aws lambda', label: 'AWS Lambda' },
-    { value: 'firebase', label: 'Firebase' }
-  ]
+    setIsFinish(true)
+  }
 
   // TODO remove <br /> and split components
 
@@ -60,7 +51,7 @@ const CapabilitiesForm = () => {
             <Controller
               name="skills"
               control={control}
-              options={options}
+              options={skills}
               isMulti
               as={ReactSelect}
             />
@@ -104,7 +95,8 @@ const CapabilitiesForm = () => {
           </label>
         </div>
 
-        <FormButton />
+        <Button />
+        {isFinish ? <Redirect to="/" /> : null}
       </div>
     </form>
   )

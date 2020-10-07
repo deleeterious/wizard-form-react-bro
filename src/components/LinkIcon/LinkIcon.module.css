@@ -8,8 +8,9 @@
   display: flex;
   justify-content: space-between;
   text-decoration: none;
+  margin-left: 60px;
 }
 
-.button:first-child {
-  margin-right: 60px;
+.button:hover {
+  color: #222;
 }

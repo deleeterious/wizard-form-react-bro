@@ -2,7 +2,7 @@ import React from 'react'
 // react-redux
 import { useSelector } from 'react-redux'
 // containers
-import FormNav from 'containers/FormNav'
+import FormNavigation from 'containers/FormNavigation'
 import AccountForm from 'containers/Forms/AccountForm'
 import ProfileForm from 'containers/Forms/ProfileForm'
 import ContactsForm from 'containers/Forms/ContactsForm'
@@ -15,11 +15,11 @@ const FormsPage = () => {
   return (
     <main className="container">
       <Title content="Adding new user" />
-      <FormNav />
+      <FormNavigation />
       {activeFormStage === 1 ? <AccountForm /> : null}
       {activeFormStage === 2 ? <ProfileForm /> : null}
       {activeFormStage === 3 ? <ContactsForm /> : null}
-      {activeFormStage === 4 ? <CapabilitiesForm /> : null}
+      <CapabilitiesForm />
     </main>
   )
 }

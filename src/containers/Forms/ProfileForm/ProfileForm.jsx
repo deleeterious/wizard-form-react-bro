@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
+// helpers
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 // components
 import TextInput from 'components/TextInput'
-import FormButton from 'components/FormButton'
+import Button from 'components/Button'
 import DateInput from 'components/DateInput/DateInput'
 import RadioInput from 'components/RadioInput/RadioInput'
 // css
@@ -20,7 +22,7 @@ const ProfileForm = () => {
   const { register, handleSubmit, errors, control } = useForm()
   const onSubmit = (data) => {
     console.log(data)
-    localStorage.setItem('profile', JSON.stringify(data))
+    setToLocalStorage('profile', data)
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
   return (
@@ -56,7 +58,7 @@ const ProfileForm = () => {
 
         <TextInput
           type="text"
-          name="Address"
+          name="address"
           title="Address"
           refRegister={register({ required: true })}
           errors={errors}
@@ -67,7 +69,7 @@ const ProfileForm = () => {
           errors={errors}
         />
 
-        <FormButton />
+        <Button />
       </div>
     </form>
   )
