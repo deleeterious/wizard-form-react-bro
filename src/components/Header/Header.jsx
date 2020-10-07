@@ -11,20 +11,32 @@ import LinkIcon from 'components/LinkIcon'
 import { Link } from 'react-router-dom'
 // css
 import classes from './Header.module.css'
+import { useDispatch } from 'react-redux'
+import { changeActiveFormStage } from 'redux/actions'
 
-const Header = () => (
-  <header className={concatStyles('container', classes.header)}>
-    <div className={classes.logo}>
-      <Link to="/">
-        <HeaderLogo />
-      </Link>
-    </div>
-    <div className={classes.buttons}>
-      <LinkIcon to="/new-user" icon={<NewUserIcon />} text="Add new user" />
+const Header = () => {
+  const dispatch = useDispatch()
+  const handleClick = () => dispatch(changeActiveFormStage(1))
 
-      <LinkIcon to="/" icon={<ListUsersIcon />} text="List of users" />
-    </div>
-  </header>
-)
+  return (
+    <header className={concatStyles('container', classes.header)}>
+      <div className={classes.logo}>
+        <Link to="/">
+          <HeaderLogo />
+        </Link>
+      </div>
+      <div className={classes.buttons}>
+        <LinkIcon
+          onClick={handleClick}
+          to="/new-user"
+          icon={<NewUserIcon />}
+          text="Add new user"
+        />
+
+        <LinkIcon to="/" icon={<ListUsersIcon />} text="List of users" />
+      </div>
+    </header>
+  )
+}
 
 export default Header

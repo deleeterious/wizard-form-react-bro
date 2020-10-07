@@ -15,7 +15,7 @@ const App = () => (
   <Router className="app">
     <Header />
     <Switch>
-      <Route path="/edit/:stage" component={EditPage} />
+      <Route path="/edit/:id" component={EditPage} />
       <Route path="/profile/:id" component={ProfilePage} />
       <Route path="/new-user" component={FormsPage} />
       <Route path="/" component={UserListPage} />

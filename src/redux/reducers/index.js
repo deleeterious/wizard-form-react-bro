@@ -3,7 +3,8 @@ import {
   CHANGE_ACTIVE_FORM_STAGE,
   GET_USER,
   LOAD_AVATAR,
-  LOAD_USERS
+  LOAD_USERS,
+  UPDATE_USER
 } from '../types'
 
 export const rootReducer = (state, { type, payload }) => {
@@ -24,6 +25,15 @@ export const rootReducer = (state, { type, payload }) => {
         ...state,
         users: [...state.users, payload]
       }
+    case UPDATE_USER: {
+      return {
+        ...state,
+        users: [
+          ...state.users.filter((user) => user.id !== payload.id),
+          { ...state.user, ...payload.changes }
+        ]
+      }
+    }
     case CHANGE_ACTIVE_FORM_STAGE:
       return {
         ...state,

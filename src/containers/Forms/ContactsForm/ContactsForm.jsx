@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 // useForm
 import { useForm } from 'react-hook-form'
-import { changeActiveFormStage } from 'redux/actions'
+import { changeActiveFormStage, updateUser } from 'redux/actions'
 // assets
 import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
 // helpers
@@ -15,14 +15,18 @@ import PhoneInput from 'components/PhoneInput/PhoneInput'
 // css
 import classes from './ContactsForm.module.css'
 
-const ContactsForm = () => {
+const ContactsForm = ({ isEdit, id }) => {
   const NEXT_STAGE = 4
 
   const { register, handleSubmit, errors, control } = useForm()
   const dispatch = useDispatch()
   const onSubmit = (data) => {
     console.log(data)
-    setToLocalStorage('contacts', data)
+    if (isEdit) {
+      dispatch(updateUser(+id, data))
+    } else {
+      setToLocalStorage('contacts', ...data)
+    }
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
 

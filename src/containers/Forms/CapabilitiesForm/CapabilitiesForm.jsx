@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 // redux
 import { useDispatch } from 'react-redux'
-import { addUser } from 'redux/actions'
+import { addUser, updateUser } from 'redux/actions'
 // router
 import { Redirect } from 'react-router-dom'
 // helpers
@@ -20,20 +20,26 @@ import { skills } from 'constants.js'
 // css
 import classes from './CapabilitiesForm.module.css'
 
-const CapabilitiesForm = () => {
+const CapabilitiesForm = ({ isEdit, id }) => {
   const [isFinish, setIsFinish] = useState(false)
   const dispatch = useDispatch()
 
   const { register, handleSubmit, control } = useForm()
   const onSubmit = (data) => {
-    setToLocalStorage('capabilities', data)
+    if (!isEdit) setToLocalStorage('capabilities', data)
 
     const account = getFromLocalStorage('account')
     const profile = getFromLocalStorage('profile')
     const contacts = getFromLocalStorage('contacts')
     const capabilities = getFromLocalStorage('capabilities')
 
-    dispatch(addUser({ ...account, ...profile, ...contacts, ...capabilities }))
+    if (isEdit) {
+      dispatch(updateUser(+id, data))
+    } else {
+      dispatch(
+        addUser({ ...account, ...profile, ...contacts, ...capabilities })
+      )
+    }
 
     localStorage.clear()
 

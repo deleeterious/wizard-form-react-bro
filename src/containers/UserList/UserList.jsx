@@ -14,9 +14,10 @@ const UserList = ({ users }) => (
       <div className={classes.updates}>last updates</div>
       <div className={classes.buttons} />
     </div>
-    {users.map((user) => (
-      <UserListItem key={user.id} user={user} />
-    ))}
+    {users.map((user) => {
+      console.log(user)
+      return <UserListItem key={user.id} user={user} />
+    })}
   </section>
 )
 

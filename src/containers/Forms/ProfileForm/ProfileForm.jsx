@@ -1,7 +1,7 @@
 import React from 'react'
 // react-redux
 import { useDispatch } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
+import { changeActiveFormStage, updateUser } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
 // helpers
@@ -15,14 +15,18 @@ import RadioInput from 'components/RadioInput/RadioInput'
 import 'react-datepicker/dist/react-datepicker.css'
 import classes from './ProfileForm.module.css'
 
-const ProfileForm = () => {
+const ProfileForm = ({ isEdit, id }) => {
   const NEXT_STAGE = 3
 
   const dispatch = useDispatch()
   const { register, handleSubmit, errors, control } = useForm()
   const onSubmit = (data) => {
     console.log(data)
-    setToLocalStorage('profile', data)
+    if (isEdit) {
+      dispatch(updateUser(+id, data))
+    } else {
+      setToLocalStorage('profile', ...data)
+    }
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
   return (

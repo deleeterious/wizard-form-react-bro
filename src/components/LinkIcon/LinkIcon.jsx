@@ -2,21 +2,22 @@ import React from 'react'
 // router
 import { Link } from 'react-router-dom'
 // prop-types
-import PropTypes from 'prop-types'
+import T from 'prop-types'
 // css
 import classes from './LinkIcon.module.css'
 
-const LinkIcon = ({ icon, text, to }) => (
-  <Link className={classes.button} to={to}>
+const LinkIcon = ({ icon, text, to, onClick }) => (
+  <Link onClick={onClick} className={classes.button} to={to}>
     <div className={classes.icon}>{icon}</div>
     <div className={classes.text}>{text}</div>
   </Link>
 )
 
 LinkIcon.propTypes = {
-  icon: PropTypes.element,
-  text: PropTypes.string,
-  to: PropTypes.string
+  icon: T.element,
+  text: T.string,
+  to: T.string,
+  onClick: T.func
 }
 
 export default LinkIcon

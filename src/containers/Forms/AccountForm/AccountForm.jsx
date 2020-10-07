@@ -1,7 +1,7 @@
 import React from 'react'
 // redux
 import { useDispatch } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
+import { changeActiveFormStage, updateUser } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
 // utils
@@ -15,7 +15,7 @@ import Button from 'components/Button/Button'
 // css
 import classes from './AccountForm.module.css'
 
-const AccountForm = () => {
+const AccountForm = ({ isEdit, id }) => {
   const NEXT_STAGE = 2
 
   const { register, handleSubmit, errors } = useForm()
@@ -24,13 +24,12 @@ const AccountForm = () => {
 
   const onSubmit = (data) => {
     console.log(data)
-    const avatarObjectURL = data.avatar[0]
-      ? window.URL.createObjectURL(data.avatar[0])
-      : null
-    setToLocalStorage('account', {
-      ...data,
-      avatar: avatarObjectURL
-    })
+
+    if (isEdit) {
+      dispatch(updateUser(+id, data))
+    } else {
+      setToLocalStorage('account', ...data)
+    }
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
 

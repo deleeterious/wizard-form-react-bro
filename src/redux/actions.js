@@ -3,7 +3,8 @@ import {
   CHANGE_ACTIVE_FORM_STAGE,
   LOAD_USERS,
   GET_USER,
-  LOAD_AVATAR
+  LOAD_AVATAR,
+  UPDATE_USER
 } from './types'
 import db from '../db'
 
@@ -33,14 +34,14 @@ export const getUser = (id) => {
   }
 }
 
-export const updateUser = (id, payload) => {
+export const updateUser = (id, changes) => {
   return (dispatch) => {
     db.table('users')
-      .update(id, { ...payload })
+      .update(id, { ...changes })
       .then(() => {
         dispatch({
-          type: ADD_USER,
-          payload: { id, payload }
+          type: UPDATE_USER,
+          payload: { id, changes }
         })
       })
   }

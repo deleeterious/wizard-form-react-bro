@@ -27,7 +27,6 @@ const UserInfo = ({ user }) => {
     skills,
     id
   } = user
-  console.log(user)
   const dispatch = useDispatch()
   return (
     <div className={classes.userInfo}>
