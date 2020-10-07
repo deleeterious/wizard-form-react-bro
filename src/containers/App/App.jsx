@@ -9,11 +9,13 @@ import Header from 'components/Header'
 import FormsPage from 'pages/FormsPage'
 import UserListPage from 'pages/UserListPage'
 import ProfilePage from 'pages/ProfilePage/ProfilePage'
+import EditPage from 'pages/EditPage/EditPage'
 
 const App = () => (
   <Router className="app">
     <Header />
     <Switch>
+      <Route path="/edit/:stage" component={EditPage} />
       <Route path="/profile/:id" component={ProfilePage} />
       <Route path="/new-user" component={FormsPage} />
       <Route path="/" component={UserListPage} />

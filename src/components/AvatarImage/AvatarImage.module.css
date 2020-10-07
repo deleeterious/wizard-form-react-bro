@@ -1,0 +1,19 @@
+.avatarCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatarIconCont {
+  position: relative;
+  border: 3px solid #5e97f3;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatarIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+}

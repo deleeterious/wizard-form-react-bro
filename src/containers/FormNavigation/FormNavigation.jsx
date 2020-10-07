@@ -1,23 +1,37 @@
 import React from 'react'
-// utils
-import { concatStyles } from 'utils'
+import FormNavigationItem from 'components/FormNavigationItem'
 // css
 import classes from './FormNavigation.module.css'
 
-const FormNavigation = () => (
+const FormNavigation = ({ activeFormStage, isEdit = false }) => (
   <nav className={classes.nav}>
-    <div className={concatStyles(classes.navItem, classes.active)}>
-      <div>1. Account</div>
-    </div>
-    <div className={classes.navItem}>
-      <div>2. Profile</div>
-    </div>
-    <div className={classes.navItem}>
-      <div>3. Contacts</div>
-    </div>
-    <div className={classes.navItem}>
-      <div>4. Capabilities</div>
-    </div>
+    <FormNavigationItem
+      title="1. Account"
+      isActive={activeFormStage === 1}
+      stage={1}
+      isEdit={isEdit}
+    />
+
+    <FormNavigationItem
+      title="2. Profile"
+      isActive={activeFormStage === 2}
+      stage={2}
+      isEdit={isEdit}
+    />
+
+    <FormNavigationItem
+      title="3. Contacts"
+      isActive={activeFormStage === 3}
+      stage={3}
+      isEdit={isEdit}
+    />
+
+    <FormNavigationItem
+      title="4. Capabilities"
+      isActive={activeFormStage === 4}
+      stage={4}
+      isEdit={isEdit}
+    />
   </nav>
 )
 

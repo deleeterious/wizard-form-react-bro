@@ -1,0 +1,16 @@
+.navItem {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: #e9f1fd;
+  color: #9bb0cb;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.active {
+  background: #4e86e4;
+  color: #fff;
+}

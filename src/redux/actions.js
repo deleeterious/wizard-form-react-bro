@@ -33,6 +33,19 @@ export const getUser = (id) => {
   }
 }
 
+export const updateUser = (id, payload) => {
+  return (dispatch) => {
+    db.table('users')
+      .update(id, { ...payload })
+      .then(() => {
+        dispatch({
+          type: ADD_USER,
+          payload: { id, payload }
+        })
+      })
+  }
+}
+
 export const addUser = (user) => {
   return (dispatch) => {
     db.table('users')

@@ -1,21 +1,18 @@
-import React from 'react'
-// react-redux
-import { useSelector } from 'react-redux'
-// containers
+import Title from 'components/Title/Title'
 import FormNavigation from 'containers/FormNavigation'
-import AccountForm from 'containers/Forms/AccountForm'
-import ProfileForm from 'containers/Forms/ProfileForm'
-import ContactsForm from 'containers/Forms/ContactsForm'
+import AccountForm from 'containers/Forms/AccountForm/AccountForm'
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm/CapabilitiesForm'
-import Title from 'components/Title'
+import ContactsForm from 'containers/Forms/ContactsForm/ContactsForm'
+import ProfileForm from 'containers/Forms/ProfileForm/ProfileForm'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
-const FormsPage = () => {
+const EditPage = () => {
   const activeFormStage = useSelector((state) => state.activeFormStage)
-
   return (
     <main className="container">
-      <Title content="Adding new user" />
-      <FormNavigation activeFormStage={activeFormStage} />
+      <Title content="Editing" />
+      <FormNavigation activeFormStage={activeFormStage} isEdit />
       {activeFormStage === 1 ? <AccountForm /> : null}
       {activeFormStage === 2 ? <ProfileForm /> : null}
       {activeFormStage === 3 ? <ContactsForm /> : null}
@@ -24,4 +21,4 @@ const FormsPage = () => {
   )
 }
 
-export default FormsPage
+export default EditPage
