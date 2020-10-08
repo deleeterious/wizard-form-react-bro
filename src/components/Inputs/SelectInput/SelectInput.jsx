@@ -10,20 +10,35 @@ import commonStyles from 'components/Inputs/common/styles.module.css'
 
 const SelectInput = ({ control, options, title, name, isMulti }) => {
   const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      width: '100%',
-      height: '40px',
-      border: '1px solid #e7f0ff',
-      outline: 'none',
-      paddingLeft: '10px'
+    clearIndicator: () => ({
+      display: 'none'
     }),
-    dropdownIndicator: (provided) => ({
-      ...provided,
+    dropdownIndicator: () => ({
       display: 'none'
     }),
     indicatorSeparator: () => ({
       display: 'none'
+    }),
+    container: (provided) => ({
+      ...provided,
+      border: '1px solid #e7f0ff',
+      minHeight: 40,
+      fontSize: 14,
+      fontWeight: 500
+    }),
+    control: (provided) => ({
+      ...provided,
+      border: 'none',
+      boxShadow: 'none'
+    }),
+    placeholder: () => ({
+      display: 'none'
+    }),
+    menu: () => ({
+      border: '1px solid #e7f0ff',
+      fontSize: 14,
+      fontWeight: 400,
+      color: '#657C9A'
     })
   }
 
