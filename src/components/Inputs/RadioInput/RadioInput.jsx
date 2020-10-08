@@ -1,13 +1,15 @@
 import React from 'react'
 // prop-types
-import PropTypes from 'prop-types'
+import T from 'prop-types'
+// utils
+import { concatStyles } from 'utils'
 // css
-import classes from 'components/TextInput/TextInput.module.css'
-import radioClasses from './RadioInput.module.css'
+import commonStyles from 'components/Inputs/common/styles.module.css'
+import classes from './RadioInput.module.css'
 
 const RadioInput = ({ refRegister }) => (
-  <div className={classes.inputCont}>
-    <div className={classes.inputLabel}>Gender</div>
+  <div className={commonStyles.inputCont}>
+    <div className={commonStyles.inputLabel}>Gender</div>
     <label htmlFor="male">
       <input
         defaultChecked
@@ -17,9 +19,7 @@ const RadioInput = ({ refRegister }) => (
         id="male"
         value="Male"
       />
-      <span className={radioClasses.gender} style={{ marginRight: 60 }}>
-        Male
-      </span>
+      <span className={concatStyles(classes.gender, classes.mr60)}>Male</span>
     </label>
     <label htmlFor="female">
       <input
@@ -29,13 +29,13 @@ const RadioInput = ({ refRegister }) => (
         id="female"
         value="Female"
       />
-      <span className={radioClasses.gender}>Female</span>
+      <span className={classes.gender}>Female</span>
     </label>
   </div>
 )
 
 RadioInput.propTypes = {
-  refRegister: PropTypes.func
+  refRegister: T.func
 }
 
 export default RadioInput

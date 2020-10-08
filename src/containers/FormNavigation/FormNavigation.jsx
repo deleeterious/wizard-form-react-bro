@@ -1,4 +1,7 @@
 import React from 'react'
+// prop-types
+import T from 'prop-types'
+// components
 import FormNavigationItem from 'components/FormNavigationItem'
 // css
 import classes from './FormNavigation.module.css'
@@ -34,5 +37,10 @@ const FormNavigation = ({ activeFormStage, isEdit = false }) => (
     />
   </nav>
 )
+
+FormNavigation.propTypes = {
+  activeFormStage: T.number,
+  isEdit: T.bool
+}
 
 export default FormNavigation

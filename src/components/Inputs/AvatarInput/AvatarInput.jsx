@@ -1,9 +1,8 @@
 import React from 'react'
 // prop-types
-import PropTypes from 'prop-types'
+import T from 'prop-types'
 // redux
-import { useDispatch, useSelector } from 'react-redux'
-import { loadAvatar } from 'redux/actions'
+import { useSelector } from 'react-redux'
 // components
 import AvatarImage from 'components/AvatarImage'
 // assets
@@ -12,9 +11,7 @@ import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
 import classes from './AvatarInput.module.css'
 
 const AvatarInput = ({ refRegister }) => {
-  const dispatch = useDispatch()
   const avatar = useSelector((state) => state.avatar)
-  console.log(avatar)
 
   return (
     <div className={classes.avatarCont}>
@@ -26,12 +23,6 @@ const AvatarInput = ({ refRegister }) => {
           name="avatar"
           id="avatar"
           ref={refRegister}
-          onChange={(e) => {
-            e.preventDefault()
-            const file = e.target.files[0]
-            const localImageUrl = URL.createObjectURL(file)
-            dispatch(loadAvatar(localImageUrl))
-          }}
           className={classes.fileInput}
         />
         <AddIcon className={classes.addIcon} />
@@ -42,7 +33,7 @@ const AvatarInput = ({ refRegister }) => {
 }
 
 AvatarInput.propTypes = {
-  refRegister: PropTypes.func
+  refRegister: T.func
 }
 
 export default AvatarInput

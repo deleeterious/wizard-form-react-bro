@@ -1,12 +1,14 @@
+import db from 'db'
+
 import {
   ADD_USER,
   CHANGE_ACTIVE_FORM_STAGE,
   LOAD_USERS,
   GET_USER,
   LOAD_AVATAR,
-  UPDATE_USER
-} from './types'
-import db from '../db'
+  UPDATE_USER,
+  DELETE_USER
+} from 'redux/types'
 
 export const loadUsers = () => {
   return (dispatch) => {
@@ -55,6 +57,19 @@ export const addUser = (user) => {
         dispatch({
           type: ADD_USER,
           payload: { ...user, id }
+        })
+      })
+  }
+}
+
+export const deleteUser = (id) => {
+  return (dispatch) => {
+    db.table('users')
+      .delete(id)
+      .then(() => {
+        dispatch({
+          type: DELETE_USER,
+          payload: id
         })
       })
   }

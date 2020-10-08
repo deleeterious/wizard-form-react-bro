@@ -24,6 +24,7 @@
   width: 33%;
   color: #475666;
   font-weight: 500;
+  display: flex;
 }
 
 .infoList {
@@ -48,4 +49,8 @@
 .infoListItemValue {
   width: 50%;
   color: #657c9a;
+}
+
+.hobbiesItem {
+  margin-bottom: 10px;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 // prop-types
-import PropTypes from 'prop-types'
+import T from 'prop-types'
 // css
 import classes from './Title.module.css'
 
@@ -11,7 +11,7 @@ const Title = ({ content }) => (
 )
 
 Title.propTypes = {
-  content: PropTypes.string
+  content: T.string
 }
 
 export default Title

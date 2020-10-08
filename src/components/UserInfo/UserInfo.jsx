@@ -25,9 +25,12 @@ const UserInfo = ({ user }) => {
     facebookLink,
     phone,
     skills,
+    hobbies,
     id
   } = user
+
   const dispatch = useDispatch()
+
   return (
     <div className={classes.userInfo}>
       <div className={classes.avatarCont}>
@@ -136,7 +139,15 @@ const UserInfo = ({ user }) => {
             </div>
             <div className={classes.infoListItem}>
               <div className={classes.infoListItemTitle}>Hobbies:</div>
-              <div className={classes.infoListItemValue}>Hobbies</div>
+              <div className={classes.infoListItemValue}>
+                {hobbies
+                  ?.filter((item) => item)
+                  .map((item, idx) => (
+                    <p className={classes.hobbiesItem} key={idx}>
+                      {item}
+                    </p>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
@@ -144,5 +155,5 @@ const UserInfo = ({ user }) => {
     </div>
   )
 }
-
+// TODO Need prop-types
 export default UserInfo

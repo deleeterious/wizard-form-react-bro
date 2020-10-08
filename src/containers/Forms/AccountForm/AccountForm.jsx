@@ -1,6 +1,8 @@
 import React from 'react'
+// prop-types
+import T from 'prop-types'
 // redux
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { changeActiveFormStage, updateUser } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
@@ -9,8 +11,8 @@ import { concatStyles } from 'utils'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 // components
-import TextInput from 'components/TextInput/TextInput'
-import AvatarInput from 'components/AvatarInput/AvatarInput'
+import TextInput from 'components/Inputs/TextInput/TextInput'
+import AvatarInput from 'components/Inputs/AvatarInput/AvatarInput'
 import Button from 'components/Button/Button'
 // css
 import classes from './AccountForm.module.css'
@@ -18,20 +20,27 @@ import classes from './AccountForm.module.css'
 const AccountForm = ({ isEdit, id }) => {
   const NEXT_STAGE = 2
 
-  const { register, handleSubmit, errors } = useForm()
+  const users = useSelector((state) => state.users)
+
+  const { register, handleSubmit, watch, errors } = useForm()
 
   const dispatch = useDispatch()
 
   const onSubmit = (data) => {
-    console.log(data)
-
     if (isEdit) {
       dispatch(updateUser(+id, data))
     } else {
-      setToLocalStorage('account', ...data)
+      setToLocalStorage('account', data)
     }
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
+
+  const userNameValidation = (value) =>
+    !users.find((user) => user.userName === value) ||
+    'This username is already used'
+
+  const passwordRepeatValidation = (value) =>
+    value === watch('password') || "Password don't match"
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -44,7 +53,10 @@ const AccountForm = ({ isEdit, id }) => {
           type="text"
           name="userName"
           title="User Name"
-          refRegister={register({ required: true })}
+          refRegister={register({
+            required: 'This field is required',
+            validate: userNameValidation
+          })}
           errors={errors}
         />
 
@@ -52,7 +64,7 @@ const AccountForm = ({ isEdit, id }) => {
           type="password"
           name="password"
           title="Password"
-          refRegister={register({ required: true })}
+          refRegister={register({ required: 'This field is required' })}
           errors={errors}
         />
 
@@ -60,14 +72,22 @@ const AccountForm = ({ isEdit, id }) => {
           type="password"
           name="passwordRepeat"
           title="Repeat password"
-          refRegister={register({ required: true })}
+          refRegister={register({
+            required: 'This field is required',
+            validate: passwordRepeatValidation
+          })}
           errors={errors}
         />
 
-        <Button />
+        <Button title={isEdit ? 'Save' : 'Forward'} />
       </div>
     </form>
   )
+}
+
+AccountForm.propTypes = {
+  isEdit: T.bool,
+  id: T.string
 }
 
 export default AccountForm

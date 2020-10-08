@@ -1,4 +1,7 @@
 import React from 'react'
+// redux
+import { useDispatch } from 'react-redux'
+import { changeActiveFormStage } from 'redux/actions'
 // utils
 import { concatStyles } from 'utils'
 // assets
@@ -11,11 +14,10 @@ import LinkIcon from 'components/LinkIcon'
 import { Link } from 'react-router-dom'
 // css
 import classes from './Header.module.css'
-import { useDispatch } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
 
 const Header = () => {
   const dispatch = useDispatch()
+
   const handleClick = () => dispatch(changeActiveFormStage(1))
 
   return (

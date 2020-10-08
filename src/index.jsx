@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// react-redux
-import { Provider } from 'react-redux'
-
-import App from './containers/App'
-import * as serviceWorker from './serviceWorker'
 // redux
-import store from './redux/store'
-import { loadUsers } from './redux/actions'
+import store from 'redux/store'
+import { loadUsers } from 'redux/actions'
+import { Provider } from 'react-redux'
+// containers
+import App from 'containers/App'
+import * as serviceWorker from './serviceWorker'
 
 store.dispatch(loadUsers())
 

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 // prop-types
-import PropTypes from 'prop-types'
+import T from 'prop-types'
 // components
 import Title from 'components/Title'
 import UserInfo from 'components/UserInfo'
 // import db from 'db'
+// redux
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from 'redux/actions'
 
@@ -23,6 +24,7 @@ const ProfilePage = ({ match }) => {
   // }, [])
 
   const dispatch = useDispatch()
+
   const user = useSelector((state) => state.user)
 
   useEffect(() => {
@@ -38,11 +40,7 @@ const ProfilePage = ({ match }) => {
 }
 
 ProfilePage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string
-    })
-  })
+  match: T.object
 }
 
 export default ProfilePage

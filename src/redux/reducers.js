@@ -1,11 +1,12 @@
 import {
   ADD_USER,
   CHANGE_ACTIVE_FORM_STAGE,
+  DELETE_USER,
   GET_USER,
   LOAD_AVATAR,
   LOAD_USERS,
   UPDATE_USER
-} from '../types'
+} from './types'
 
 export const rootReducer = (state, { type, payload }) => {
   switch (type) {
@@ -34,6 +35,11 @@ export const rootReducer = (state, { type, payload }) => {
         ]
       }
     }
+    case DELETE_USER:
+      return {
+        ...state,
+        users: [...state.users.filter((user) => user.id !== payload)]
+      }
     case CHANGE_ACTIVE_FORM_STAGE:
       return {
         ...state,

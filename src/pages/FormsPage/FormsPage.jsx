@@ -1,13 +1,14 @@
 import React from 'react'
 // react-redux
 import { useSelector } from 'react-redux'
+// components
+import Title from 'components/Title'
 // containers
 import FormNavigation from 'containers/FormNavigation'
 import AccountForm from 'containers/Forms/AccountForm'
 import ProfileForm from 'containers/Forms/ProfileForm'
 import ContactsForm from 'containers/Forms/ContactsForm'
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm/CapabilitiesForm'
-import Title from 'components/Title'
 
 const FormsPage = () => {
   const activeFormStage = useSelector((state) => state.activeFormStage)

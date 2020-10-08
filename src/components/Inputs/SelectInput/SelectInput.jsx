@@ -1,16 +1,14 @@
 import React from 'react'
 // prop-types
-import PropTypes from 'prop-types'
+import T from 'prop-types'
 // react-hook-form
 import { Controller } from 'react-hook-form'
 // react-datepicker
 import ReactSelect from 'react-select'
-// constants
-import { languages } from 'constants.js'
 // css
-import classes from 'components/TextInput/TextInput.module.css'
+import commonStyles from 'components/Inputs/common/styles.module.css'
 
-const SelectInput = ({ control }) => {
+const SelectInput = ({ control, options, title, name, isMulti }) => {
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -30,13 +28,14 @@ const SelectInput = ({ control }) => {
   }
 
   return (
-    <div className={classes.inputCont}>
-      <label htmlFor="language">
-        <div className={classes.inputLabel}>Main language</div>
+    <div className={commonStyles.inputCont}>
+      <label htmlFor={name}>
+        <div className={commonStyles.inputLabel}>{title}</div>
         <Controller
-          name="language"
+          name={name}
+          isMulti={isMulti}
           control={control}
-          options={languages}
+          options={options}
           styles={customStyles}
           as={ReactSelect}
         />
@@ -46,7 +45,11 @@ const SelectInput = ({ control }) => {
 }
 
 SelectInput.propTypes = {
-  control: PropTypes.object
+  control: T.object,
+  options: T.array,
+  title: T.string,
+  name: T.string,
+  isMulti: T.bool
 }
 
 export default SelectInput

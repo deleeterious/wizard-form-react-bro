@@ -1,11 +1,16 @@
+import React from 'react'
+// prop-types
+import T from 'prop-types'
+// redux
+import { useSelector } from 'react-redux'
+// components
 import Title from 'components/Title/Title'
+// containers
 import FormNavigation from 'containers/FormNavigation'
 import AccountForm from 'containers/Forms/AccountForm/AccountForm'
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm/CapabilitiesForm'
 import ContactsForm from 'containers/Forms/ContactsForm/ContactsForm'
 import ProfileForm from 'containers/Forms/ProfileForm/ProfileForm'
-import React from 'react'
-import { useSelector } from 'react-redux'
 
 const EditPage = ({ match }) => {
   const activeFormStage = useSelector((state) => state.activeFormStage)
@@ -20,6 +25,10 @@ const EditPage = ({ match }) => {
       {activeFormStage === 4 ? <CapabilitiesForm id={id} isEdit /> : null}
     </main>
   )
+}
+
+EditPage.propTypes = {
+  match: T.object
 }
 
 export default EditPage

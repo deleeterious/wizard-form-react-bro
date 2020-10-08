@@ -1,14 +1,19 @@
 import React from 'react'
 // router
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom'
 // css
 import './App.css'
-// containers
+// components
 import Header from 'components/Header'
 // pages
 import FormsPage from 'pages/FormsPage'
 import UserListPage from 'pages/UserListPage'
-import ProfilePage from 'pages/ProfilePage/ProfilePage'
+import ProfilePage from 'pages/ProfilePage'
 import EditPage from 'pages/EditPage/EditPage'
 
 const App = () => (
@@ -20,6 +25,7 @@ const App = () => (
       <Route path="/new-user" component={FormsPage} />
       <Route path="/" component={UserListPage} />
     </Switch>
+    <Redirect to="/" />
   </Router>
 )
 

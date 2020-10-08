@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+// prop-types
+import T from 'prop-types'
 // react-hook-form
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 // redux
 import { useDispatch } from 'react-redux'
 import { addUser, updateUser } from 'redux/actions'
@@ -11,10 +13,12 @@ import {
   getFromLocalStorage,
   setToLocalStorage
 } from 'helpers/localStorageHelper'
-// react-datepicker
-import ReactSelect from 'react-select'
 // component
+import SelectInput from 'components/Inputs/SelectInput'
+import TextareaInput from 'components/Inputs/TextareaInput'
 import Button from 'components/Button'
+import CheckboxInput from 'components/Inputs/CheckboxInput'
+import CheckboxInputItem from 'components/Inputs/CheckboxInput/CheckboxInputItem'
 // constants
 import { skills } from 'constants.js'
 // css
@@ -22,10 +26,13 @@ import classes from './CapabilitiesForm.module.css'
 
 const CapabilitiesForm = ({ isEdit, id }) => {
   const [isFinish, setIsFinish] = useState(false)
+
   const dispatch = useDispatch()
 
   const { register, handleSubmit, control } = useForm()
+
   const onSubmit = (data) => {
+    console.log(data)
     if (!isEdit) setToLocalStorage('capabilities', data)
 
     const account = getFromLocalStorage('account')
@@ -46,66 +53,75 @@ const CapabilitiesForm = ({ isEdit, id }) => {
     setIsFinish(true)
   }
 
-  // TODO remove <br /> and split components
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <div className={classes.flexCont}>
-        <div className={classes.inputCont}>
-          <label htmlFor="skills">
-            <div className={classes.inputLabel}>Skills</div>
-            <Controller
-              name="skills"
-              control={control}
-              options={skills}
-              isMulti
-              as={ReactSelect}
-            />
-          </label>
-        </div>
+        <SelectInput
+          control={control}
+          options={skills}
+          title="Skills"
+          name="skills"
+          isMulti
+        />
 
-        <div className={classes.inputCont}>
-          <label htmlFor="additionalInfo">
-            <div className={classes.inputLabel}>Additional information</div>
-            <textarea
-              ref={register()}
-              name="additionalInfo"
-              className={classes.textarea}
-            />
-          </label>
-        </div>
+        <TextareaInput
+          name="additionInfo"
+          refRegister={register({ maxLength: 300 })}
+          title="Additional information"
+        />
       </div>
       <div className={classes.flexCont}>
-        <div className={classes.inputCont}>
-          <label htmlFor="checkbox">
-            <div className={classes.inputLabel}>Additional information</div>
-            <label htmlFor="art">
-              <input name="art" id="art" type="checkbox" ref={register()} />
-              <span className={classes.checkboxLabel}>Art</span>
-            </label>
-            <br />
-            <label htmlFor="sport">
-              <input name="sport" id="sport" type="checkbox" ref={register()} />
-              <span className={classes.checkboxLabel}>Sport</span>
-            </label>
-            <br />
-            <label htmlFor="guitar">
-              <input
-                name="guitar"
-                id="guitar"
-                type="checkbox"
-                ref={register()}
-              />
-              <span className={classes.checkboxLabel}>Guitar</span>
-            </label>
-          </label>
-        </div>
+        <CheckboxInput title="Hobbies">
+          <CheckboxInputItem
+            title="Art"
+            name="hobbies[0]"
+            refRegister={register()}
+          />
 
-        <Button />
+          <CheckboxInputItem
+            title="Sport, fitness and staff like that"
+            name="hobbies[1]"
+            refRegister={register()}
+          />
+
+          <CheckboxInputItem
+            title="I just want to play games, I’m not living in this life"
+            name="hobbies[2]"
+            refRegister={register()}
+          />
+
+          <CheckboxInputItem
+            title="I’m a female... I’m doing nothing. Every day."
+            name="hobbies[3]"
+            refRegister={register()}
+          />
+
+          <CheckboxInputItem
+            title="Guitar, guitar and guitar again. I’m fall in love with it."
+            name="hobbies[4]"
+            refRegister={register()}
+          />
+
+          <CheckboxInputItem
+            title="WTF is “hobbies”???"
+            name="hobbies[5]"
+            refRegister={register()}
+          />
+        </CheckboxInput>
+
+        <Button
+          title={isEdit ? 'Save' : 'Finish'}
+          style={{ background: '#4EE4A5' }}
+        />
         {isFinish ? <Redirect to="/" /> : null}
       </div>
     </form>
   )
+}
+
+CapabilitiesForm.propTypes = {
+  isEdit: T.bool,
+  id: T.string
 }
 
 export default CapabilitiesForm

@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
+// prop-types
+import T from 'prop-types'
+// redux
 import { useDispatch } from 'react-redux'
 // useForm
 import { useForm } from 'react-hook-form'
 import { changeActiveFormStage, updateUser } from 'redux/actions'
-// assets
-import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
+// constants
+import { languages } from 'constants.js'
 // components
-import TextInput from 'components/TextInput'
+import TextInput from 'components/Inputs/TextInput'
 import Button from 'components/Button'
-import SelectInput from 'components/SelectInput/SelectInput'
-import PhoneInput from 'components/PhoneInput/PhoneInput'
+import SelectInput from 'components/Inputs/SelectInput'
+import PhoneInput from 'components/Inputs/PhoneInput'
 // css
 import classes from './ContactsForm.module.css'
 
@@ -19,20 +22,18 @@ const ContactsForm = ({ isEdit, id }) => {
   const NEXT_STAGE = 4
 
   const { register, handleSubmit, errors, control } = useForm()
+
   const dispatch = useDispatch()
+
   const onSubmit = (data) => {
     console.log(data)
     if (isEdit) {
       dispatch(updateUser(+id, data))
     } else {
-      setToLocalStorage('contacts', ...data)
+      setToLocalStorage('contacts', data)
     }
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
-
-  const [phoneNumbers, setPhoneNumbers] = useState([
-    <PhoneInput key={+new Date().toString()} control={control} />
-  ])
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -61,7 +62,12 @@ const ContactsForm = ({ isEdit, id }) => {
           errors={errors}
         />
 
-        <SelectInput control={control} />
+        <SelectInput
+          control={control}
+          options={languages}
+          title="Main languages"
+          name="language"
+        />
       </div>
 
       <div className={classes.flexCont}>
@@ -73,26 +79,17 @@ const ContactsForm = ({ isEdit, id }) => {
           errors={errors}
         />
 
-        {phoneNumbers}
+        <PhoneInput control={control} />
 
-        <button
-          onClick={(e) => {
-            e.preventDefault()
-            setPhoneNumbers((prev) => [
-              ...prev,
-              <PhoneInput key={+new Date()} control={control} />
-            ])
-          }}
-          className={classes.addPhoneBtn}
-        >
-          <AddIcon />
-          <span>add phone number</span>
-        </button>
-
-        <Button />
+        <Button title={isEdit ? 'Save' : 'Forward'} />
       </div>
     </form>
   )
+}
+
+ContactsForm.propTypes = {
+  isEdit: T.bool,
+  id: T.string
 }
 
 export default ContactsForm

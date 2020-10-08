@@ -49,4 +49,32 @@
 
 .deleteBtn {
   cursor: pointer;
+  background: none;
+  outline: none;
+  border: none;
+  z-index: 100;
+}
+
+.confirmedListItem {
+  transition: all 0.5s;
+  transform: translateX(-70px);
+}
+
+.confirmedDeleteBtn {
+  color: #ff8989;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+
+  transform: translateX(70px);
+  display: flex;
+}
+
+.deleteBtn div,
+.deleteIcon {
+  z-index: -1;
+}
+
+.deleteIcon path {
+  stroke: #ff8989;
 }
