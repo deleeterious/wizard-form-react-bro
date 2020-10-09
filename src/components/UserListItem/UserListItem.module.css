@@ -15,6 +15,8 @@
 
 .avatar {
   width: 6%;
+  display: flex;
+  justify-content: center;
 }
 
 .name {
@@ -77,4 +79,9 @@
 
 .deleteIcon path {
   stroke: #ff8989;
+}
+
+.avatarSize {
+  width: 40px;
+  height: 40px;
 }

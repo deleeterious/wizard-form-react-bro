@@ -21,6 +21,7 @@ const AccountForm = ({ isEdit, id }) => {
   const NEXT_STAGE = 2
 
   const users = useSelector((state) => state.users)
+  const avatar = useSelector((state) => state.avatar)
 
   const { register, handleSubmit, watch, errors } = useForm()
 
@@ -30,7 +31,7 @@ const AccountForm = ({ isEdit, id }) => {
     if (isEdit) {
       dispatch(updateUser(+id, data))
     } else {
-      setToLocalStorage('account', data)
+      setToLocalStorage('account', { ...data, avatar })
     }
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }

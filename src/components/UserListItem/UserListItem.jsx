@@ -6,6 +6,8 @@ import { deleteUser } from 'redux/actions'
 import { Link } from 'react-router-dom'
 // prop-types
 import T from 'prop-types'
+// components
+import AvatarImage from 'components/AvatarImage'
 // icons
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg'
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg'
@@ -15,9 +17,11 @@ import { concatStyles } from 'utils'
 import classes from './UserListItem.module.css'
 
 const UserListItem = ({ user }) => {
-  const dispatch = useDispatch()
-  const { userName, firstName, lastName, company, email, id } = user
   const [isDeleting, setIsDeleting] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const { userName, firstName, lastName, company, email, id, avatar } = user
 
   function handleOutSideClick(e) {
     const domNode = document.getElementById('deleteBtn')
@@ -42,7 +46,9 @@ const UserListItem = ({ user }) => {
         isDeleting ? classes.confirmedListItem : null
       )}
     >
-      <div className={classes.avatar} />
+      <div className={classes.avatar}>
+        <AvatarImage avatar={avatar} size={{ width: 40, height: 40 }} />
+      </div>
       <div className={classes.name}>
         <div className={classes.fullName}>
           {firstName}
@@ -86,7 +92,8 @@ UserListItem.propTypes = {
     lastName: T.string,
     company: T.string,
     email: T.string,
-    id: T.number
+    id: T.number,
+    avatar: T.string
   })
 }
 
