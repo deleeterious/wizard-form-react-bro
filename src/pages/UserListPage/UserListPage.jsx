@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 // components
 import Title from 'components/Title'
 import NoUserIndicator from 'components/NoUserIndicator'
-
+// containers
 import UserList from 'containers/UserList'
 
 const UserListPage = () => {

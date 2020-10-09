@@ -5,10 +5,16 @@ import T from 'prop-types'
 import { Controller } from 'react-hook-form'
 // react-datepicker
 import DatePicker from 'react-date-picker'
+// assets
+import { ReactComponent as CalendarIcon } from 'assets/icons/calendar.svg'
+import { ReactComponent as CalendarArrowRight } from 'assets/icons/calendarArrowRight.svg'
+import { ReactComponent as CalendarArrowLeft } from 'assets/icons/calendarArrowLeft.svg'
+
 // components
 import ValidationError from 'components/ValidationError'
 // css
 import commonStyles from 'components/Inputs/common/styles.module.css'
+import classes from './DateInput.module.css'
 
 const DateInput = ({ control, validate, errors, name }) => (
   <div className={commonStyles.inputCont}>
@@ -23,13 +29,20 @@ const DateInput = ({ control, validate, errors, name }) => (
         }}
         render={({ onChange, value }) => (
           <DatePicker
-            // className={classes.input}
             onChange={onChange}
             value={value}
             format="dd/M/y"
             dayPlaceholder="DD"
             monthPlaceholder="MM"
             yearPlaceholder="YY"
+            clearIcon={null}
+            calendarIcon={<CalendarIcon />}
+            next2Label={null}
+            prev2Label={null}
+            nextLabel={<CalendarArrowRight />}
+            prevLabel={<CalendarArrowLeft />}
+            calendarClassName={classes.calendar}
+            tileClassName={classes.tile}
           />
         )}
       />
