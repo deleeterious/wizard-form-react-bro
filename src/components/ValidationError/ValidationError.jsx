@@ -5,7 +5,7 @@ import T from 'prop-types'
 import classes from './ValidationError.module.css'
 
 const ValidationError = ({ errors, name }) => (
-  <div className={classes.validMess}>{errors[name].message}</div>
+  <div className={classes.validMess}>{errors[name]?.message}</div>
 )
 
 ValidationError.propTypes = {

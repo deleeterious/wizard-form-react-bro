@@ -28,6 +28,7 @@ const AccountForm = ({ isEdit, id }) => {
   const dispatch = useDispatch()
 
   const onSubmit = (data) => {
+    console.log(data)
     if (isEdit) {
       dispatch(updateUser(+id, data))
     } else {
@@ -35,6 +36,9 @@ const AccountForm = ({ isEdit, id }) => {
     }
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
+
+  const avatarValidation = (value) =>
+    value.length === 0 || +value[0].size < 1e6 || 'File size is more than 1MB'
 
   const userNameValidation = (value) =>
     !users.find((user) => user.userName === value) ||
@@ -46,7 +50,12 @@ const AccountForm = ({ isEdit, id }) => {
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
-        <AvatarInput refRegister={register()} />
+        <AvatarInput
+          refRegister={register({
+            validate: avatarValidation
+          })}
+          errors={errors}
+        />
       </div>
 
       <div className={classes.flexCont}>
