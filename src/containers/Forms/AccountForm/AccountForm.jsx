@@ -89,7 +89,7 @@ const AccountForm = ({ isEdit, id }) => {
           errors={errors}
         />
 
-        <Button title={isEdit ? 'Save' : 'Forward'} />
+        <Button>{isEdit ? 'Save' : 'Forward'}</Button>
       </div>
     </form>
   )

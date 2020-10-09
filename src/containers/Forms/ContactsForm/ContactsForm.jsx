@@ -81,7 +81,7 @@ const ContactsForm = ({ isEdit, id }) => {
 
         <PhoneInput control={control} />
 
-        <Button title={isEdit ? 'Save' : 'Forward'} />
+        <Button>{isEdit ? 'Save' : 'Forward'}</Button>
       </div>
     </form>
   )

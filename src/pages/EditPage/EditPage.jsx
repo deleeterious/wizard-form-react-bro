@@ -19,10 +19,10 @@ const EditPage = ({ match }) => {
     <main className="container">
       <Title content="Editing" />
       <FormNavigation activeFormStage={activeFormStage} isEdit />
-      {activeFormStage === 1 ? <AccountForm id={id} isEdit /> : null}
-      {activeFormStage === 2 ? <ProfileForm id={id} isEdit /> : null}
-      {activeFormStage === 3 ? <ContactsForm id={id} isEdit /> : null}
-      {activeFormStage === 4 ? <CapabilitiesForm id={id} isEdit /> : null}
+      {activeFormStage === 1 && <AccountForm id={id} isEdit />}
+      {activeFormStage === 2 && <ProfileForm id={id} isEdit />}
+      {activeFormStage === 3 && <ContactsForm id={id} isEdit />}
+      {activeFormStage === 4 && <CapabilitiesForm id={id} isEdit />}
     </main>
   )
 }

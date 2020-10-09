@@ -53,6 +53,8 @@ const CapabilitiesForm = ({ isEdit, id }) => {
     setIsFinish(true)
   }
 
+  if (isFinish) return <Redirect to="/" />
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <div className={classes.flexCont}>
@@ -109,11 +111,7 @@ const CapabilitiesForm = ({ isEdit, id }) => {
           />
         </CheckboxInput>
 
-        <Button
-          title={isEdit ? 'Save' : 'Finish'}
-          style={{ background: '#4EE4A5' }}
-        />
-        {isFinish ? <Redirect to="/" /> : null}
+        <Button>{isEdit ? 'Save' : 'Forward'}</Button>
       </div>
     </form>
   )

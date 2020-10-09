@@ -17,10 +17,10 @@ const FormsPage = () => {
     <main className="container">
       <Title content="Adding new user" />
       <FormNavigation activeFormStage={activeFormStage} />
-      {activeFormStage === 1 ? <AccountForm /> : null}
-      {activeFormStage === 2 ? <ProfileForm /> : null}
-      {activeFormStage === 3 ? <ContactsForm /> : null}
-      {activeFormStage === 4 ? <CapabilitiesForm /> : null}
+      {activeFormStage === 1 && <AccountForm />}
+      {activeFormStage === 2 && <ProfileForm />}
+      {activeFormStage === 3 && <ContactsForm />}
+      {activeFormStage === 4 && <CapabilitiesForm />}
     </main>
   )
 }
