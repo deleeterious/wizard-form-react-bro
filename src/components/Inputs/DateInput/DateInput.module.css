@@ -27,3 +27,20 @@
   color: #475666;
   font-size: 9px;
 }
+
+.dataPicker > div {
+  border: 1px solid #e7f0ff;
+  color: #657c9a;
+  height: 40px;
+  width: 190px;
+  padding-left: 5px;
+}
+
+.dataPicker > div > div > input {
+  outline: none;
+  color: #657c9a;
+}
+
+.dataPicker > div > div > input:invalid {
+  background: none;
+}

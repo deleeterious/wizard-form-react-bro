@@ -4,11 +4,12 @@ import T from 'prop-types'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
 import { loadAvatar } from 'redux/actions'
+// assets
+import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
 // components
 import AvatarImage from 'components/AvatarImage'
 import ValidationError from 'components/ValidationError'
-// assets
-import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
+
 // css
 import classes from './AvatarInput.module.css'
 
@@ -39,8 +40,10 @@ const AvatarInput = ({ refRegister, errors }) => {
           className={classes.fileInput}
           onChange={handleLoadLocalFile}
         />
+
         <AddIcon className={classes.addIcon} />
         <div>add avatar</div>
+
         <ValidationError errors={errors} name="avatar" />
       </label>
     </div>

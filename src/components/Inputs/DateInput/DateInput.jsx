@@ -29,6 +29,7 @@ const DateInput = ({ control, validate, errors, name }) => (
         }}
         render={({ onChange, value }) => (
           <DatePicker
+            className={classes.dataPicker}
             onChange={onChange}
             value={value}
             format="dd/M/y"

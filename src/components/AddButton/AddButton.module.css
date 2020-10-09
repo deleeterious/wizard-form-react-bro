@@ -1,0 +1,13 @@
+.addButton {
+  margin-top: 15px;
+  background: none;
+  border: none;
+  outline: none;
+  display: flex;
+  color: #657c9a;
+  font-size: 14px;
+}
+
+.addIcon {
+  margin-right: 10px;
+}

@@ -7,8 +7,17 @@ import { Controller } from 'react-hook-form'
 import ReactSelect from 'react-select'
 // css
 import commonStyles from 'components/Inputs/common/styles.module.css'
+import ValidationError from 'components/ValidationError'
 
-const SelectInput = ({ control, options, title, name, isMulti }) => {
+const SelectInput = ({
+  control,
+  options,
+  title,
+  name,
+  isMulti,
+  rules,
+  errors
+}) => {
   const customStyles = {
     clearIndicator: () => ({
       display: 'none'
@@ -47,6 +56,8 @@ const SelectInput = ({ control, options, title, name, isMulti }) => {
       <label htmlFor={name}>
         <div className={commonStyles.inputLabel}>{title}</div>
         <Controller
+          defaultValue=""
+          rules={rules}
           name={name}
           isMulti={isMulti}
           control={control}
@@ -55,6 +66,7 @@ const SelectInput = ({ control, options, title, name, isMulti }) => {
           as={ReactSelect}
         />
       </label>
+      <ValidationError errors={errors} name={name} />
     </div>
   )
 }
@@ -64,7 +76,9 @@ SelectInput.propTypes = {
   options: T.array,
   title: T.string,
   name: T.string,
-  isMulti: T.bool
+  isMulti: T.bool,
+  rules: T.object,
+  errors: T.object
 }
 
 export default SelectInput
