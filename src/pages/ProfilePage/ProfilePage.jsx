@@ -29,6 +29,7 @@ const ProfilePage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

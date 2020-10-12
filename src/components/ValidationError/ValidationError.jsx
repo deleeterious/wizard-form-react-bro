@@ -4,15 +4,12 @@ import T from 'prop-types'
 // css
 import classes from './ValidationError.module.css'
 
-const ValidationError = ({ errors, name }) => (
-  <div className={classes.validMess}>{errors[name]?.message}</div>
+const ValidationError = ({ errorMessage }) => (
+  <div className={classes.validMess}>{errorMessage}</div>
 )
 
 ValidationError.propTypes = {
-  errors: T.shape({
-    message: T.string
-  }),
-  name: T.string
+  errorMessage: T.string
 }
 
 export default ValidationError

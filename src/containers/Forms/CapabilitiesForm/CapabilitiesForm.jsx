@@ -13,6 +13,7 @@ import {
   getFromLocalStorage,
   setToLocalStorage
 } from 'helpers/localStorageHelper'
+import { additionInfoValidation, skillsValidation } from 'helpers/validations'
 // component
 import SelectInput from 'components/Inputs/SelectInput'
 import TextareaInput from 'components/Inputs/TextareaInput'
@@ -29,10 +30,9 @@ const CapabilitiesForm = ({ isEdit, id }) => {
 
   const dispatch = useDispatch()
 
-  const { register, handleSubmit, control } = useForm()
+  const { register, handleSubmit, errors, control } = useForm()
 
   const onSubmit = (data) => {
-    console.log(data)
     if (!isEdit) setToLocalStorage('capabilities', data)
 
     const account = getFromLocalStorage('account')
@@ -54,22 +54,24 @@ const CapabilitiesForm = ({ isEdit, id }) => {
   }
 
   if (isFinish) return <Redirect to="/" />
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <div className={classes.flexCont}>
         <SelectInput
-          control={control}
-          options={skills}
           title="Skills"
           name="skills"
+          options={skills}
+          control={control}
           isMulti
+          rules={skillsValidation()}
+          errorMessage={errors?.skills?.message}
         />
 
         <TextareaInput
           name="additionInfo"
-          refRegister={register({ maxLength: 300 })}
+          refRegister={register(additionInfoValidation())}
           title="Additional information"
+          errorMessage={errors?.additionInfo?.message}
         />
       </div>
       <div className={classes.flexCont}>

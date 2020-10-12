@@ -13,7 +13,7 @@ import ValidationError from 'components/ValidationError'
 // css
 import classes from './AvatarInput.module.css'
 
-const AvatarInput = ({ refRegister, errors }) => {
+const AvatarInput = ({ refRegister, errorMessage }) => {
   const dispatch = useDispatch()
   const avatar = useSelector((state) => state.avatar)
 
@@ -25,6 +25,7 @@ const AvatarInput = ({ refRegister, errors }) => {
     reader.readAsDataURL(file)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => dispatch(loadAvatar('')), [])
 
   return (
@@ -43,16 +44,15 @@ const AvatarInput = ({ refRegister, errors }) => {
 
         <AddIcon className={classes.addIcon} />
         <div>add avatar</div>
-
-        <ValidationError errors={errors} name="avatar" />
       </label>
+      <ValidationError errorMessage={errorMessage} />
     </div>
   )
 }
 
 AvatarInput.propTypes = {
   refRegister: T.func,
-  errors: T.object
+  errorMessage: T.string
 }
 
 export default AvatarInput

@@ -14,11 +14,10 @@ const MaskInput = ({
   name,
   placeholder,
   mask,
-  errors,
+  errorMessage,
   rules,
   title
 }) => {
-  console.log(errors, name)
   return (
     <div className={commonStyles.inputCont}>
       <label htmlFor={name}>
@@ -34,13 +33,19 @@ const MaskInput = ({
           rules={rules}
         />
       </label>
-      <ValidationError errors={errors} name={name} />
+      <ValidationError errorMessage={errorMessage} />
     </div>
   )
 }
 
 MaskInput.propTypes = {
-  control: T.object
+  control: T.object,
+  name: T.string,
+  placeholder: T.string,
+  mask: T.string,
+  errorMessage: T.string,
+  rules: T.object,
+  title: T.string
 }
 
 export default MaskInput

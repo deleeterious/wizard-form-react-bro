@@ -16,7 +16,7 @@ const SelectInput = ({
   name,
   isMulti,
   rules,
-  errors
+  errorMessage
 }) => {
   const customStyles = {
     clearIndicator: () => ({
@@ -66,7 +66,7 @@ const SelectInput = ({
           as={ReactSelect}
         />
       </label>
-      <ValidationError errors={errors} name={name} />
+      <ValidationError errorMessage={errorMessage} />
     </div>
   )
 }
@@ -78,7 +78,7 @@ SelectInput.propTypes = {
   name: T.string,
   isMulti: T.bool,
   rules: T.object,
-  errors: T.object
+  errorMessage: T.string
 }
 
 export default SelectInput

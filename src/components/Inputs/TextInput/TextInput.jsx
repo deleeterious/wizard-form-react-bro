@@ -6,7 +6,7 @@ import ValidationError from 'components/ValidationError'
 // css
 import commonStyles from 'components/Inputs/common/styles.module.css'
 
-const TextInput = ({ name, type, title, refRegister, errors }) => {
+const TextInput = ({ name, type, title, refRegister, errorMessage }) => {
   return (
     <div className={commonStyles.inputCont}>
       <label htmlFor={name}>
@@ -18,7 +18,7 @@ const TextInput = ({ name, type, title, refRegister, errors }) => {
           className={commonStyles.input}
           ref={refRegister}
         />
-        {errors[name] && <ValidationError errors={errors} name={name} />}
+        {errorMessage && <ValidationError errorMessage={errorMessage} />}
       </label>
     </div>
   )
@@ -29,10 +29,7 @@ TextInput.propTypes = {
   type: T.string,
   title: T.string,
   refRegister: T.func,
-  errors: T.shape({
-    massage: T.string,
-    ref: T.node
-  })
+  errorMessage: T.string
 }
 
 export default TextInput

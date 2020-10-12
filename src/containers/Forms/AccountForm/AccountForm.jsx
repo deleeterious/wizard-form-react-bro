@@ -10,6 +10,12 @@ import { useForm } from 'react-hook-form'
 import { concatStyles } from 'utils'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  avatarValidation,
+  userNameValidation,
+  requiredValidation,
+  passwordRepeatValidation
+} from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput/TextInput'
 import AvatarInput from 'components/Inputs/AvatarInput/AvatarInput'
@@ -28,7 +34,6 @@ const AccountForm = ({ isEdit, id }) => {
   const dispatch = useDispatch()
 
   const onSubmit = (data) => {
-    console.log(data)
     if (isEdit) {
       dispatch(updateUser(+id, data))
     } else {
@@ -37,24 +42,12 @@ const AccountForm = ({ isEdit, id }) => {
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
 
-  const avatarValidation = (value) =>
-    value.length === 0 || +value[0].size < 1e6 || 'File size is more than 1MB'
-
-  const userNameValidation = (value) =>
-    !users.find((user) => user.userName === value) ||
-    'This username is already used'
-
-  const passwordRepeatValidation = (value) =>
-    value === watch('password') || "Password don't match"
-
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
         <AvatarInput
-          refRegister={register({
-            validate: avatarValidation
-          })}
-          errors={errors}
+          refRegister={register(avatarValidation())}
+          errorMessage={errors?.avatar?.message}
         />
       </div>
 
@@ -63,30 +56,24 @@ const AccountForm = ({ isEdit, id }) => {
           type="text"
           name="userName"
           title="User Name"
-          refRegister={register({
-            required: 'This field is required',
-            validate: userNameValidation
-          })}
-          errors={errors}
+          refRegister={register(userNameValidation(users))}
+          errorMessage={errors?.userName?.message}
         />
 
         <TextInput
           type="password"
           name="password"
           title="Password"
-          refRegister={register({ required: 'This field is required' })}
-          errors={errors}
+          refRegister={register(requiredValidation())}
+          errorMessage={errors?.password?.message}
         />
 
         <TextInput
           type="password"
           name="passwordRepeat"
           title="Repeat password"
-          refRegister={register({
-            required: 'This field is required',
-            validate: passwordRepeatValidation
-          })}
-          errors={errors}
+          refRegister={register(passwordRepeatValidation(watch('password')))}
+          errorMessage={errors?.passwordRepeat?.message}
         />
 
         <Button>{isEdit ? 'Save' : 'Forward'}</Button>

@@ -16,7 +16,7 @@ import ValidationError from 'components/ValidationError'
 import commonStyles from 'components/Inputs/common/styles.module.css'
 import classes from './DateInput.module.css'
 
-const DateInput = ({ control, validate, errors, name }) => (
+const DateInput = ({ control, rules, errorMessage, name }) => (
   <div className={commonStyles.inputCont}>
     <label htmlFor="birthDate">
       <div className={commonStyles.inputLabel}>Birth date</div>
@@ -24,38 +24,36 @@ const DateInput = ({ control, validate, errors, name }) => (
         control={control}
         name={name}
         defaultValue=""
-        rules={{
-          validate
-        }}
+        rules={rules}
         render={({ onChange, value }) => (
           <DatePicker
             className={classes.dataPicker}
-            onChange={onChange}
-            value={value}
+            tileClassName={classes.tile}
+            calendarClassName={classes.calendar}
             format="dd/M/y"
             dayPlaceholder="DD"
             monthPlaceholder="MM"
             yearPlaceholder="YY"
-            clearIcon={null}
             calendarIcon={<CalendarIcon />}
-            next2Label={null}
-            prev2Label={null}
             nextLabel={<CalendarArrowRight />}
             prevLabel={<CalendarArrowLeft />}
-            calendarClassName={classes.calendar}
-            tileClassName={classes.tile}
+            next2Label={null}
+            clearIcon={null}
+            prev2Label={null}
+            onChange={onChange}
+            value={value}
           />
         )}
       />
-      {errors[name] && <ValidationError errors={errors} name={name} />}
+      {errorMessage && <ValidationError errorMessage={errorMessage} />}
     </label>
   </div>
 )
 
 DateInput.propTypes = {
   control: T.object,
-  validate: T.func,
-  errors: T.object,
+  rules: T.object,
+  errorMessage: T.string,
   name: T.string
 }
 

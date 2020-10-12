@@ -8,6 +8,11 @@ import { useForm } from 'react-hook-form'
 import { changeActiveFormStage, updateUser } from 'redux/actions'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  faxValidation,
+  requiredValidation,
+  phoneValidation
+} from 'helpers/validations'
 // constants
 import { languages } from 'constants.js'
 // components
@@ -29,7 +34,6 @@ const ContactsForm = ({ isEdit, id }) => {
   const dispatch = useDispatch()
 
   const onSubmit = (data) => {
-    console.log(data)
     if (isEdit) {
       dispatch(updateUser(+id, data))
     } else {
@@ -53,8 +57,8 @@ const ContactsForm = ({ isEdit, id }) => {
           type="text"
           name="company"
           title="Company"
-          refRegister={register({ required: 'This field is required' })}
-          errors={errors}
+          refRegister={register(requiredValidation())}
+          errorMessage={errors?.company?.message}
         />
 
         <TextInput
@@ -62,7 +66,6 @@ const ContactsForm = ({ isEdit, id }) => {
           name="githubLink"
           title="Github link"
           refRegister={register()}
-          errors={errors}
         />
 
         <TextInput
@@ -70,7 +73,6 @@ const ContactsForm = ({ isEdit, id }) => {
           name="facebookLink"
           title="Facebook link"
           refRegister={register()}
-          errors={errors}
         />
 
         <SelectInput
@@ -78,8 +80,8 @@ const ContactsForm = ({ isEdit, id }) => {
           options={languages}
           title="Main languages"
           name="language"
-          rules={{ required: 'This field is required' }}
-          errors={errors}
+          rules={requiredValidation()}
+          errorMessage={errors?.language?.message}
         />
       </div>
 
@@ -90,13 +92,8 @@ const ContactsForm = ({ isEdit, id }) => {
           name="fax"
           placeholder="+38 (XXX) XXX XX XX"
           mask="+38 (999) 999 99 99"
-          rules={{
-            pattern: {
-              value: /(\+\d\d) (\(\d\d\d\)) \d\d\d \d\d \d\d/,
-              message: 'Invalid fax number'
-            }
-          }}
-          errors={errors}
+          rules={faxValidation()}
+          errorMessage={errors?.fax?.message}
         />
 
         {phones.map((phone) => (
@@ -107,13 +104,8 @@ const ContactsForm = ({ isEdit, id }) => {
             name={`phones[${phone.id}]`}
             placeholder="+38 (XXX) XXX XX XX"
             mask="+38 (999) 999 99 99"
-            rules={{
-              pattern: {
-                value: /(\+\d\d) (\(\d\d\d\)) \d\d\d \d\d \d\d/,
-                message: 'Invalid phone number'
-              }
-            }}
-            errors={errors}
+            rules={phoneValidation()}
+            errorMessage={errors.phones ? errors.phones[phone.id].message : ''}
           />
         ))}
 

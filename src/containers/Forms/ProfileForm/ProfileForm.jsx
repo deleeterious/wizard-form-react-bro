@@ -8,6 +8,11 @@ import { changeActiveFormStage, updateUser } from 'redux/actions'
 import { useForm } from 'react-hook-form'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  birthDateValidation,
+  emailValidation,
+  requiredValidation
+} from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput'
 import Button from 'components/Button'
@@ -25,7 +30,6 @@ const ProfileForm = ({ isEdit, id }) => {
   const { register, handleSubmit, errors, control } = useForm()
 
   const onSubmit = (data) => {
-    console.log(data)
     if (isEdit) {
       dispatch(updateUser(+id, data))
     } else {
@@ -34,37 +38,30 @@ const ProfileForm = ({ isEdit, id }) => {
     dispatch(changeActiveFormStage(NEXT_STAGE))
   }
 
-  const birthDateValidate = (value) =>
-    new Date().getFullYear() - new Date(value).getFullYear() > 18 ||
-    'You are under 18 years old'
-
-  const emailValidation = (value) =>
-    !users.find((user) => user.email === value) || 'This email is already used'
-
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={classes.flexCont}>
         <TextInput
           type="text"
-          name="firstName"
           title="First name"
-          refRegister={register({ required: 'This field is required' })}
-          errors={errors}
+          name="firstName"
+          refRegister={register(requiredValidation())}
+          errorMessage={errors?.firstName?.message}
         />
 
         <TextInput
           type="text"
-          name="lastName"
           title="Last name"
-          refRegister={register({ required: 'This field is required' })}
-          errors={errors}
+          name="lastName"
+          refRegister={register(requiredValidation())}
+          errorMessage={errors?.lastName?.message}
         />
 
         <DateInput
           name="birthDate"
-          errors={errors}
           control={control}
-          validate={birthDateValidate}
+          rules={birthDateValidation()}
+          errorMessage={errors?.birthDate?.message}
         />
       </div>
 
@@ -73,11 +70,8 @@ const ProfileForm = ({ isEdit, id }) => {
           type="text"
           name="email"
           title="Email"
-          refRegister={register({
-            required: 'This field is required',
-            validate: emailValidation
-          })}
-          errors={errors}
+          refRegister={register(emailValidation(users))}
+          errorMessage={errors?.email?.message}
         />
 
         <TextInput
@@ -85,13 +79,9 @@ const ProfileForm = ({ isEdit, id }) => {
           name="address"
           title="Address"
           refRegister={register()}
-          errors={errors}
         />
 
-        <RadioInput
-          refRegister={register({ required: true })}
-          errors={errors}
-        />
+        <RadioInput refRegister={register()} />
 
         <Button>{isEdit ? 'Save' : 'Forward'}</Button>
       </div>

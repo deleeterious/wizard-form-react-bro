@@ -1,4 +1,7 @@
 import React from 'react'
+// redux
+import { useDispatch } from 'react-redux'
+import { changeActiveFormStage } from 'redux/actions'
 // router
 import { Link } from 'react-router-dom'
 // components
@@ -7,8 +10,6 @@ import AvatarImage from 'components/AvatarImage'
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg'
 // css
 import classes from './UserInfo.module.css'
-import { useDispatch } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
 
 const UserInfo = ({ user }) => {
   const {
