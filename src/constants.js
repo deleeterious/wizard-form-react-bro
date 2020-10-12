@@ -1,3 +1,8 @@
+export const ACCOUNT_FORM_STAGE = 1
+export const PROFILE_FORM_STAGE = 2
+export const CONTACTS_FORM_STAGE = 3
+export const CAPABILITIES_FORM_STAGE = 4
+
 export const languages = [
   { value: 'en', label: 'English' },
   { value: 'en', label: 'French' },

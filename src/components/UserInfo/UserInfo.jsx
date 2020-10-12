@@ -6,6 +6,13 @@ import { useDispatch } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
 // router
 import { Link } from 'react-router-dom'
+// constants
+import {
+  ACCOUNT_FORM_STAGE,
+  PROFILE_FORM_STAGE,
+  CONTACTS_FORM_STAGE,
+  CAPABILITIES_FORM_STAGE
+} from 'constants.js'
 // utils
 import { parseDate, concatStyles } from 'utils'
 // components
@@ -47,7 +54,9 @@ const UserInfo = ({ user }) => {
             <div>Account</div>
             <Link
               to={`/edit/${id}`}
-              onClick={() => dispatch(changeActiveFormStage(1))}
+              onClick={() =>
+                dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
+              }
             >
               <EditIcon className={classes.editIcon} />
             </Link>
@@ -68,7 +77,9 @@ const UserInfo = ({ user }) => {
             <div>Person</div>
             <Link
               to={`/edit/${id}`}
-              onClick={() => dispatch(changeActiveFormStage(2))}
+              onClick={() =>
+                dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
+              }
             >
               <EditIcon className={classes.editIcon} />
             </Link>
@@ -103,7 +114,9 @@ const UserInfo = ({ user }) => {
             <div>Contacts</div>
             <Link
               to={`/edit/${id}`}
-              onClick={() => dispatch(changeActiveFormStage(3))}
+              onClick={() =>
+                dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
+              }
             >
               <EditIcon className={classes.editIcon} />
             </Link>
@@ -138,7 +151,9 @@ const UserInfo = ({ user }) => {
             <div>Capabilities</div>
             <Link
               to={`/edit/${id}`}
-              onClick={() => dispatch(changeActiveFormStage(4))}
+              onClick={() =>
+                dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
+              }
             >
               <EditIcon className={classes.editIcon} />
             </Link>

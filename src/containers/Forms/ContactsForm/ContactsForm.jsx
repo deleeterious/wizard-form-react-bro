@@ -14,7 +14,7 @@ import {
   phoneValidation
 } from 'helpers/validations'
 // constants
-import { languages } from 'constants.js'
+import { CAPABILITIES_FORM_STAGE, languages } from 'constants.js'
 // components
 import TextInput from 'components/Inputs/TextInput'
 import Button from 'components/Button'
@@ -25,8 +25,6 @@ import AddButton from 'components/AddButton'
 import classes from './ContactsForm.module.css'
 
 const ContactsForm = ({ isEdit, id }) => {
-  const NEXT_STAGE = 4
-
   const [phones, setPhones] = useState([{ id: 0 }])
 
   const { register, handleSubmit, errors, control } = useForm()
@@ -39,7 +37,7 @@ const ContactsForm = ({ isEdit, id }) => {
     } else {
       setToLocalStorage('contacts', data)
     }
-    dispatch(changeActiveFormStage(NEXT_STAGE))
+    dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
   }
 
   const handleClick = (e) => {

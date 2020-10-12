@@ -8,6 +8,8 @@ import { changeActiveFormStage, updateUser } from 'redux/actions'
 import { useForm } from 'react-hook-form'
 // utils
 import { concatStyles } from 'utils'
+// constants
+import { PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
@@ -24,8 +26,6 @@ import Button from 'components/Button/Button'
 import classes from './AccountForm.module.css'
 
 const AccountForm = ({ isEdit, id }) => {
-  const NEXT_STAGE = 2
-
   const users = useSelector((state) => state.users)
   const avatar = useSelector((state) => state.avatar)
 
@@ -39,7 +39,7 @@ const AccountForm = ({ isEdit, id }) => {
     } else {
       setToLocalStorage('account', { ...data, avatar })
     }
-    dispatch(changeActiveFormStage(NEXT_STAGE))
+    dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
 
   return (

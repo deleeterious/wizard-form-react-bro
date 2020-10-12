@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changeActiveFormStage, updateUser } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
+// constants
+import { CONTACTS_FORM_STAGE } from 'constants.js'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
@@ -22,8 +24,6 @@ import RadioInput from 'components/Inputs/RadioInput'
 import classes from './ProfileForm.module.css'
 
 const ProfileForm = ({ isEdit, id }) => {
-  const NEXT_STAGE = 3
-
   const users = useSelector((state) => state.users)
   const dispatch = useDispatch()
 
@@ -35,7 +35,7 @@ const ProfileForm = ({ isEdit, id }) => {
     } else {
       setToLocalStorage('profile', data)
     }
-    dispatch(changeActiveFormStage(NEXT_STAGE))
+    dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
 
   return (
