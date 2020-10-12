@@ -27,6 +27,16 @@
   display: flex;
 }
 
+.editIcon {
+  stroke: #475666;
+  fill: #475666;
+  margin-left: 10px;
+}
+
+.editIcon path {
+  fill: #475666;
+}
+
 .infoList {
   width: 67%;
 }
@@ -53,4 +63,12 @@
 
 .hobbiesItem {
   margin-bottom: 10px;
+}
+
+.skillsString {
+  line-height: 22px;
+}
+
+.link {
+  color: #657c9a;
 }

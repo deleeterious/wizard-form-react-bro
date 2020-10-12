@@ -18,7 +18,7 @@ import EditPage from 'pages/EditPage/EditPage'
 
 const App = () => (
   <Router className="app">
-    <Header />
+    <Route component={Header} />
     <Switch>
       <Route path="/edit/:id" component={EditPage} />
       <Route path="/profile/:id" component={ProfilePage} />

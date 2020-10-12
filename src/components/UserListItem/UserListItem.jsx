@@ -50,17 +50,14 @@ const UserListItem = ({ user }) => {
         <AvatarImage avatar={avatar} size={{ width: 40, height: 40 }} />
       </div>
       <div className={classes.name}>
-        <div className={classes.fullName}>
-          {firstName}
-          {lastName}
-        </div>
+        <div className={classes.fullName}>{`${firstName} ${lastName}`}</div>
         <div className={classes.userName}>{userName}</div>
       </div>
       <div className={classes.company}>{company}</div>
       <div className={classes.contacts}>{email}</div>
       <div className={classes.updates}>last updates</div>
       <div className={classes.buttons}>
-        <Link to={`/profile/${id}`}>
+        <Link to={`/profile/${id}`} className={classes.editIcon}>
           <EditIcon />
         </Link>
         {!isDeleting ? (
@@ -69,10 +66,7 @@ const UserListItem = ({ user }) => {
           </button>
         ) : (
           <button
-            className={concatStyles(
-              classes.deleteBtn,
-              classes.confirmedDeleteBtn
-            )}
+            className={classes.confirmedDeleteBtn}
             id="deleteBtn"
             onClick={handleDelete}
           >

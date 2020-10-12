@@ -1,9 +1,13 @@
 import React from 'react'
+// prop-types
+import T from 'prop-types'
 // redux
 import { useDispatch } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
 // router
 import { Link } from 'react-router-dom'
+// utils
+import { parseDate, concatStyles } from 'utils'
 // components
 import AvatarImage from 'components/AvatarImage'
 // assets
@@ -24,7 +28,7 @@ const UserInfo = ({ user }) => {
     company,
     fax,
     facebookLink,
-    phone,
+    phones,
     skills,
     hobbies,
     id
@@ -45,7 +49,7 @@ const UserInfo = ({ user }) => {
               to={`/edit/${id}`}
               onClick={() => dispatch(changeActiveFormStage(1))}
             >
-              <EditIcon />
+              <EditIcon className={classes.editIcon} />
             </Link>
           </div>
           <div className={classes.infoList}>
@@ -66,7 +70,7 @@ const UserInfo = ({ user }) => {
               to={`/edit/${id}`}
               onClick={() => dispatch(changeActiveFormStage(2))}
             >
-              <EditIcon />
+              <EditIcon className={classes.editIcon} />
             </Link>
           </div>
           <div className={classes.infoList}>
@@ -80,7 +84,9 @@ const UserInfo = ({ user }) => {
             </div>
             <div className={classes.infoListItem}>
               <div className={classes.infoListItemTitle}>Birth date:</div>
-              <div className={classes.infoListItemValue}>{birthDate}</div>
+              <div className={classes.infoListItemValue}>
+                {parseDate(birthDate)}
+              </div>
             </div>
             <div className={classes.infoListItem}>
               <div className={classes.infoListItemTitle}>Email:</div>
@@ -99,7 +105,7 @@ const UserInfo = ({ user }) => {
               to={`/edit/${id}`}
               onClick={() => dispatch(changeActiveFormStage(3))}
             >
-              <EditIcon />
+              <EditIcon className={classes.editIcon} />
             </Link>
           </div>
           <div className={classes.infoList}>
@@ -109,16 +115,22 @@ const UserInfo = ({ user }) => {
             </div>
             <div className={classes.infoListItem}>
               <div className={classes.infoListItemTitle}>Fax:</div>
-              <div className={classes.infoListItemValue}>{fax}</div>
+              <div className={classes.infoListItemValue}>{fax || 'N/A'}</div>
             </div>
             <div className={classes.infoListItem}>
               <div className={classes.infoListItemTitle}>Facebook link:</div>
-              <div className={classes.infoListItemValue}>{facebookLink}</div>
+              <div className={classes.infoListItemValue}>
+                <a className={classes.link} href={facebookLink}>
+                  facebook.com
+                </a>
+              </div>
             </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Phone#1:</div>
-              <div className={classes.infoListItemValue}>{phone}</div>
-            </div>
+            {phones?.map((phone, i) => (
+              <div className={classes.infoListItem} key={i}>
+                <div className={classes.infoListItemTitle}>Phone#{i + 1}:</div>
+                <div className={classes.infoListItemValue}>{phone}</div>
+              </div>
+            ))}
           </div>
         </div>
         <div className={classes.sectionCont}>
@@ -128,13 +140,18 @@ const UserInfo = ({ user }) => {
               to={`/edit/${id}`}
               onClick={() => dispatch(changeActiveFormStage(4))}
             >
-              <EditIcon />
+              <EditIcon className={classes.editIcon} />
             </Link>
           </div>
           <div className={classes.infoList}>
             <div className={classes.infoListItem}>
               <div className={classes.infoListItemTitle}>Skills:</div>
-              <div className={classes.infoListItemValue}>
+              <div
+                className={concatStyles(
+                  classes.infoListItemValue,
+                  classes.skillsString
+                )}
+              >
                 {skills?.map((item) => item.label).join(', ')}
               </div>
             </div>
@@ -156,5 +173,25 @@ const UserInfo = ({ user }) => {
     </div>
   )
 }
-// TODO Need prop-types
+
+UserInfo.propTypes = {
+  user: T.shape({
+    userName: T.string,
+    avatar: T.string,
+    password: T.string,
+    firstName: T.string,
+    lastName: T.string,
+    birthDate: T.string,
+    email: T.string,
+    address: T.string,
+    company: T.string,
+    fax: T.string,
+    facebookLink: T.string,
+    phones: T.arrayOf(T.string),
+    skills: T.arrayOf(T.object),
+    hobbies: T.array,
+    id: T.number
+  })
+}
+
 export default UserInfo

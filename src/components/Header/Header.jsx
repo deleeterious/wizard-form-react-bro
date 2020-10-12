@@ -1,4 +1,6 @@
 import React from 'react'
+// prop-types
+import T from 'prop-types'
 // redux
 import { useDispatch } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
@@ -15,7 +17,7 @@ import { Link } from 'react-router-dom'
 // css
 import classes from './Header.module.css'
 
-const Header = () => {
+const Header = ({ location: { pathname } }) => {
   const dispatch = useDispatch()
 
   const handleClick = () => dispatch(changeActiveFormStage(1))
@@ -27,18 +29,30 @@ const Header = () => {
           <HeaderLogo />
         </Link>
       </div>
-      <div className={classes.buttons}>
+      <div className={classes.links}>
         <LinkIcon
-          onClick={handleClick}
-          to="/new-user"
-          icon={<NewUserIcon />}
           text="Add new user"
+          icon={<NewUserIcon />}
+          to="/new-user"
+          onClick={handleClick}
+          isActive={pathname === '/new-user'}
         />
 
-        <LinkIcon to="/" icon={<ListUsersIcon />} text="List of users" />
+        <LinkIcon
+          text="List of users"
+          icon={<ListUsersIcon />}
+          to="/"
+          isActive={pathname === '/'}
+        />
       </div>
     </header>
   )
+}
+
+Header.propTypes = {
+  location: T.shape({
+    pathname: T.string
+  })
 }
 
 export default Header

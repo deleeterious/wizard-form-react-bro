@@ -20,7 +20,11 @@ const AvatarImage = ({ avatar, size = { width: 170, height: 170 } }) => {
           height={size.height}
         />
       ) : (
-        <AvatarIcon className={classes.avatarIcon} />
+        <AvatarIcon
+          className={classes.avatarIcon}
+          width={size.width}
+          height={size.height}
+        />
       )}
     </div>
   )

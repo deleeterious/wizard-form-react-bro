@@ -2,8 +2,9 @@
   margin-right: 10px;
 }
 
-.button {
+.links {
   color: #fff;
+  opacity: 0.5;
   font-size: 14px;
   display: flex;
   justify-content: space-between;
@@ -11,6 +12,7 @@
   margin-left: 60px;
 }
 
-.button:hover {
-  color: #222;
+.links:hover,
+.active {
+  opacity: 1;
 }

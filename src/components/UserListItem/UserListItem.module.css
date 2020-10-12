@@ -6,6 +6,7 @@
   align-items: center;
   color: #475666;
   font-size: 14px;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -54,7 +55,25 @@
   background: none;
   outline: none;
   border: none;
-  z-index: 100;
+}
+
+.deleteBtn path {
+  stroke: #b1bcc9;
+}
+
+.deleteBtn:hover path {
+  stroke: #8899ac;
+  fill: #8899ac;
+}
+
+.editIcon path {
+  stroke: #b1bcc9;
+  fill: #b1bcc9;
+}
+
+.editIcon:hover path {
+  stroke: #8899ac;
+  fill: #8899ac;
 }
 
 .confirmedListItem {
@@ -67,14 +86,12 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-
+  cursor: pointer;
+  background: none;
+  outline: none;
+  border: none;
   transform: translateX(70px);
   display: flex;
-}
-
-.deleteBtn div,
-.deleteIcon {
-  z-index: -1;
 }
 
 .deleteIcon path {
