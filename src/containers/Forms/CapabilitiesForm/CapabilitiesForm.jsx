@@ -31,7 +31,9 @@ import CheckboxInputItem from 'components/Inputs/CheckboxInput/CheckboxInputItem
 // constants
 import { CONTACTS_FORM_STAGE, skillsList } from 'constants.js'
 // css
+import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './CapabilitiesForm.module.css'
+import { concatStyles } from 'utils'
 
 const CapabilitiesForm = ({ isEdit, isContinue, id }) => {
   const dispatch = useDispatch()
@@ -155,11 +157,11 @@ const CapabilitiesForm = ({ isEdit, isContinue, id }) => {
           />
         </CheckboxInput>
 
-        <div className={classes.buttons}>
+        <div className={commonStyles.buttons}>
           {isEdit || <Button onClick={handleClickBack}>Back</Button>}
           <Button
             disabled={isEdit && isDisabled}
-            className={isEdit || classes.finish}
+            className={concatStyles(commonStyles.r0, isEdit || classes.finish)}
           >
             {isEdit ? 'Save' : 'Finish'}
           </Button>

@@ -1,9 +1,9 @@
 .btnCont {
   display: flex;
-  justify-content: flex-end;
 }
 
 .forwardBtn {
+  position: absolute;
   width: 100px;
   height: 40px;
   border: none;

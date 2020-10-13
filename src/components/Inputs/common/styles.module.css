@@ -23,3 +23,8 @@
   font-size: 14px;
   font-weight: 500;
 }
+
+.input:hover,
+.input:focus {
+  border: 1px solid #a1c4ff;
+}

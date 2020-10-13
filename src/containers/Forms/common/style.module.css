@@ -1,0 +1,13 @@
+.r0 {
+  right: 0;
+}
+
+.l0 {
+  left: 0;
+}
+
+.buttons {
+  position: relative;
+  margin-top: 100px;
+  display: flex;
+}

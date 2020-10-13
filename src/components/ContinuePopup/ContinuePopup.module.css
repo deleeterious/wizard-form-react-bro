@@ -1,11 +1,12 @@
 .popup {
-  display: flex;
   z-index: 1;
   height: 40px;
+  display: flex;
   padding: 12px 0 12px 24px;
   background: #5e97f3;
   color: #fff;
   font-size: 14px;
+  position: relative;
 }
 
 .popupText {
@@ -20,4 +21,8 @@
 .close {
   position: absolute;
   right: 25px;
+}
+
+.close:hover path {
+  stroke: #fff;
 }

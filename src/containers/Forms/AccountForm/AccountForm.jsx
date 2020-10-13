@@ -30,6 +30,7 @@ import TextInput from 'components/Inputs/TextInput/TextInput'
 import AvatarInput from 'components/Inputs/AvatarInput/AvatarInput'
 import Button from 'components/Button/Button'
 // css
+import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
 
 const AccountForm = ({ isEdit, isContinue, id }) => {
@@ -119,10 +120,11 @@ const AccountForm = ({ isEdit, isContinue, id }) => {
           refRegister={register(passwordRepeatValidation(watch('password')))}
           errorMessage={errors?.passwordRepeat?.message}
         />
-
-        <Button disabled={isEdit && isDisabled}>
-          {isEdit ? 'Save' : 'Forward'}
-        </Button>
+        <div className={commonStyles.buttons}>
+          <Button className={commonStyles.r0} disabled={isEdit && isDisabled}>
+            {isEdit ? 'Save' : 'Forward'}
+          </Button>
+        </div>
       </div>
     </form>
   )

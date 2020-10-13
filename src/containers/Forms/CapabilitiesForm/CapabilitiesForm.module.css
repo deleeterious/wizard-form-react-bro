@@ -13,9 +13,3 @@
 .finish {
   background: #4ee4a5;
 }
-
-.buttons {
-  margin-top: 100px;
-  display: flex;
-  justify-content: space-between;
-}

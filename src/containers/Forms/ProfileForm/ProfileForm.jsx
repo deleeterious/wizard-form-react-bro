@@ -28,6 +28,7 @@ import Button from 'components/Button'
 import DateInput from 'components/Inputs/DateInput'
 import RadioInput from 'components/Inputs/RadioInput'
 // css
+import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ProfileForm.module.css'
 
 const ProfileForm = ({ isEdit, isContinue, id }) => {
@@ -155,9 +156,13 @@ const ProfileForm = ({ isEdit, isContinue, id }) => {
 
         <RadioInput refRegister={register()} />
 
-        <div className={classes.buttons}>
-          {isEdit || <Button onClick={handleClickBack}>Back</Button>}
-          <Button disabled={isEdit && isDisabled}>
+        <div className={commonStyles.buttons}>
+          {isEdit || (
+            <Button className={commonStyles.l0} onClick={handleClickBack}>
+              Back
+            </Button>
+          )}
+          <Button className={commonStyles.r0} disabled={isEdit && isDisabled}>
             {isEdit ? 'Save' : 'Forward'}
           </Button>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 // prop-types
 import T from 'prop-types'
+import { ReactComponent as CloseIcon } from 'assets/icons/delete.svg'
 // css
 import classes from './ContinuePopup.module.css'
 
@@ -14,7 +15,7 @@ const ContinuePopup = ({ handleContinue, handleClose }) => {
         Continue
       </div>
       <div className={classes.close} onClick={handleClose}>
-        X
+        <CloseIcon />
       </div>
     </div>
   )

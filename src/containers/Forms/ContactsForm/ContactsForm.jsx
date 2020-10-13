@@ -33,6 +33,7 @@ import SelectInput from 'components/Inputs/SelectInput'
 import MaskInput from 'components/Inputs/MaskInput'
 import AddButton from 'components/AddButton'
 // css
+import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ContactsForm.module.css'
 
 const ContactsForm = ({ isEdit, isContinue, id }) => {
@@ -185,9 +186,13 @@ const ContactsForm = ({ isEdit, isContinue, id }) => {
           <AddButton onClick={handleClick}>add phone number</AddButton>
         )}
 
-        <div className={classes.buttons}>
-          {isEdit || <Button onClick={handleClickBack}>Back</Button>}
-          <Button disabled={isEdit && isDisabled}>
+        <div className={commonStyles.buttons}>
+          {isEdit || (
+            <Button className={commonStyles.l0} onClick={handleClickBack}>
+              Back
+            </Button>
+          )}
+          <Button className={commonStyles.r0} disabled={isEdit && isDisabled}>
             {isEdit ? 'Save' : 'Forward'}
           </Button>
         </div>

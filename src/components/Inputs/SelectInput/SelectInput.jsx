@@ -33,7 +33,13 @@ const SelectInput = ({
       border: '1px solid #e7f0ff',
       minHeight: 40,
       fontSize: 14,
-      fontWeight: 500
+      fontWeight: 500,
+      ':hover': {
+        border: '1px solid #a1c4ff'
+      },
+      ':focus': {
+        border: '1px solid #a1c4ff'
+      }
     }),
     control: (provided) => ({
       ...provided,
