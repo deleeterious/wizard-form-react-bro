@@ -1,0 +1,12 @@
+.linkBack {
+  text-decoration: none;
+  color: #9bb0cb;
+  position: absolute;
+  left: 0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 10px;
+}

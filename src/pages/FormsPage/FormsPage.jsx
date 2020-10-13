@@ -28,7 +28,7 @@ const FormsPage = () => {
 
   return (
     <main className="container">
-      <Title content="Adding new user" />
+      <Title title="Adding new user" />
       <FormNavigation activeFormStage={activeFormStage} />
       {isPopup && (
         <ContinuePopup

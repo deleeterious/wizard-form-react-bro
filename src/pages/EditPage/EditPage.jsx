@@ -5,6 +5,7 @@ import T from 'prop-types'
 import { useSelector } from 'react-redux'
 // components
 import Title from 'components/Title/Title'
+import LinkBack from 'components/LinkBack'
 // containers
 import FormNavigation from 'containers/FormNavigation'
 import AccountForm from 'containers/Forms/AccountForm/AccountForm'
@@ -17,7 +18,9 @@ const EditPage = ({ match }) => {
   const { id } = match.params
   return (
     <main className="container">
-      <Title content="Editing" />
+      <Title title="Editing">
+        <LinkBack to={`/profile/${id}`}>User Profile</LinkBack>
+      </Title>
       <FormNavigation activeFormStage={activeFormStage} isEdit />
       {activeFormStage === 1 && <AccountForm id={id} isEdit />}
       {activeFormStage === 2 && <ProfileForm id={id} isEdit />}

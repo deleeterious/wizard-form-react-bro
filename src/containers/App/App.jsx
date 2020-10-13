@@ -20,10 +20,10 @@ const App = () => (
   <Router className="app">
     <Route component={Header} />
     <Switch>
-      <Route path="/edit/:id" component={EditPage} />
-      <Route path="/profile/:id" component={ProfilePage} />
-      <Route path="/new-user" component={FormsPage} />
-      <Route path="/" component={UserListPage} />
+      <Route exact path="/edit/:id" component={EditPage} />
+      <Route exact path="/profile/:id" component={ProfilePage} />
+      <Route exact path="/new-user" component={FormsPage} />
+      <Route exact path="/" component={UserListPage} />
       <Route render={() => <Redirect to="/" />} />
     </Switch>
   </Router>

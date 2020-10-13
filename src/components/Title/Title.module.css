@@ -1,12 +1,14 @@
-.title {
+.titleCont {
   height: 145px;
   display: flex;
+  flex-direction: row;
+  color: #475666;
   align-items: center;
   justify-content: center;
-  color: #475666;
+  position: relative;
 }
 
-.title h1 {
+.title {
   font-weight: 700;
   font-size: 35px;
 }

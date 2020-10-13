@@ -4,14 +4,15 @@ import T from 'prop-types'
 // css
 import classes from './Title.module.css'
 
-const Title = ({ content }) => (
-  <div className={classes.title}>
-    <h1>{content}</h1>
+const Title = ({ title, children }) => (
+  <div className={classes.titleCont}>
+    {children}
+    <h1 className={classes.title}>{title}</h1>
   </div>
 )
 
 Title.propTypes = {
-  content: T.string
+  title: T.string
 }
 
 export default Title
