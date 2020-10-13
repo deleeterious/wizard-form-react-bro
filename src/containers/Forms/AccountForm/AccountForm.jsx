@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+// lodash/isEqual
+import isEqual from 'lodash/isEqual'
 // prop-types
 import T from 'prop-types'
+// react-router
+import { Redirect } from 'react-router-dom'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, updateUser } from 'redux/actions'
+import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
 // utils
@@ -11,7 +15,10 @@ import { concatStyles } from 'utils'
 // constants
 import { PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 import {
   avatarValidation,
   userNameValidation,
@@ -25,25 +32,60 @@ import Button from 'components/Button/Button'
 // css
 import classes from './AccountForm.module.css'
 
-const AccountForm = ({ isEdit, id }) => {
+const AccountForm = ({ isEdit, isContinue, id }) => {
+  const dispatch = useDispatch()
+
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [isSaved, setIsSaved] = useState(false)
+
+  const { userName, password, passwordRepeat } = useSelector(
+    (state) => state.user
+  )
   const users = useSelector((state) => state.users)
   const avatar = useSelector((state) => state.avatar)
+  const newUser = useSelector((state) => state.newUser)
 
-  const { register, handleSubmit, watch, errors } = useForm()
+  const { register, handleSubmit, watch, errors, getValues, reset } = useForm({
+    defaultValues: { ...newUser.account }
+  })
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    if (isContinue) {
+      reset(getFromLocalStorage('account'))
+    } else if (isEdit) {
+      reset({ userName, password, passwordRepeat })
+    }
+  }, [isContinue])
 
   const onSubmit = (data) => {
     if (isEdit) {
       dispatch(updateUser(+id, data))
-    } else {
-      setToLocalStorage('account', { ...data, avatar })
+      setIsSaved(true)
     }
     dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
 
+  const handleChange = () => {
+    setIsDisabled(
+      isEqual(
+        { avatar: {}, userName, password, passwordRepeat },
+        { ...getValues(), avatar: {} }
+      )
+    )
+    if (!isEdit) {
+      setToLocalStorage('account', { ...getValues(), avatar })
+      dispatch(setNewUser({ account: getValues() }))
+    }
+  }
+
+  if (isSaved) return <Redirect to={`/profile/${id}`} />
+
   return (
-    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={classes.form}
+      onChange={handleChange}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
         <AvatarInput
           refRegister={register(avatarValidation())}
@@ -56,7 +98,9 @@ const AccountForm = ({ isEdit, id }) => {
           type="text"
           name="userName"
           title="User Name"
-          refRegister={register(userNameValidation(users))}
+          refRegister={register(
+            isEdit ? requiredValidation() : userNameValidation(users)
+          )}
           errorMessage={errors?.userName?.message}
         />
 
@@ -76,7 +120,9 @@ const AccountForm = ({ isEdit, id }) => {
           errorMessage={errors?.passwordRepeat?.message}
         />
 
-        <Button>{isEdit ? 'Save' : 'Forward'}</Button>
+        <Button disabled={isEdit && isDisabled}>
+          {isEdit ? 'Save' : 'Forward'}
+        </Button>
       </div>
     </form>
   )
@@ -84,6 +130,7 @@ const AccountForm = ({ isEdit, id }) => {
 
 AccountForm.propTypes = {
   isEdit: T.bool,
+  isContinue: T.bool,
   id: T.string
 }
 

@@ -1,6 +1,7 @@
 .form {
   display: flex;
   padding: 0 calc(50% - 385px);
+  margin-top: 45px;
 }
 
 .flexCont {

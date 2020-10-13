@@ -7,7 +7,9 @@ import {
   GET_USER,
   LOAD_AVATAR,
   UPDATE_USER,
-  DELETE_USER
+  DELETE_USER,
+  SET_NEW_USER,
+  CLEAR_NEW_USER
 } from 'redux/types'
 
 export const loadUsers = () => {
@@ -83,4 +85,13 @@ export const changeActiveFormStage = (payload) => ({
 export const loadAvatar = (payload) => ({
   type: LOAD_AVATAR,
   payload
+})
+
+export const setNewUser = (payload) => ({
+  type: SET_NEW_USER,
+  payload
+})
+
+export const clearNewUser = () => ({
+  type: CLEAR_NEW_USER
 })

@@ -6,9 +6,13 @@ import { concatStyles } from 'utils'
 // css
 import classes from './Button.module.css'
 
-const Button = ({ children, className }) => (
+const Button = ({ children, className, onClick, disabled }) => (
   <div className={classes.btnCont}>
-    <button className={concatStyles(classes.forwardBtn, className)}>
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={concatStyles(classes.forwardBtn, className)}
+    >
       {children}
     </button>
   </div>
@@ -16,7 +20,9 @@ const Button = ({ children, className }) => (
 
 Button.propTypes = {
   children: T.string,
-  className: T.string
+  className: T.string,
+  onClick: T.func,
+  disabled: T.bool
 }
 
 export default Button

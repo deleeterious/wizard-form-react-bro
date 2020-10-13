@@ -4,7 +4,6 @@
 }
 
 .forwardBtn {
-  margin-top: 100px;
   width: 100px;
   height: 40px;
   border: none;
@@ -13,4 +12,8 @@
   font-size: 14px;
   outline: none;
   cursor: pointer;
+}
+
+.forwardBtn:disabled {
+  background: #c1cfe0;
 }

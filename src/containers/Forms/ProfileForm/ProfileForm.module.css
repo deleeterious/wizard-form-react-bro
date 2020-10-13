@@ -2,9 +2,16 @@
   display: flex;
   padding: 0 calc(50% - 385px);
   justify-content: space-between;
+  margin-top: 45px;
 }
 
 .flexCont {
   max-width: 300px;
   width: 100%;
+}
+
+.buttons {
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
 }

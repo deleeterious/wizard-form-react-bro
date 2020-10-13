@@ -1,20 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+// lodash/isEqual
+import isEqual from 'lodash/isEqual'
+// react-router
+import { Redirect } from 'react-router-dom'
 // prop-types
 import T from 'prop-types'
 // redux
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // useForm
 import { useForm } from 'react-hook-form'
-import { changeActiveFormStage, updateUser } from 'redux/actions'
+import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 import {
   faxValidation,
   requiredValidation,
   phoneValidation
 } from 'helpers/validations'
 // constants
-import { CAPABILITIES_FORM_STAGE, languages } from 'constants.js'
+import {
+  CAPABILITIES_FORM_STAGE,
+  languages,
+  PROFILE_FORM_STAGE
+} from 'constants.js'
 // components
 import TextInput from 'components/Inputs/TextInput'
 import Button from 'components/Button'
@@ -24,21 +35,52 @@ import AddButton from 'components/AddButton'
 // css
 import classes from './ContactsForm.module.css'
 
-const ContactsForm = ({ isEdit, id }) => {
+const ContactsForm = ({ isEdit, isContinue, id }) => {
+  const dispatch = useDispatch()
+
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [isSaved, setIsSaved] = useState(false)
+
   const [phones, setPhones] = useState([{ id: 0 }])
 
-  const { register, handleSubmit, errors, control } = useForm()
+  const {
+    company,
+    githubLink,
+    facebookLink,
+    language,
+    fax
+    // phones
+  } = useSelector((state) => state.user)
+  const newUser = useSelector((state) => state.newUser)
 
-  const dispatch = useDispatch()
+  const { register, handleSubmit, errors, control, getValues, reset } = useForm(
+    {
+      defaultValues: { ...newUser.contacts }
+    }
+  )
 
   const onSubmit = (data) => {
     if (isEdit) {
       dispatch(updateUser(+id, data))
-    } else {
-      setToLocalStorage('contacts', data)
+      setIsSaved(true)
     }
     dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
   }
+
+  useEffect(() => {
+    if (isContinue) {
+      reset(getFromLocalStorage('contacts'))
+    } else if (isEdit) {
+      reset({
+        company,
+        githubLink,
+        facebookLink,
+        language,
+        fax
+        // phones
+      })
+    }
+  }, [isContinue])
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -48,8 +90,40 @@ const ContactsForm = ({ isEdit, id }) => {
     ])
   }
 
+  const handleChange = () => {
+    setIsDisabled(
+      isEqual(
+        {
+          company,
+          githubLink,
+          facebookLink,
+          language,
+          fax
+          // phones
+        },
+        getValues()
+      )
+    )
+
+    if (!isEdit) {
+      setToLocalStorage('contacts', getValues())
+      dispatch(setNewUser({ contacts: getValues() }))
+    }
+  }
+
+  const handleClickBack = (e) => {
+    e.preventDefault()
+    dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
+  }
+
+  if (isSaved) return <Redirect to={`/profile/${id}`} />
+
   return (
-    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={classes.form}
+      onChange={handleChange}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className={classes.flexCont}>
         <TextInput
           type="text"
@@ -111,7 +185,12 @@ const ContactsForm = ({ isEdit, id }) => {
           <AddButton onClick={handleClick}>add phone number</AddButton>
         )}
 
-        <Button>{isEdit ? 'Save' : 'Forward'}</Button>
+        <div className={classes.buttons}>
+          {isEdit || <Button onClick={handleClickBack}>Back</Button>}
+          <Button disabled={isEdit && isDisabled}>
+            {isEdit ? 'Save' : 'Forward'}
+          </Button>
+        </div>
       </div>
     </form>
   )
@@ -119,6 +198,7 @@ const ContactsForm = ({ isEdit, id }) => {
 
 ContactsForm.propTypes = {
   isEdit: T.bool,
+  isContinue: T.bool,
   id: T.string
 }
 

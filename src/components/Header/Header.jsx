@@ -3,7 +3,7 @@ import React from 'react'
 import T from 'prop-types'
 // redux
 import { useDispatch } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
+import { changeActiveFormStage, clearNewUser } from 'redux/actions'
 // utils
 import { concatStyles } from 'utils'
 // assets
@@ -20,12 +20,15 @@ import classes from './Header.module.css'
 const Header = ({ location: { pathname } }) => {
   const dispatch = useDispatch()
 
-  const handleClick = () => dispatch(changeActiveFormStage(1))
+  const handleClick = () => {
+    dispatch(clearNewUser())
+    dispatch(changeActiveFormStage(1))
+  }
 
   return (
     <header className={concatStyles('container', classes.header)}>
       <div className={classes.logo}>
-        <Link to="/">
+        <Link onClick={handleClick} to="/">
           <HeaderLogo />
         </Link>
       </div>
@@ -42,6 +45,7 @@ const Header = ({ location: { pathname } }) => {
           text="List of users"
           icon={<ListUsersIcon />}
           to="/"
+          onClick={handleClick}
           isActive={pathname === '/'}
         />
       </div>

@@ -30,7 +30,7 @@ export const languages = [
   { value: 'ko', label: 'Korean' }
 ]
 
-export const skills = [
+export const skillsList = [
   { value: 'html', label: 'HTML' },
   { value: 'css', label: 'CSS' },
   { value: 'js', label: 'Javascript' },

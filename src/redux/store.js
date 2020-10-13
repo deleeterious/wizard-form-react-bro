@@ -7,6 +7,7 @@ import { rootReducer } from './reducers'
 const initialState = {
   activeFormStage: 1,
   users: [],
+  newUser: {},
   user: {},
   avatar: null
 }

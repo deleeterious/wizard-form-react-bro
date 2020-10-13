@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+// lodash/isEqual
+import isEqual from 'lodash/isEqual'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
 import { useForm } from 'react-hook-form'
 // redux
-import { useDispatch } from 'react-redux'
-import { addUser, updateUser } from 'redux/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  addUser,
+  changeActiveFormStage,
+  clearNewUser,
+  setNewUser,
+  updateUser
+} from 'redux/actions'
 // router
 import { Redirect } from 'react-router-dom'
 // helpers
@@ -21,20 +29,27 @@ import Button from 'components/Button'
 import CheckboxInput from 'components/Inputs/CheckboxInput'
 import CheckboxInputItem from 'components/Inputs/CheckboxInput/CheckboxInputItem'
 // constants
-import { skills } from 'constants.js'
+import { CONTACTS_FORM_STAGE, skillsList } from 'constants.js'
 // css
 import classes from './CapabilitiesForm.module.css'
 
-const CapabilitiesForm = ({ isEdit, id }) => {
-  const [isFinish, setIsFinish] = useState(false)
-
+const CapabilitiesForm = ({ isEdit, isContinue, id }) => {
   const dispatch = useDispatch()
 
-  const { register, handleSubmit, errors, control } = useForm()
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [isSaved, setIsSaved] = useState(false)
+  const [isFinish, setIsFinish] = useState(false)
+
+  const { skills, additionInfo, hobbies } = useSelector((state) => state.user)
+  const newUser = useSelector((state) => state.newUser)
+
+  const { register, handleSubmit, errors, control, getValues, reset } = useForm(
+    {
+      defaultValues: { ...newUser.capabilities }
+    }
+  )
 
   const onSubmit = (data) => {
-    if (!isEdit) setToLocalStorage('capabilities', data)
-
     const account = getFromLocalStorage('account')
     const profile = getFromLocalStorage('profile')
     const contacts = getFromLocalStorage('contacts')
@@ -42,25 +57,52 @@ const CapabilitiesForm = ({ isEdit, id }) => {
 
     if (isEdit) {
       dispatch(updateUser(+id, data))
+      setIsSaved(true)
     } else {
       dispatch(
         addUser({ ...account, ...profile, ...contacts, ...capabilities })
       )
+      dispatch(clearNewUser())
+      localStorage.clear()
+      setIsFinish(true)
     }
+  }
 
-    localStorage.clear()
+  useEffect(() => {
+    if (isContinue) {
+      reset(getFromLocalStorage('capabilities'))
+    } else if (isEdit) {
+      reset({ skills, additionInfo, hobbies })
+    }
+  }, [isContinue])
 
-    setIsFinish(true)
+  const handleChange = () => {
+    setIsDisabled(isEqual({ skills, additionInfo, hobbies }, getValues()))
+    if (!isEdit) {
+      setToLocalStorage('capabilities', getValues())
+      dispatch(setNewUser({ capabilities: getValues() }))
+    }
+  }
+
+  const handleClickBack = (e) => {
+    e.preventDefault()
+    dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
 
   if (isFinish) return <Redirect to="/" />
+  if (isSaved) return <Redirect to={`/profile/${id}`} />
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={handleChange}
+      className={classes.form}
+    >
       <div className={classes.flexCont}>
         <SelectInput
           title="Skills"
           name="skills"
-          options={skills}
+          options={skillsList}
           control={control}
           isMulti
           rules={skillsValidation()}
@@ -113,7 +155,15 @@ const CapabilitiesForm = ({ isEdit, id }) => {
           />
         </CheckboxInput>
 
-        <Button>{isEdit ? 'Save' : 'Forward'}</Button>
+        <div className={classes.buttons}>
+          {isEdit || <Button onClick={handleClickBack}>Back</Button>}
+          <Button
+            disabled={isEdit && isDisabled}
+            className={isEdit || classes.finish}
+          >
+            {isEdit ? 'Save' : 'Finish'}
+          </Button>
+        </div>
       </div>
     </form>
   )
@@ -121,6 +171,7 @@ const CapabilitiesForm = ({ isEdit, id }) => {
 
 CapabilitiesForm.propTypes = {
   isEdit: T.bool,
+  isContinue: T.bool,
   id: T.string
 }
 

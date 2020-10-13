@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+// lodash/isEqual
+import isEqual from 'lodash/isEqual'
 // prop-types
 import T from 'prop-types'
+// react-router
+import { Redirect } from 'react-router-dom'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, updateUser } from 'redux/actions'
+import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
 // constants
-import { CONTACTS_FORM_STAGE } from 'constants.js'
+import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js'
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 import {
   birthDateValidation,
   emailValidation,
@@ -23,23 +30,86 @@ import RadioInput from 'components/Inputs/RadioInput'
 // css
 import classes from './ProfileForm.module.css'
 
-const ProfileForm = ({ isEdit, id }) => {
-  const users = useSelector((state) => state.users)
+const ProfileForm = ({ isEdit, isContinue, id }) => {
   const dispatch = useDispatch()
 
-  const { register, handleSubmit, errors, control } = useForm()
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [isSaved, setIsSaved] = useState(false)
+
+  const {
+    firstName,
+    lastName,
+    birthDate,
+    email,
+    address,
+    gender
+  } = useSelector((state) => state.user)
+  const users = useSelector((state) => state.users)
+  const newUser = useSelector((state) => state.newUser)
+
+  const { register, handleSubmit, errors, control, getValues, reset } = useForm(
+    {
+      defaultValues: { ...newUser.profile }
+    }
+  )
 
   const onSubmit = (data) => {
     if (isEdit) {
       dispatch(updateUser(+id, data))
-    } else {
-      setToLocalStorage('profile', data)
+      setIsSaved(true)
     }
     dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
 
+  useEffect(() => {
+    if (isContinue) {
+      reset(getFromLocalStorage('profile'))
+    } else if (isEdit) {
+      reset({
+        firstName,
+        lastName,
+        birthDate,
+        email,
+        address,
+        gender
+      })
+    }
+  }, [isContinue])
+
+  const handleChange = () => {
+    setIsDisabled(
+      isEqual(
+        {
+          firstName,
+          lastName,
+          birthDate,
+          email,
+          address,
+          gender
+        },
+        getValues()
+      )
+    )
+
+    if (!isEdit) {
+      setToLocalStorage('profile', getValues())
+      dispatch(setNewUser({ profile: getValues() }))
+    }
+  }
+
+  const handleClickBack = (e) => {
+    e.preventDefault()
+    dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
+  }
+
+  if (isSaved) return <Redirect to={`/profile/${id}`} />
+
   return (
-    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={classes.form}
+      onChange={handleChange}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className={classes.flexCont}>
         <TextInput
           type="text"
@@ -70,7 +140,9 @@ const ProfileForm = ({ isEdit, id }) => {
           type="text"
           name="email"
           title="Email"
-          refRegister={register(emailValidation(users))}
+          refRegister={register(
+            isEdit ? requiredValidation() : emailValidation(users)
+          )}
           errorMessage={errors?.email?.message}
         />
 
@@ -83,7 +155,12 @@ const ProfileForm = ({ isEdit, id }) => {
 
         <RadioInput refRegister={register()} />
 
-        <Button>{isEdit ? 'Save' : 'Forward'}</Button>
+        <div className={classes.buttons}>
+          {isEdit || <Button onClick={handleClickBack}>Back</Button>}
+          <Button disabled={isEdit && isDisabled}>
+            {isEdit ? 'Save' : 'Forward'}
+          </Button>
+        </div>
       </div>
     </form>
   )
@@ -91,6 +168,7 @@ const ProfileForm = ({ isEdit, id }) => {
 
 ProfileForm.propTypes = {
   isEdit: T.bool,
+  isContinue: T.bool,
   id: T.string
 }
 
