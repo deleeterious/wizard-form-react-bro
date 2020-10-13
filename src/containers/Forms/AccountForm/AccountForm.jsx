@@ -7,7 +7,12 @@ import T from 'prop-types'
 import { Redirect } from 'react-router-dom'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
+import {
+  changeActiveFormStage,
+  getUser,
+  setNewUser,
+  updateUser
+} from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
 // utils
@@ -35,7 +40,6 @@ import classes from './AccountForm.module.css'
 
 const AccountForm = ({ isEdit, isContinue, id }) => {
   const dispatch = useDispatch()
-
   const [isDisabled, setIsDisabled] = useState(true)
   const [isSaved, setIsSaved] = useState(false)
 
@@ -47,7 +51,9 @@ const AccountForm = ({ isEdit, isContinue, id }) => {
   const newUser = useSelector((state) => state.newUser)
 
   const { register, handleSubmit, watch, errors, getValues, reset } = useForm({
-    defaultValues: { ...newUser.account }
+    defaultValues: isEdit
+      ? { userName, password, passwordRepeat }
+      : { ...newUser.account }
   })
 
   useEffect(() => {
@@ -56,7 +62,7 @@ const AccountForm = ({ isEdit, isContinue, id }) => {
     } else if (isEdit) {
       reset({ userName, password, passwordRepeat })
     }
-  }, [isContinue])
+  }, [isContinue, isEdit, userName, password, passwordRepeat])
 
   const onSubmit = (data) => {
     if (isEdit) {

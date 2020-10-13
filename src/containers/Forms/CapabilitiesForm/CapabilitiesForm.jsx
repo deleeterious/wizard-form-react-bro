@@ -30,10 +30,11 @@ import CheckboxInput from 'components/Inputs/CheckboxInput'
 import CheckboxInputItem from 'components/Inputs/CheckboxInput/CheckboxInputItem'
 // constants
 import { CONTACTS_FORM_STAGE, skillsList } from 'constants.js'
+// utils
+import { concatStyles } from 'utils'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './CapabilitiesForm.module.css'
-import { concatStyles } from 'utils'
 
 const CapabilitiesForm = ({ isEdit, isContinue, id }) => {
   const dispatch = useDispatch()

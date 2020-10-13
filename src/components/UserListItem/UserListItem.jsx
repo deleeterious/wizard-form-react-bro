@@ -27,8 +27,8 @@ const UserListItem = ({ user }) => {
     const domNode = document.getElementById('deleteBtn')
 
     if (!e.path.includes(domNode)) {
-      setIsDeleting(false)
       document.removeEventListener('click', handleOutSideClick)
+      setIsDeleting(false)
     }
   }
 

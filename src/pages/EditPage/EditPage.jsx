@@ -1,21 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from 'redux/actions'
 // components
 import Title from 'components/Title/Title'
 import LinkBack from 'components/LinkBack'
 // containers
 import FormNavigation from 'containers/FormNavigation'
-import AccountForm from 'containers/Forms/AccountForm/AccountForm'
-import CapabilitiesForm from 'containers/Forms/CapabilitiesForm/CapabilitiesForm'
-import ContactsForm from 'containers/Forms/ContactsForm/ContactsForm'
-import ProfileForm from 'containers/Forms/ProfileForm/ProfileForm'
+import AccountForm from 'containers/Forms/AccountForm'
+import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
+import ContactsForm from 'containers/Forms/ContactsForm'
+import ProfileForm from 'containers/Forms/ProfileForm'
 
 const EditPage = ({ match }) => {
-  const activeFormStage = useSelector((state) => state.activeFormStage)
   const { id } = match.params
+
+  const dispatch = useDispatch()
+
+  const activeFormStage = useSelector((state) => state.activeFormStage)
+
+  useEffect(() => {
+    dispatch(getUser(id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <main className="container">
       <Title title="Editing">
