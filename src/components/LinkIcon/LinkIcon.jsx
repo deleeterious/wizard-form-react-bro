@@ -1,30 +1,27 @@
 import React from 'react'
 // router
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 // prop-types
 import T from 'prop-types'
-// utils
-import { concatStyles } from 'utils'
 // css
 import classes from './LinkIcon.module.css'
 
-const LinkIcon = ({ icon, text, to, onClick, isActive }) => (
-  <Link
-    onClick={onClick}
-    className={concatStyles(classes.links, isActive && classes.active)}
+const LinkIcon = ({ icon, text, to }) => (
+  <NavLink
+    exact
+    className={classes.links}
     to={to}
+    activeClassName={classes.active}
   >
     <div className={classes.icon}>{icon}</div>
     <div className={classes.text}>{text}</div>
-  </Link>
+  </NavLink>
 )
 
 LinkIcon.propTypes = {
   icon: T.element,
   text: T.string,
-  to: T.string,
-  onClick: T.func,
-  isActive: T.bool
+  to: T.string
 }
 
 export default LinkIcon

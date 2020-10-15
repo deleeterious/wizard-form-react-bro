@@ -8,6 +8,10 @@
   font-size: 14px;
 }
 
+.addButton:hover {
+  cursor: pointer;
+}
+
 .addIcon {
   margin-right: 10px;
 }

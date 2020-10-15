@@ -7,12 +7,7 @@ import T from 'prop-types'
 import { Redirect } from 'react-router-dom'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  changeActiveFormStage,
-  getUser,
-  setNewUser,
-  updateUser
-} from 'redux/actions'
+import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
 // useForm
 import { useForm } from 'react-hook-form'
 // utils
@@ -31,15 +26,16 @@ import {
   passwordRepeatValidation
 } from 'helpers/validations'
 // components
-import TextInput from 'components/Inputs/TextInput/TextInput'
+import TextInput from 'components/Inputs/TextInput'
 import AvatarInput from 'components/Inputs/AvatarInput/AvatarInput'
-import Button from 'components/Button/Button'
+import Button from 'components/Button'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
 
 const AccountForm = ({ isEdit, isContinue, id }) => {
   const dispatch = useDispatch()
+
   const [isDisabled, setIsDisabled] = useState(true)
   const [isSaved, setIsSaved] = useState(false)
 
@@ -66,19 +62,15 @@ const AccountForm = ({ isEdit, isContinue, id }) => {
 
   const onSubmit = (data) => {
     if (isEdit) {
-      dispatch(updateUser(+id, data))
+      dispatch(updateUser(+id, { ...data, avatar: '' }))
       setIsSaved(true)
     }
     dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
 
   const handleChange = () => {
-    setIsDisabled(
-      isEqual(
-        { avatar: {}, userName, password, passwordRepeat },
-        { ...getValues(), avatar: {} }
-      )
-    )
+    console.log(getValues())
+    setIsDisabled(isEqual({ userName, password, passwordRepeat }, getValues()))
     if (!isEdit) {
       setToLocalStorage('account', { ...getValues(), avatar })
       dispatch(setNewUser({ account: getValues() }))

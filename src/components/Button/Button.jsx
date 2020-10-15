@@ -11,7 +11,7 @@ const Button = ({ children, className, onClick, disabled }) => (
     <button
       disabled={disabled}
       onClick={onClick}
-      className={concatStyles(classes.forwardBtn, className)}
+      className={concatStyles(classes.button, className)}
     >
       {children}
     </button>

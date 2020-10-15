@@ -4,7 +4,6 @@ import T from 'prop-types'
 // components
 import Title from 'components/Title'
 import UserInfo from 'components/UserInfo'
-import LinkBack from 'components/LinkBack'
 // import db from 'db'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -35,8 +34,8 @@ const ProfilePage = ({ match }) => {
 
   return (
     <main className="container">
-      <Title title={user.userName}>
-        <LinkBack to="/">Users List</LinkBack>
+      <Title linkBackPath="/" linkBackTitle="Users List">
+        {user.userName}
       </Title>
       <UserInfo user={user} />
     </main>

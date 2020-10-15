@@ -119,6 +119,9 @@ const ContactsForm = ({ isEdit, isContinue, id }) => {
 
   if (isSaved) return <Redirect to={`/profile/${id}`} />
 
+  console.log(errors)
+  console.log(phones)
+
   return (
     <form
       className={classes.form}
@@ -178,7 +181,11 @@ const ContactsForm = ({ isEdit, isContinue, id }) => {
             placeholder="+38 (XXX) XXX XX XX"
             mask="+38 (999) 999 99 99"
             rules={phoneValidation()}
-            errorMessage={errors.phones ? errors.phones[phone.id].message : ''}
+            errorMessage={
+              errors.phones && errors.phones[phone.id]
+                ? errors.phones[phone.id].message
+                : ''
+            }
           />
         ))}
 

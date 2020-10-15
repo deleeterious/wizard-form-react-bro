@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // react-redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeActiveFormStage, clearNewUser } from 'redux/actions'
+import { ACCOUNT_FORM_STAGE } from 'constants.js'
 // components
 import Title from 'components/Title'
 import ContinuePopup from 'components/ContinuePopup'
@@ -9,10 +11,13 @@ import FormNavigation from 'containers/FormNavigation'
 import AccountForm from 'containers/Forms/AccountForm'
 import ProfileForm from 'containers/Forms/ProfileForm'
 import ContactsForm from 'containers/Forms/ContactsForm'
-import CapabilitiesForm from 'containers/Forms/CapabilitiesForm/CapabilitiesForm'
+import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
 
 const FormsPage = () => {
+  const dispatch = useDispatch()
+
   const activeFormStage = useSelector((state) => state.activeFormStage)
+
   const [isPopup, setIsPopup] = useState(!!localStorage.account)
   const [isContinue, setIsContinue] = useState(false)
 
@@ -26,9 +31,17 @@ const FormsPage = () => {
     setIsPopup(false)
   }
 
+  useEffect(
+    () => () => {
+      dispatch(clearNewUser())
+      dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
+    },
+    []
+  )
+
   return (
     <main className="container">
-      <Title title="Adding new user" />
+      <Title>Adding new user</Title>
       <FormNavigation activeFormStage={activeFormStage} />
       {isPopup && (
         <ContinuePopup

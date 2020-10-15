@@ -28,3 +28,7 @@
 .input:focus {
   border: 1px solid #a1c4ff;
 }
+
+.input::placeholder {
+  color: #9bb0cb;
+}

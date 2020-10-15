@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
+// constants
+import { ACCOUNT_FORM_STAGE } from 'constants.js'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser } from 'redux/actions'
+import { changeActiveFormStage, clearNewUser, getUser } from 'redux/actions'
 // components
-import Title from 'components/Title/Title'
-import LinkBack from 'components/LinkBack'
+import Title from 'components/Title'
 // containers
 import FormNavigation from 'containers/FormNavigation'
 import AccountForm from 'containers/Forms/AccountForm'
@@ -23,13 +24,16 @@ const EditPage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(id))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      dispatch(clearNewUser())
+      dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
+    }
   }, [])
 
   return (
     <main className="container">
-      <Title title="Editing">
-        <LinkBack to={`/profile/${id}`}>User Profile</LinkBack>
+      <Title linkBackPath={`/profile/${id}`} linkBackTitle="User Profile">
+        Editing
       </Title>
       <FormNavigation activeFormStage={activeFormStage} isEdit />
       {activeFormStage === 1 && <AccountForm id={id} isEdit />}

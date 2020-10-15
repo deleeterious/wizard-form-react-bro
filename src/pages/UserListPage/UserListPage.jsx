@@ -12,7 +12,7 @@ const UserListPage = () => {
 
   return (
     <main className="container">
-      <Title title="List of users" />
+      <Title>List of users</Title>
       {users.length ? <UserList users={users} /> : <NoUserIndicator />}
     </main>
   )
