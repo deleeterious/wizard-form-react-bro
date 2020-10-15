@@ -7,18 +7,15 @@ import { ACCOUNT_FORM_STAGE } from 'constants.js'
 import Title from 'components/Title'
 import ContinuePopup from 'components/ContinuePopup'
 // containers
+import Form from 'containers/Form'
 import FormNavigation from 'containers/FormNavigation'
-import AccountForm from 'containers/Forms/AccountForm'
-import ProfileForm from 'containers/Forms/ProfileForm'
-import ContactsForm from 'containers/Forms/ContactsForm'
-import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
 
 const FormsPage = () => {
   const dispatch = useDispatch()
 
   const activeFormStage = useSelector((state) => state.activeFormStage)
 
-  const [isPopup, setIsPopup] = useState(!!localStorage.account)
+  const [isPopup, setIsPopup] = useState(!!localStorage[ACCOUNT_FORM_STAGE])
   const [isContinue, setIsContinue] = useState(false)
 
   const handleContinue = () => {
@@ -27,7 +24,7 @@ const FormsPage = () => {
   }
 
   const handleClose = () => {
-    setIsContinue(false)
+    localStorage.clear()
     setIsPopup(false)
   }
 
@@ -49,10 +46,7 @@ const FormsPage = () => {
           handleClose={handleClose}
         />
       )}
-      {activeFormStage === 1 && <AccountForm isContinue={isContinue} />}
-      {activeFormStage === 2 && <ProfileForm isContinue={isContinue} />}
-      {activeFormStage === 3 && <ContactsForm isContinue={isContinue} />}
-      {activeFormStage === 4 && <CapabilitiesForm isContinue={isContinue} />}
+      <Form isContinue={isContinue} activeFormStage={activeFormStage} />
     </main>
   )
 }

@@ -1,7 +1,7 @@
-export const ACCOUNT_FORM_STAGE = 1
-export const PROFILE_FORM_STAGE = 2
-export const CONTACTS_FORM_STAGE = 3
-export const CAPABILITIES_FORM_STAGE = 4
+export const ACCOUNT_FORM_STAGE = 'ACCOUNT_FORM_STAGE'
+export const PROFILE_FORM_STAGE = 'PROFILE_FORM_STAGE'
+export const CONTACTS_FORM_STAGE = 'CONTACTS_FORM_STAGE'
+export const CAPABILITIES_FORM_STAGE = 'CAPABILITIES_FORM_STAGE'
 
 export const languages = [
   { value: 'en', label: 'English' },

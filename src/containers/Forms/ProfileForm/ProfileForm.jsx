@@ -31,70 +31,19 @@ import RadioInput from 'components/Inputs/RadioInput'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ProfileForm.module.css'
 
-const ProfileForm = ({ isEdit, isContinue, id }) => {
+const ProfileForm = ({ register, errors, control, trigger }) => {
   const dispatch = useDispatch()
 
-  const [isDisabled, setIsDisabled] = useState(true)
-  const [isSaved, setIsSaved] = useState(false)
-
-  const {
-    firstName,
-    lastName,
-    birthDate,
-    email,
-    address,
-    gender
-  } = useSelector((state) => state.user)
-  const users = useSelector((state) => state.users)
-  const newUser = useSelector((state) => state.newUser)
-
-  const { register, handleSubmit, errors, control, getValues, reset } = useForm(
-    {
-      defaultValues: { ...newUser.profile }
-    }
-  )
-
-  const onSubmit = (data) => {
-    if (isEdit) {
-      dispatch(updateUser(+id, data))
-      setIsSaved(true)
-    }
-    dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
-  }
-
-  useEffect(() => {
-    if (isContinue) {
-      reset(getFromLocalStorage('profile'))
-    } else if (isEdit) {
-      reset({
-        firstName,
-        lastName,
-        birthDate,
-        email,
-        address,
-        gender
-      })
-    }
-  }, [isContinue])
-
-  const handleChange = () => {
-    setIsDisabled(
-      isEqual(
-        {
-          firstName,
-          lastName,
-          birthDate,
-          email,
-          address,
-          gender
-        },
-        getValues()
-      )
-    )
-
-    if (!isEdit) {
-      setToLocalStorage('profile', getValues())
-      dispatch(setNewUser({ profile: getValues() }))
+  const handleClickForward = async (e) => {
+    e.preventDefault()
+    const result = await trigger([
+      'firstName',
+      'lastName',
+      'birthDate',
+      'email'
+    ])
+    if (result) {
+      dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
     }
   }
 
@@ -103,14 +52,8 @@ const ProfileForm = ({ isEdit, isContinue, id }) => {
     dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
   }
 
-  if (isSaved) return <Redirect to={`/profile/${id}`} />
-
   return (
-    <form
-      className={classes.form}
-      onChange={handleChange}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <div className={classes.form}>
       <div className={classes.flexCont}>
         <TextInput
           type="text"
@@ -141,9 +84,7 @@ const ProfileForm = ({ isEdit, isContinue, id }) => {
           type="text"
           name="email"
           title="Email"
-          refRegister={register(
-            isEdit ? requiredValidation() : emailValidation(users)
-          )}
+          refRegister={register(requiredValidation())}
           errorMessage={errors?.email?.message}
         />
 
@@ -157,17 +98,16 @@ const ProfileForm = ({ isEdit, isContinue, id }) => {
         <RadioInput refRegister={register()} />
 
         <div className={commonStyles.buttons}>
-          {isEdit || (
-            <Button className={commonStyles.l0} onClick={handleClickBack}>
-              Back
-            </Button>
-          )}
-          <Button className={commonStyles.r0} disabled={isEdit && isDisabled}>
-            {isEdit ? 'Save' : 'Forward'}
+          <Button className={commonStyles.l0} handleClick={handleClickBack}>
+            Back
+          </Button>
+
+          <Button handleClick={handleClickForward} className={commonStyles.r0}>
+            Forward
           </Button>
         </div>
       </div>
-    </form>
+    </div>
   )
 }
 

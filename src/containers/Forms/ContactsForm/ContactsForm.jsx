@@ -36,52 +36,10 @@ import AddButton from 'components/AddButton'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ContactsForm.module.css'
 
-const ContactsForm = ({ isEdit, isContinue, id }) => {
+const ContactsForm = ({ register, errors, control, trigger }) => {
   const dispatch = useDispatch()
 
-  const [isDisabled, setIsDisabled] = useState(true)
-  const [isSaved, setIsSaved] = useState(false)
-
   const [phones, setPhones] = useState([{ id: 0 }])
-
-  const {
-    company,
-    githubLink,
-    facebookLink,
-    language,
-    fax
-    // phones
-  } = useSelector((state) => state.user)
-  const newUser = useSelector((state) => state.newUser)
-
-  const { register, handleSubmit, errors, control, getValues, reset } = useForm(
-    {
-      defaultValues: { ...newUser.contacts }
-    }
-  )
-
-  const onSubmit = (data) => {
-    if (isEdit) {
-      dispatch(updateUser(+id, data))
-      setIsSaved(true)
-    }
-    dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
-  }
-
-  useEffect(() => {
-    if (isContinue) {
-      reset(getFromLocalStorage('contacts'))
-    } else if (isEdit) {
-      reset({
-        company,
-        githubLink,
-        facebookLink,
-        language,
-        fax
-        // phones
-      })
-    }
-  }, [isContinue])
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -91,24 +49,11 @@ const ContactsForm = ({ isEdit, isContinue, id }) => {
     ])
   }
 
-  const handleChange = () => {
-    setIsDisabled(
-      isEqual(
-        {
-          company,
-          githubLink,
-          facebookLink,
-          language,
-          fax
-          // phones
-        },
-        getValues()
-      )
-    )
-
-    if (!isEdit) {
-      setToLocalStorage('contacts', getValues())
-      dispatch(setNewUser({ contacts: getValues() }))
+  const handleClickForward = async (e) => {
+    e.preventDefault()
+    const result = await trigger(['company', 'language', 'fax'])
+    if (result) {
+      dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
     }
   }
 
@@ -117,17 +62,8 @@ const ContactsForm = ({ isEdit, isContinue, id }) => {
     dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
 
-  if (isSaved) return <Redirect to={`/profile/${id}`} />
-
-  console.log(errors)
-  console.log(phones)
-
   return (
-    <form
-      className={classes.form}
-      onChange={handleChange}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <div className={classes.form}>
       <div className={classes.flexCont}>
         <TextInput
           type="text"
@@ -194,17 +130,16 @@ const ContactsForm = ({ isEdit, isContinue, id }) => {
         )}
 
         <div className={commonStyles.buttons}>
-          {isEdit || (
-            <Button className={commonStyles.l0} onClick={handleClickBack}>
-              Back
-            </Button>
-          )}
-          <Button className={commonStyles.r0} disabled={isEdit && isDisabled}>
-            {isEdit ? 'Save' : 'Forward'}
+          <Button className={commonStyles.l0} handleClick={handleClickBack}>
+            Back
+          </Button>
+
+          <Button className={commonStyles.r0} handleClick={handleClickForward}>
+            Forward
           </Button>
         </div>
       </div>
-    </form>
+    </div>
   )
 }
 

@@ -36,71 +36,16 @@ import { concatStyles } from 'utils'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './CapabilitiesForm.module.css'
 
-const CapabilitiesForm = ({ isEdit, isContinue, id }) => {
+const CapabilitiesForm = ({ register, errors, control, trigger }) => {
   const dispatch = useDispatch()
-
-  const [isDisabled, setIsDisabled] = useState(true)
-  const [isSaved, setIsSaved] = useState(false)
-  const [isFinish, setIsFinish] = useState(false)
-
-  const { skills, additionInfo, hobbies } = useSelector((state) => state.user)
-  const newUser = useSelector((state) => state.newUser)
-
-  const { register, handleSubmit, errors, control, getValues, reset } = useForm(
-    {
-      defaultValues: { ...newUser.capabilities }
-    }
-  )
-
-  const onSubmit = (data) => {
-    const account = getFromLocalStorage('account')
-    const profile = getFromLocalStorage('profile')
-    const contacts = getFromLocalStorage('contacts')
-    const capabilities = getFromLocalStorage('capabilities')
-
-    if (isEdit) {
-      dispatch(updateUser(+id, data))
-      setIsSaved(true)
-    } else {
-      dispatch(
-        addUser({ ...account, ...profile, ...contacts, ...capabilities })
-      )
-      dispatch(clearNewUser())
-      localStorage.clear()
-      setIsFinish(true)
-    }
-  }
-
-  useEffect(() => {
-    if (isContinue) {
-      reset(getFromLocalStorage('capabilities'))
-    } else if (isEdit) {
-      reset({ skills, additionInfo, hobbies })
-    }
-  }, [isContinue])
-
-  const handleChange = () => {
-    setIsDisabled(isEqual({ skills, additionInfo, hobbies }, getValues()))
-    if (!isEdit) {
-      setToLocalStorage('capabilities', getValues())
-      dispatch(setNewUser({ capabilities: getValues() }))
-    }
-  }
 
   const handleClickBack = (e) => {
     e.preventDefault()
     dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
 
-  if (isFinish) return <Redirect to="/" />
-  if (isSaved) return <Redirect to={`/profile/${id}`} />
-
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      onChange={handleChange}
-      className={classes.form}
-    >
+    <div className={classes.form}>
       <div className={classes.flexCont}>
         <SelectInput
           title="Skills"
@@ -159,16 +104,13 @@ const CapabilitiesForm = ({ isEdit, isContinue, id }) => {
         </CheckboxInput>
 
         <div className={commonStyles.buttons}>
-          {isEdit || <Button onClick={handleClickBack}>Back</Button>}
-          <Button
-            disabled={isEdit && isDisabled}
-            className={concatStyles(commonStyles.r0, isEdit || classes.finish)}
-          >
-            {isEdit ? 'Save' : 'Finish'}
+          <Button handleClick={handleClickBack}>Back</Button>
+          <Button className={concatStyles(commonStyles.r0, classes.finish)}>
+            Finish
           </Button>
         </div>
       </div>
-    </form>
+    </div>
   )
 }
 

@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form'
 // utils
 import { concatStyles } from 'utils'
 // constants
-import { PROFILE_FORM_STAGE } from 'constants.js'
+import { ACCOUNT_FORM_STAGE, PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
 import {
   getFromLocalStorage,
@@ -33,61 +33,62 @@ import Button from 'components/Button'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
 
-const AccountForm = ({ isEdit, isContinue, id }) => {
+const AccountForm = ({ register, errors, trigger }) => {
   const dispatch = useDispatch()
 
-  const [isDisabled, setIsDisabled] = useState(true)
-  const [isSaved, setIsSaved] = useState(false)
+  // const [isDisabled, setIsDisabled] = useState(true)
 
-  const { userName, password, passwordRepeat } = useSelector(
-    (state) => state.user
-  )
-  const users = useSelector((state) => state.users)
-  const avatar = useSelector((state) => state.avatar)
-  const newUser = useSelector((state) => state.newUser)
+  // const { userName, password, passwordRepeat } = useSelector(
+  //   (state) => state.user
+  // )
+  // const users = useSelector((state) => state.users)
+  // const avatar = useSelector((state) => state.avatar)
+  // const newUser = useSelector((state) => state.newUser)
 
-  const { register, handleSubmit, watch, errors, getValues, reset } = useForm({
-    defaultValues: isEdit
-      ? { userName, password, passwordRepeat }
-      : { ...newUser.account }
-  })
+  // const { register, handleSubmit, watch, errors, getValues, reset } = useForm({
+  //   defaultValues: isEdit
+  //     ? { userName, password, passwordRepeat }
+  //     : { ...newUser.account }
+  // })
 
-  useEffect(() => {
-    if (isContinue) {
-      reset(getFromLocalStorage('account'))
-    } else if (isEdit) {
-      reset({ userName, password, passwordRepeat })
+  // useEffect(() => {
+  //   if (isContinue) {
+  //     reset(getFromLocalStorage('account'))
+  //   } else if (isEdit) {
+  //     reset({ userName, password, passwordRepeat })
+  //   }
+  // }, [isContinue, isEdit, userName, password, passwordRepeat])
+
+  // const onSubmit = (data) => {
+  //   if (isEdit) {
+  //     dispatch(updateUser(+id, { ...data, avatar: '' }))
+  //     setIsSaved(true)
+  //   }
+  //   dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
+  // }
+
+  // const handleChange = () => {
+  //   console.log(getValues())
+  //   setIsDisabled(isEqual({ userName, password, passwordRepeat }, getValues()))
+  //   if (!isEdit) {
+  //     setToLocalStorage('account', { ...getValues(), avatar })
+  //     dispatch(setNewUser({ account: getValues() }))
+  //   }
+  // }
+
+  const handleClickForward = async (e) => {
+    e.preventDefault()
+    const result = await trigger(['userName', 'password', 'passwordRepeat'])
+    if (result) {
+      dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
     }
-  }, [isContinue, isEdit, userName, password, passwordRepeat])
-
-  const onSubmit = (data) => {
-    if (isEdit) {
-      dispatch(updateUser(+id, { ...data, avatar: '' }))
-      setIsSaved(true)
-    }
-    dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
-
-  const handleChange = () => {
-    console.log(getValues())
-    setIsDisabled(isEqual({ userName, password, passwordRepeat }, getValues()))
-    if (!isEdit) {
-      setToLocalStorage('account', { ...getValues(), avatar })
-      dispatch(setNewUser({ account: getValues() }))
-    }
-  }
-
-  if (isSaved) return <Redirect to={`/profile/${id}`} />
 
   return (
-    <form
-      className={classes.form}
-      onChange={handleChange}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <div className={classes.form}>
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
         <AvatarInput
-          refRegister={register(avatarValidation())}
+          // refRegister={register(avatarValidation())}
           errorMessage={errors?.avatar?.message}
         />
       </div>
@@ -97,9 +98,7 @@ const AccountForm = ({ isEdit, isContinue, id }) => {
           type="text"
           name="userName"
           title="User Name"
-          refRegister={register(
-            isEdit ? requiredValidation() : userNameValidation(users)
-          )}
+          refRegister={register(requiredValidation())}
           errorMessage={errors?.userName?.message}
         />
 
@@ -115,16 +114,20 @@ const AccountForm = ({ isEdit, isContinue, id }) => {
           type="password"
           name="passwordRepeat"
           title="Repeat password"
-          refRegister={register(passwordRepeatValidation(watch('password')))}
+          refRegister={register(
+            passwordRepeatValidation(
+              getFromLocalStorage(ACCOUNT_FORM_STAGE)?.password
+            )
+          )}
           errorMessage={errors?.passwordRepeat?.message}
         />
         <div className={commonStyles.buttons}>
-          <Button className={commonStyles.r0} disabled={isEdit && isDisabled}>
-            {isEdit ? 'Save' : 'Forward'}
+          <Button handleClick={handleClickForward} className={commonStyles.r0}>
+            Forward
           </Button>
         </div>
       </div>
-    </form>
+    </div>
   )
 }
 

@@ -18,32 +18,34 @@ import classes from './DateInput.module.css'
 
 const DateInput = ({ control, rules, errorMessage, name }) => (
   <div className={commonStyles.inputCont}>
-    <label htmlFor="birthDate">
+    <label htmlFor={name}>
       <div className={commonStyles.inputLabel}>Birth date</div>
       <Controller
         control={control}
         name={name}
-        defaultValue=""
         rules={rules}
-        render={({ onChange, value }) => (
-          <DatePicker
-            className={classes.dataPicker}
-            tileClassName={classes.tile}
-            calendarClassName={classes.calendar}
-            format="dd/M/y"
-            dayPlaceholder="DD"
-            monthPlaceholder="MM"
-            yearPlaceholder="YY"
-            calendarIcon={<CalendarIcon />}
-            nextLabel={<CalendarArrowRight />}
-            prevLabel={<CalendarArrowLeft />}
-            next2Label={null}
-            clearIcon={null}
-            prev2Label={null}
-            onChange={onChange}
-            value={value}
-          />
-        )}
+        defaultValue=""
+        render={({ onChange, value }) => {
+          return (
+            <DatePicker
+              className={classes.dataPicker}
+              tileClassName={classes.tile}
+              calendarClassName={classes.calendar}
+              format="dd/M/y"
+              dayPlaceholder="DD"
+              monthPlaceholder="MM"
+              yearPlaceholder="YY"
+              calendarIcon={<CalendarIcon />}
+              nextLabel={<CalendarArrowRight />}
+              prevLabel={<CalendarArrowLeft />}
+              next2Label={null}
+              clearIcon={null}
+              prev2Label={null}
+              onChange={onChange}
+              value={value}
+            />
+          )
+        }}
       />
       {errorMessage && <ValidationError errorMessage={errorMessage} />}
     </label>

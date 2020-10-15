@@ -7,6 +7,12 @@ import FormNavigationItem from 'components/FormNavigationItem'
 import classes from './FormNavigation.module.css'
 import { useDispatch } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
+import {
+  ACCOUNT_FORM_STAGE,
+  PROFILE_FORM_STAGE,
+  CONTACTS_FORM_STAGE,
+  CAPABILITIES_FORM_STAGE
+} from 'constants.js'
 
 const FormNavigation = ({ activeFormStage, isEdit = false }) => {
   const dispatch = useDispatch()
@@ -18,25 +24,25 @@ const FormNavigation = ({ activeFormStage, isEdit = false }) => {
     <nav className={classes.nav}>
       <FormNavigationItem
         title="1. Account"
-        isActive={activeFormStage === 1}
+        isActive={activeFormStage === ACCOUNT_FORM_STAGE}
         onStepChange={onStepChange(1)}
       />
 
       <FormNavigationItem
         title="2. Profile"
-        isActive={activeFormStage === 2}
+        isActive={activeFormStage === PROFILE_FORM_STAGE}
         onStepChange={onStepChange(2)}
       />
 
       <FormNavigationItem
         title="3. Contacts"
-        isActive={activeFormStage === 3}
+        isActive={activeFormStage === CONTACTS_FORM_STAGE}
         onStepChange={onStepChange(3)}
       />
 
       <FormNavigationItem
         title="4. Capabilities"
-        isActive={activeFormStage === 4}
+        isActive={activeFormStage === CAPABILITIES_FORM_STAGE}
         onStepChange={onStepChange(4)}
       />
     </nav>
