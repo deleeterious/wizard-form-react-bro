@@ -4,8 +4,9 @@ import {
   CLEAR_NEW_USER,
   DELETE_USER,
   GET_USER,
-  LOAD_AVATAR,
   LOAD_USERS,
+  SET_AVATAR,
+  SET_EDIT,
   SET_NEW_USER,
   UPDATE_USER
 } from './types'
@@ -47,7 +48,7 @@ export const rootReducer = (state, { type, payload }) => {
         ...state,
         activeFormStage: payload
       }
-    case LOAD_AVATAR:
+    case SET_AVATAR:
       return {
         ...state,
         avatar: payload
@@ -61,6 +62,11 @@ export const rootReducer = (state, { type, payload }) => {
       return {
         ...state,
         newUser: {}
+      }
+    case SET_EDIT:
+      return {
+        ...state,
+        isEdit: payload
       }
 
     default:

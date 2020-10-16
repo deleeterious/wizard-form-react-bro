@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react'
-// lodash/isEqual
-import isEqual from 'lodash/isEqual'
+import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
-// react-router
-import { Redirect } from 'react-router-dom'
 // react-redux
-import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
+import { useDispatch } from 'react-redux'
+import { changeActiveFormStage, setNewUser } from 'redux/actions'
 // useForm
-import { useForm } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 // constants
 import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js'
 // helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
   birthDateValidation,
   emailValidation,
@@ -31,8 +24,10 @@ import RadioInput from 'components/Inputs/RadioInput'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ProfileForm.module.css'
 
-const ProfileForm = ({ register, errors, control, trigger }) => {
+const ProfileForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
+
+  const { register, trigger, getValues, errors, control } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
@@ -43,6 +38,7 @@ const ProfileForm = ({ register, errors, control, trigger }) => {
       'email'
     ])
     if (result) {
+      setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
       dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
     }
   }
@@ -51,6 +47,12 @@ const ProfileForm = ({ register, errors, control, trigger }) => {
     e.preventDefault()
     dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
   }
+
+  useEffect(() => {
+    if (!isEdit) {
+      return () => dispatch(setNewUser(getValues()))
+    }
+  }, [])
 
   return (
     <div className={classes.form}>
@@ -98,12 +100,13 @@ const ProfileForm = ({ register, errors, control, trigger }) => {
         <RadioInput refRegister={register()} />
 
         <div className={commonStyles.buttons}>
-          <Button className={commonStyles.l0} handleClick={handleClickBack}>
-            Back
-          </Button>
+          {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
 
-          <Button handleClick={handleClickForward} className={commonStyles.r0}>
-            Forward
+          <Button
+            handleClick={isEdit ? handleSave : handleClickForward}
+            className={commonStyles.r0}
+          >
+            {isEdit ? 'Save' : 'Forward'}
           </Button>
         </div>
       </div>
@@ -113,8 +116,7 @@ const ProfileForm = ({ register, errors, control, trigger }) => {
 
 ProfileForm.propTypes = {
   isEdit: T.bool,
-  isContinue: T.bool,
-  id: T.string
+  handleSave: T.func
 }
 
 export default ProfileForm

@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
-// lodash/isEqual
-import isEqual from 'lodash/isEqual'
-// react-router
-import { Redirect } from 'react-router-dom'
+
 // prop-types
 import T from 'prop-types'
 // redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 // useForm
-import { useForm } from 'react-hook-form'
-import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
+import { useFormContext } from 'react-hook-form'
+import { changeActiveFormStage, setNewUser } from 'redux/actions'
 // helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
   faxValidation,
   requiredValidation,
@@ -36,8 +30,10 @@ import AddButton from 'components/AddButton'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ContactsForm.module.css'
 
-const ContactsForm = ({ register, errors, control, trigger }) => {
+const ContactsForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
+
+  const { register, trigger, getValues, errors, control } = useFormContext()
 
   const [phones, setPhones] = useState([{ id: 0 }])
 
@@ -53,6 +49,7 @@ const ContactsForm = ({ register, errors, control, trigger }) => {
     e.preventDefault()
     const result = await trigger(['company', 'language', 'fax'])
     if (result) {
+      setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE)
       dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
     }
   }
@@ -61,6 +58,12 @@ const ContactsForm = ({ register, errors, control, trigger }) => {
     e.preventDefault()
     dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
+
+  useEffect(() => {
+    if (!isEdit) {
+      return () => dispatch(setNewUser(getValues()))
+    }
+  }, [])
 
   return (
     <div className={classes.form}>
@@ -130,12 +133,17 @@ const ContactsForm = ({ register, errors, control, trigger }) => {
         )}
 
         <div className={commonStyles.buttons}>
-          <Button className={commonStyles.l0} handleClick={handleClickBack}>
-            Back
-          </Button>
+          {isEdit || (
+            <Button className={commonStyles.l0} handleClick={handleClickBack}>
+              Back
+            </Button>
+          )}
 
-          <Button className={commonStyles.r0} handleClick={handleClickForward}>
-            Forward
+          <Button
+            className={commonStyles.r0}
+            handleClick={isEdit ? handleSave : handleClickForward}
+          >
+            {isEdit ? 'Save' : 'Forward'}
           </Button>
         </div>
       </div>
@@ -145,8 +153,7 @@ const ContactsForm = ({ register, errors, control, trigger }) => {
 
 ContactsForm.propTypes = {
   isEdit: T.bool,
-  isContinue: T.bool,
-  id: T.string
+  handleSave: T.func
 }
 
 export default ContactsForm

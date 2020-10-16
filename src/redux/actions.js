@@ -1,15 +1,21 @@
 import db from 'db'
+// helpers
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 
 import {
   ADD_USER,
   CHANGE_ACTIVE_FORM_STAGE,
   LOAD_USERS,
   GET_USER,
-  LOAD_AVATAR,
   UPDATE_USER,
   DELETE_USER,
   SET_NEW_USER,
-  CLEAR_NEW_USER
+  CLEAR_NEW_USER,
+  SET_AVATAR,
+  SET_EDIT
 } from 'redux/types'
 
 export const loadUsers = () => {
@@ -82,16 +88,27 @@ export const changeActiveFormStage = (payload) => ({
   payload
 })
 
-export const loadAvatar = (payload) => ({
-  type: LOAD_AVATAR,
+export const setAvatar = (payload) => ({
+  type: SET_AVATAR,
   payload
 })
 
-export const setNewUser = (payload) => ({
-  type: SET_NEW_USER,
-  payload
-})
+export const setNewUser = (payload) => {
+  setToLocalStorage('newUser', {
+    ...getFromLocalStorage('newUser'),
+    ...payload
+  })
+  return {
+    type: SET_NEW_USER,
+    payload
+  }
+}
 
 export const clearNewUser = () => ({
   type: CLEAR_NEW_USER
+})
+
+export const setEdit = (payload) => ({
+  type: SET_EDIT,
+  payload
 })

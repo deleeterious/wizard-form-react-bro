@@ -1,6 +1,6 @@
 import React from 'react'
 // prop-types
-import T from 'prop-types'
+import T, { string } from 'prop-types'
 // react-hook-form
 import { Controller } from 'react-hook-form'
 // react-datepicker
@@ -42,7 +42,11 @@ const DateInput = ({ control, rules, errorMessage, name }) => (
               clearIcon={null}
               prev2Label={null}
               onChange={onChange}
-              value={value}
+              onClickDay={onChange}
+              showLeadingZeros
+              value={
+                typeof value === 'string' && value ? new Date(value) : value
+              }
             />
           )
         }}

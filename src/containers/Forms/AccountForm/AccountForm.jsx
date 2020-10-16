@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react'
-// lodash/isEqual
-import isEqual from 'lodash/isEqual'
+import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
-// react-router
-import { Redirect } from 'react-router-dom'
-// redux
+// react-hook-form
+import { useFormContext } from 'react-hook-form'
+// react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, setNewUser, updateUser } from 'redux/actions'
-// useForm
-import { useForm } from 'react-hook-form'
+import { changeActiveFormStage, setNewUser } from 'redux/actions'
 // utils
 import { concatStyles } from 'utils'
 // constants
-import { ACCOUNT_FORM_STAGE, PROFILE_FORM_STAGE } from 'constants.js'
+import { PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
   avatarValidation,
   userNameValidation,
@@ -33,62 +26,34 @@ import Button from 'components/Button'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
 
-const AccountForm = ({ register, errors, trigger }) => {
+const AccountForm = ({ handleSave }) => {
   const dispatch = useDispatch()
 
-  // const [isDisabled, setIsDisabled] = useState(true)
+  const isEdit = useSelector((state) => state.isEdit)
+  const avatar = useSelector((state) => state.avatar)
 
-  // const { userName, password, passwordRepeat } = useSelector(
-  //   (state) => state.user
-  // )
-  // const users = useSelector((state) => state.users)
-  // const avatar = useSelector((state) => state.avatar)
-  // const newUser = useSelector((state) => state.newUser)
-
-  // const { register, handleSubmit, watch, errors, getValues, reset } = useForm({
-  //   defaultValues: isEdit
-  //     ? { userName, password, passwordRepeat }
-  //     : { ...newUser.account }
-  // })
-
-  // useEffect(() => {
-  //   if (isContinue) {
-  //     reset(getFromLocalStorage('account'))
-  //   } else if (isEdit) {
-  //     reset({ userName, password, passwordRepeat })
-  //   }
-  // }, [isContinue, isEdit, userName, password, passwordRepeat])
-
-  // const onSubmit = (data) => {
-  //   if (isEdit) {
-  //     dispatch(updateUser(+id, { ...data, avatar: '' }))
-  //     setIsSaved(true)
-  //   }
-  //   dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
-  // }
-
-  // const handleChange = () => {
-  //   console.log(getValues())
-  //   setIsDisabled(isEqual({ userName, password, passwordRepeat }, getValues()))
-  //   if (!isEdit) {
-  //     setToLocalStorage('account', { ...getValues(), avatar })
-  //     dispatch(setNewUser({ account: getValues() }))
-  //   }
-  // }
+  const { register, errors, trigger, watch, getValues } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
-    const result = await trigger(['userName', 'password', 'passwordRepeat'])
+    const result = await trigger()
     if (result) {
+      setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
       dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
     }
   }
+
+  useEffect(() => {
+    if (!isEdit) {
+      return () => dispatch(setNewUser({ ...getValues(), avatar }))
+    }
+  }, [])
 
   return (
     <div className={classes.form}>
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
         <AvatarInput
-          // refRegister={register(avatarValidation())}
+          refRegister={register(avatarValidation())}
           errorMessage={errors?.avatar?.message}
         />
       </div>
@@ -114,16 +79,15 @@ const AccountForm = ({ register, errors, trigger }) => {
           type="password"
           name="passwordRepeat"
           title="Repeat password"
-          refRegister={register(
-            passwordRepeatValidation(
-              getFromLocalStorage(ACCOUNT_FORM_STAGE)?.password
-            )
-          )}
+          refRegister={register(passwordRepeatValidation(watch('password')))}
           errorMessage={errors?.passwordRepeat?.message}
         />
         <div className={commonStyles.buttons}>
-          <Button handleClick={handleClickForward} className={commonStyles.r0}>
-            Forward
+          <Button
+            handleClick={isEdit ? handleSave : handleClickForward}
+            className={commonStyles.r0}
+          >
+            {isEdit ? 'Save' : 'Forward'}
           </Button>
         </div>
       </div>
@@ -133,8 +97,7 @@ const AccountForm = ({ register, errors, trigger }) => {
 
 AccountForm.propTypes = {
   isEdit: T.bool,
-  isContinue: T.bool,
-  id: T.string
+  handleSave: T.func
 }
 
 export default AccountForm

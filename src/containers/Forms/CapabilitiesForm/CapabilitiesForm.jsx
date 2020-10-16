@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from 'react'
-// lodash/isEqual
-import isEqual from 'lodash/isEqual'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
-import { useForm } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addUser,
-  changeActiveFormStage,
-  clearNewUser,
-  setNewUser,
-  updateUser
-} from 'redux/actions'
-// router
-import { Redirect } from 'react-router-dom'
-// helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+import { changeActiveFormStage, setNewUser } from 'redux/actions'
+
 import { additionInfoValidation, skillsValidation } from 'helpers/validations'
 // component
 import SelectInput from 'components/Inputs/SelectInput'
@@ -36,13 +22,31 @@ import { concatStyles } from 'utils'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './CapabilitiesForm.module.css'
 
-const CapabilitiesForm = ({ register, errors, control, trigger }) => {
+const CapabilitiesForm = ({ handleSave }) => {
   const dispatch = useDispatch()
+
+  const isEdit = useSelector((state) => state.isEdit)
+
+  const { register, getValues, errors, control } = useFormContext()
 
   const handleClickBack = (e) => {
     e.preventDefault()
     dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
+
+  const [isFinish, setIsFinish] = useState(false)
+
+  useEffect(() => {
+    if (isEdit) {
+      return () => {
+        if (isFinish) {
+          localStorage.clear()
+        } else {
+          dispatch(setNewUser(getValues()))
+        }
+      }
+    }
+  }, [isFinish])
 
   return (
     <div className={classes.form}>
@@ -104,9 +108,12 @@ const CapabilitiesForm = ({ register, errors, control, trigger }) => {
         </CheckboxInput>
 
         <div className={commonStyles.buttons}>
-          <Button handleClick={handleClickBack}>Back</Button>
-          <Button className={concatStyles(commonStyles.r0, classes.finish)}>
-            Finish
+          {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
+          <Button
+            handleClick={isEdit ? handleSave : () => setIsFinish(true)}
+            className={concatStyles(commonStyles.r0, isEdit || classes.finish)}
+          >
+            {isEdit ? 'Save' : 'Finish'}
           </Button>
         </div>
       </div>
@@ -116,8 +123,7 @@ const CapabilitiesForm = ({ register, errors, control, trigger }) => {
 
 CapabilitiesForm.propTypes = {
   isEdit: T.bool,
-  isContinue: T.bool,
-  id: T.string
+  handleSave: T.func
 }
 
 export default CapabilitiesForm

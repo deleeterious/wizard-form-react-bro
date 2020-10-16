@@ -65,11 +65,16 @@ const SelectInput = ({
           defaultValue=""
           rules={rules}
           name={name}
-          isMulti={isMulti}
           control={control}
-          options={options}
-          styles={customStyles}
-          as={ReactSelect}
+          render={({ onChange, value }) => (
+            <ReactSelect
+              isMulti={isMulti}
+              options={options}
+              styles={customStyles}
+              onChange={onChange}
+              value={value}
+            />
+          )}
         />
       </label>
       <ValidationError errorMessage={errorMessage} />

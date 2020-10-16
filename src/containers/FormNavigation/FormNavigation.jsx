@@ -25,32 +25,32 @@ const FormNavigation = ({ activeFormStage, isEdit = false }) => {
       <FormNavigationItem
         title="1. Account"
         isActive={activeFormStage === ACCOUNT_FORM_STAGE}
-        onStepChange={onStepChange(1)}
+        onStepChange={onStepChange(ACCOUNT_FORM_STAGE)}
       />
 
       <FormNavigationItem
         title="2. Profile"
         isActive={activeFormStage === PROFILE_FORM_STAGE}
-        onStepChange={onStepChange(2)}
+        onStepChange={onStepChange(PROFILE_FORM_STAGE)}
       />
 
       <FormNavigationItem
         title="3. Contacts"
         isActive={activeFormStage === CONTACTS_FORM_STAGE}
-        onStepChange={onStepChange(3)}
+        onStepChange={onStepChange(CONTACTS_FORM_STAGE)}
       />
 
       <FormNavigationItem
         title="4. Capabilities"
         isActive={activeFormStage === CAPABILITIES_FORM_STAGE}
-        onStepChange={onStepChange(4)}
+        onStepChange={onStepChange(CAPABILITIES_FORM_STAGE)}
       />
     </nav>
   )
 }
 
 FormNavigation.propTypes = {
-  activeFormStage: T.number,
+  activeFormStage: T.string,
   isEdit: T.bool
 }
 

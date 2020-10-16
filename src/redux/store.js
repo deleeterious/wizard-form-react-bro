@@ -10,7 +10,8 @@ const initialState = {
   users: [],
   newUser: {},
   user: {},
-  avatar: null
+  avatar: null,
+  isEdit: false
 }
 
 const store = createStore(

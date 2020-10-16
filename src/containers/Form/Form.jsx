@@ -1,9 +1,18 @@
 import React, { useEffect } from 'react'
+// prop-types
+import T from 'prop-types'
 // react-hook-form
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser, setNewUser } from 'redux/actions'
+import {
+  addUser,
+  changeActiveFormStage,
+  clearNewUser,
+  setAvatar,
+  setNewUser,
+  updateUser
+} from 'redux/actions'
 // react-router-dom
 import { useHistory } from 'react-router-dom'
 // constants
@@ -14,90 +23,113 @@ import {
   PROFILE_FORM_STAGE
 } from 'constants.js'
 // helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+import { getFromLocalStorage } from 'helpers/localStorageHelper'
 // containers
 import AccountForm from 'containers/Forms/AccountForm'
 import ProfileForm from 'containers/Forms/ProfileForm'
 import ContactsForm from 'containers/Forms/ContactsForm'
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
-// css
-import classes from './Form.module.css'
 
-const Form = ({ activeFormStage, isContinue }) => {
+const Form = ({ activeFormStage, isContinue, isEdit }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const newUser = useSelector((state) => state.newUser)
+  const avatar = useSelector((state) => state.avatar)
+  const user = useSelector((state) => state.user)
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    getValues,
-    control,
-    trigger,
-    reset
-  } = useForm()
-
-  const onChange = () => {
-    setToLocalStorage(activeFormStage, getValues())
-    dispatch(setNewUser({ [activeFormStage]: getValues() }))
-  }
+  const methods = useForm({ mode: 'onChange' })
+  const { getValues, reset } = methods
 
   const onSubmit = () => {
-    const account = getFromLocalStorage(ACCOUNT_FORM_STAGE)
-    const profile = getFromLocalStorage(PROFILE_FORM_STAGE)
-    const contacts = getFromLocalStorage(CONTACTS_FORM_STAGE)
-    const capabilities = getFromLocalStorage(CAPABILITIES_FORM_STAGE)
-    dispatch(addUser({ ...account, ...profile, ...contacts, ...capabilities }))
+    dispatch(addUser({ ...getFromLocalStorage('newUser'), avatar }))
     localStorage.clear()
     history.push('/')
   }
 
-  console.log(newUser)
+  const onSave = () => {
+    dispatch(updateUser(user.id, { ...getValues(), avatar }))
+    history.push(`profile/${user.id}`)
+  }
 
+  // ? FORM mount
   useEffect(() => {
-    if (isContinue) {
-      reset(getFromLocalStorage(activeFormStage))
-    } else {
-      reset({ ...newUser[activeFormStage] })
-    }
-  }, [activeFormStage, isContinue])
+    if (isContinue)
+      dispatch(changeActiveFormStage(getFromLocalStorage('newUserStage')))
+  }, [isContinue])
+
+  // ? Forms isContinue mount
+  useEffect(() => {
+    if (isContinue)
+      reset({
+        ...getFromLocalStorage('newUser'),
+        avatar: ''
+      })
+  }, [isContinue, activeFormStage])
+
+  // ? FORMS isEdit mount
+  useEffect(() => {
+    if (isEdit) reset({ ...user, avatar })
+  }, [isEdit, user])
+
+  // ! FORM unmount
+  useEffect(
+    () => () => {
+      dispatch(clearNewUser())
+      dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
+    },
+    []
+  )
+
+  // useEffect(() => {
+  //   if (isContinue) {
+  //     methods.reset({ ...getFromLocalStorage(activeFormStage), avatar: '' })
+  //   } else if (!isEdit) {
+  //     methods.reset({ ...newUser[activeFormStage] })
+  //   }
+  // }, [activeFormStage, isContinue])
+
+  // useEffect(() => {
+  //   if (isContinue) {
+  //     dispatch(changeActiveFormStage(getFromLocalStorage('newUserStage')))
+  //     dispatch(setAvatar(getFromLocalStorage('avatar')))
+  //   }
+  //   return () => {
+  //     dispatch(setAvatar(''))
+  //   }
+  // }, [isContinue])
+
+  // useEffect(() => {
+  //   if (isEdit) {
+  //     dispatch(setAvatar(user.avatar))
+  //     methods.reset({ ...user, avatar: '' })
+  //   }
+  // }, [activeFormStage, isEdit, user])
 
   return (
-    <form onChange={onChange} onSubmit={handleSubmit(onSubmit)}>
-      {activeFormStage === ACCOUNT_FORM_STAGE && (
-        <AccountForm register={register} errors={errors} trigger={trigger} />
-      )}
-      {activeFormStage === PROFILE_FORM_STAGE && (
-        <ProfileForm
-          control={control}
-          register={register}
-          errors={errors}
-          trigger={trigger}
-        />
-      )}
-      {activeFormStage === CONTACTS_FORM_STAGE && (
-        <ContactsForm
-          control={control}
-          register={register}
-          errors={errors}
-          trigger={trigger}
-        />
-      )}
-      {activeFormStage === CAPABILITIES_FORM_STAGE && (
-        <CapabilitiesForm
-          control={control}
-          register={register}
-          errors={errors}
-          trigger={trigger}
-        />
-      )}
-    </form>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        {activeFormStage === ACCOUNT_FORM_STAGE && (
+          <AccountForm handleSave={onSave} isEdit={isEdit} />
+        )}
+        {activeFormStage === PROFILE_FORM_STAGE && (
+          <ProfileForm handleSave={onSave} isEdit={isEdit} />
+        )}
+        {activeFormStage === CONTACTS_FORM_STAGE && (
+          <ContactsForm handleSave={onSave} isEdit={isEdit} />
+        )}
+        {activeFormStage === CAPABILITIES_FORM_STAGE && (
+          <CapabilitiesForm handleSave={onSave} isEdit={isEdit} />
+        )}
+      </form>
+    </FormProvider>
   )
+}
+
+Form.propTypes = {
+  activeFormStage: T.string,
+  isContinue: T.bool,
+  isEdit: T.bool
 }
 
 export default Form

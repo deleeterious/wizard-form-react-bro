@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 // react-redux
-import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, clearNewUser } from 'redux/actions'
-import { ACCOUNT_FORM_STAGE } from 'constants.js'
+import { useSelector } from 'react-redux'
+
 // components
 import Title from 'components/Title'
 import ContinuePopup from 'components/ContinuePopup'
 // containers
 import Form from 'containers/Form'
 import FormNavigation from 'containers/FormNavigation'
+import { getFromLocalStorage } from 'helpers/localStorageHelper'
 
 const FormsPage = () => {
-  const dispatch = useDispatch()
-
   const activeFormStage = useSelector((state) => state.activeFormStage)
 
-  const [isPopup, setIsPopup] = useState(!!localStorage[ACCOUNT_FORM_STAGE])
+  const [isPopup, setIsPopup] = useState(!!getFromLocalStorage('newUser'))
   const [isContinue, setIsContinue] = useState(false)
 
   const handleContinue = () => {
@@ -27,14 +25,6 @@ const FormsPage = () => {
     localStorage.clear()
     setIsPopup(false)
   }
-
-  useEffect(
-    () => () => {
-      dispatch(clearNewUser())
-      dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
-    },
-    []
-  )
 
   return (
     <main className="container">

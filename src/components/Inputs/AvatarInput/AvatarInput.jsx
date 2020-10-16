@@ -3,9 +3,11 @@ import React, { useEffect } from 'react'
 import T from 'prop-types'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { loadAvatar } from 'redux/actions'
+import { setAvatar } from 'redux/actions'
 // assets
 import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
+// helpers
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 // components
 import AvatarImage from 'components/AvatarImage'
 import ValidationError from 'components/ValidationError'
@@ -21,12 +23,12 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
     event.preventDefault()
     const reader = new FileReader()
     const file = event.target.files[0]
-    reader.onloadend = () => dispatch(loadAvatar(reader.result))
+    reader.onloadend = () => {
+      setToLocalStorage('avatar', reader.result)
+      dispatch(setAvatar(reader.result))
+    }
     reader.readAsDataURL(file)
   }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => dispatch(loadAvatar('')), [])
 
   return (
     <div className={classes.avatarCont}>
@@ -34,6 +36,7 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
 
       <label htmlFor="avatar" className={classes.fileLabel}>
         <input
+          value=""
           type="file"
           name="avatar"
           id="avatar"

@@ -13,3 +13,7 @@
 .finish {
   background: #4ee4a5;
 }
+
+.finish:hover {
+  background: #41c48d;
+}
