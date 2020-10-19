@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useState } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
 import { useDispatch } from 'react-redux'
 // useForm
 import { useFormContext } from 'react-hook-form'
-import { changeActiveFormStage, setNewUser } from 'redux/actions'
+import { changeActiveFormStage } from 'redux/actions'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
@@ -33,7 +32,7 @@ import classes from './ContactsForm.module.css'
 const ContactsForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
 
-  const { register, trigger, getValues, errors, control } = useFormContext()
+  const { register, trigger, errors, control } = useFormContext()
 
   const [phones, setPhones] = useState([{ id: 0 }])
 
@@ -47,7 +46,7 @@ const ContactsForm = ({ isEdit, handleSave }) => {
 
   const handleClickForward = async (e) => {
     e.preventDefault()
-    const result = await trigger(['company', 'language', 'fax'])
+    const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE)
       dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
@@ -58,12 +57,6 @@ const ContactsForm = ({ isEdit, handleSave }) => {
     e.preventDefault()
     dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
-
-  useEffect(() => {
-    if (!isEdit) {
-      return () => dispatch(setNewUser(getValues()))
-    }
-  }, [])
 
   return (
     <div className={classes.form}>

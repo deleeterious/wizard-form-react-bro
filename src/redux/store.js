@@ -8,10 +8,7 @@ import { rootReducer } from './reducers'
 const initialState = {
   activeFormStage: ACCOUNT_FORM_STAGE,
   users: [],
-  newUser: {},
-  user: {},
-  avatar: null,
-  isEdit: false
+  user: {}
 }
 
 const store = createStore(

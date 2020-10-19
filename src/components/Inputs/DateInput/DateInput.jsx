@@ -1,6 +1,6 @@
 import React from 'react'
 // prop-types
-import T, { string } from 'prop-types'
+import T from 'prop-types'
 // react-hook-form
 import { Controller } from 'react-hook-form'
 // react-datepicker

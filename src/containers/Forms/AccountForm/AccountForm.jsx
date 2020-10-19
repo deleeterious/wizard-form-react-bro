@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
 import { useFormContext } from 'react-hook-form'
 // react-redux
-import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, setNewUser } from 'redux/actions'
+import { useDispatch } from 'react-redux'
+import { changeActiveFormStage } from 'redux/actions'
 // utils
 import { concatStyles } from 'utils'
 // constants
@@ -13,26 +13,21 @@ import { PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
-  avatarValidation,
-  userNameValidation,
   requiredValidation,
   passwordRepeatValidation
 } from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput'
-import AvatarInput from 'components/Inputs/AvatarInput/AvatarInput'
+import AvatarInput from 'components/Inputs/AvatarInput'
 import Button from 'components/Button'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
 
-const AccountForm = ({ handleSave }) => {
+const AccountForm = ({ handleSave, isEdit }) => {
   const dispatch = useDispatch()
 
-  const isEdit = useSelector((state) => state.isEdit)
-  const avatar = useSelector((state) => state.avatar)
-
-  const { register, errors, trigger, watch, getValues } = useFormContext()
+  const { register, watch, trigger, errors } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
@@ -43,17 +38,11 @@ const AccountForm = ({ handleSave }) => {
     }
   }
 
-  useEffect(() => {
-    if (!isEdit) {
-      return () => dispatch(setNewUser({ ...getValues(), avatar }))
-    }
-  }, [])
-
   return (
     <div className={classes.form}>
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
         <AvatarInput
-          refRegister={register(avatarValidation())}
+          refRegister={register()}
           errorMessage={errors?.avatar?.message}
         />
       </div>

@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 // prop-types
 import T from 'prop-types'
 // react-redux
 import { useDispatch } from 'react-redux'
-import { changeActiveFormStage, setNewUser } from 'redux/actions'
+import { changeActiveFormStage } from 'redux/actions'
 // useForm
 import { useFormContext } from 'react-hook-form'
 // constants
 import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
-import {
-  birthDateValidation,
-  emailValidation,
-  requiredValidation
-} from 'helpers/validations'
+import { birthDateValidation, requiredValidation } from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput'
 import Button from 'components/Button'
@@ -27,16 +23,11 @@ import classes from './ProfileForm.module.css'
 const ProfileForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
 
-  const { register, trigger, getValues, errors, control } = useFormContext()
+  const { register, trigger, errors, control } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
-    const result = await trigger([
-      'firstName',
-      'lastName',
-      'birthDate',
-      'email'
-    ])
+    const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
       dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
@@ -47,12 +38,6 @@ const ProfileForm = ({ isEdit, handleSave }) => {
     e.preventDefault()
     dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
   }
-
-  useEffect(() => {
-    if (!isEdit) {
-      return () => dispatch(setNewUser(getValues()))
-    }
-  }, [])
 
   return (
     <div className={classes.form}>

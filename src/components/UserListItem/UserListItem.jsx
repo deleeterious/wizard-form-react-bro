@@ -21,7 +21,7 @@ const UserListItem = ({ user }) => {
 
   const dispatch = useDispatch()
 
-  const { userName, firstName, lastName, company, email, id, avatar } = user
+  const { userName, firstName, lastName, company, email, id, avatarData } = user
 
   function handleOutSideClick(e) {
     const domNode = document.getElementById('deleteBtn')
@@ -47,7 +47,7 @@ const UserListItem = ({ user }) => {
       )}
     >
       <div className={classes.avatar}>
-        <AvatarImage avatar={avatar} size={{ width: 40, height: 40 }} />
+        <AvatarImage avatar={avatarData} size={{ width: 40, height: 40 }} />
       </div>
       <div className={classes.name}>
         <div className={classes.fullName}>{`${firstName} ${lastName}`}</div>
@@ -87,7 +87,7 @@ UserListItem.propTypes = {
     company: T.string,
     email: T.string,
     id: T.number,
-    avatar: T.string
+    avatarData: T.string
   })
 }
 

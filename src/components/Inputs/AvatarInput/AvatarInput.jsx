@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 // prop-types
 import T from 'prop-types'
-// redux
-import { useDispatch, useSelector } from 'react-redux'
-import { setAvatar } from 'redux/actions'
+// react-hook-form
+import { useFormContext } from 'react-hook-form'
 // assets
 import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
-// helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
 // components
 import AvatarImage from 'components/AvatarImage'
 import ValidationError from 'components/ValidationError'
@@ -16,31 +13,31 @@ import ValidationError from 'components/ValidationError'
 import classes from './AvatarInput.module.css'
 
 const AvatarInput = ({ refRegister, errorMessage }) => {
-  const dispatch = useDispatch()
-  const avatar = useSelector((state) => state.avatar)
+  const { setValue, watch } = useFormContext()
 
   const handleLoadLocalFile = (event) => {
-    event.preventDefault()
     const reader = new FileReader()
     const file = event.target.files[0]
     reader.onloadend = () => {
-      setToLocalStorage('avatar', reader.result)
-      dispatch(setAvatar(reader.result))
+      setValue('avatarData', reader.result, { shouldDirty: true })
     }
     reader.readAsDataURL(file)
   }
 
   return (
     <div className={classes.avatarCont}>
-      <AvatarImage avatar={avatar} />
+      <AvatarImage avatar={watch('avatarData')} />
 
       <label htmlFor="avatar" className={classes.fileLabel}>
         <input
-          value=""
+          name="avatarData"
+          ref={refRegister}
+          className={classes.avatarData}
+        />
+        <input
           type="file"
           name="avatar"
           id="avatar"
-          ref={refRegister}
           className={classes.fileInput}
           onChange={handleLoadLocalFile}
         />

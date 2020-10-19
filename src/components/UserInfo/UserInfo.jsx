@@ -25,7 +25,7 @@ import classes from './UserInfo.module.css'
 const UserInfo = ({ user }) => {
   const {
     userName,
-    avatar,
+    avatarData,
     password,
     firstName,
     lastName,
@@ -46,7 +46,7 @@ const UserInfo = ({ user }) => {
   return (
     <div className={classes.userInfo}>
       <div className={classes.avatarCont}>
-        <AvatarImage avatar={avatar} />
+        <AvatarImage avatar={avatarData} />
       </div>
       <div className={classes.infoCont}>
         <div className={classes.sectionCont}>
@@ -192,11 +192,11 @@ const UserInfo = ({ user }) => {
 UserInfo.propTypes = {
   user: T.shape({
     userName: T.string,
-    avatar: T.string,
+    avatarData: T.string,
     password: T.string,
     firstName: T.string,
     lastName: T.string,
-    birthDate: T.string,
+    birthDate: T.object,
     email: T.string,
     address: T.string,
     company: T.string,
