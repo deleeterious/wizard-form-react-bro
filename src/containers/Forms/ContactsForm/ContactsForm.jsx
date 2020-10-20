@@ -17,6 +17,7 @@ import {
 import {
   CAPABILITIES_FORM_STAGE,
   languages,
+  PHONE_MASK,
   PROFILE_FORM_STAGE
 } from 'constants.js'
 // components
@@ -27,7 +28,6 @@ import MaskInput from 'components/Inputs/MaskInput'
 import AddButton from 'components/AddButton'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
-import classes from './ContactsForm.module.css'
 
 const ContactsForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
@@ -60,8 +60,8 @@ const ContactsForm = ({ isEdit, handleSave }) => {
   }
 
   return (
-    <div className={classes.form}>
-      <div className={classes.flexCont}>
+    <div className={commonStyles.form}>
+      <div className={commonStyles.flexCont}>
         <TextInput
           type="text"
           name="company"
@@ -94,13 +94,13 @@ const ContactsForm = ({ isEdit, handleSave }) => {
         />
       </div>
 
-      <div className={classes.flexCont}>
+      <div className={commonStyles.flexCont}>
         <MaskInput
           title="Fax"
           control={control}
           name="fax"
           placeholder="+38 (XXX) XXX XX XX"
-          mask="+38 (999) 999 99 99"
+          mask={PHONE_MASK}
           rules={faxValidation()}
           errorMessage={errors?.fax?.message}
         />
@@ -112,7 +112,7 @@ const ContactsForm = ({ isEdit, handleSave }) => {
             control={control}
             name={`phones[${phone.id}]`}
             placeholder="+38 (XXX) XXX XX XX"
-            mask="+38 (999) 999 99 99"
+            mask={PHONE_MASK}
             rules={phoneValidation()}
             errorMessage={
               errors.phones && errors.phones[phone.id]
@@ -127,14 +127,10 @@ const ContactsForm = ({ isEdit, handleSave }) => {
         )}
 
         <div className={commonStyles.buttons}>
-          {isEdit || (
-            <Button className={commonStyles.l0} handleClick={handleClickBack}>
-              Back
-            </Button>
-          )}
+          {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
 
           <Button
-            className={commonStyles.r0}
+            className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
           >
             {isEdit ? 'Save' : 'Forward'}

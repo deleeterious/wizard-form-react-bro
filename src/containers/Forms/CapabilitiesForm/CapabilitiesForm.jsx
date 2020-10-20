@@ -36,8 +36,8 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
   }
 
   return (
-    <div className={classes.form}>
-      <div className={classes.flexCont}>
+    <div className={commonStyles.form}>
+      <div className={commonStyles.flexCont}>
         <SelectInput
           title="Skills"
           name="skills"
@@ -55,7 +55,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
           errorMessage={errors?.additionInfo?.message}
         />
       </div>
-      <div className={classes.flexCont}>
+      <div className={commonStyles.flexCont}>
         <CheckboxInput title="Hobbies">
           <CheckboxInputItem
             title="Art"
@@ -98,7 +98,10 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
           {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
           <Button
             handleClick={isEdit ? handleSave : null}
-            className={concatStyles(commonStyles.r0, isEdit || classes.finish)}
+            className={concatStyles(
+              commonStyles.positionRight,
+              isEdit || classes.finish
+            )}
           >
             {isEdit ? 'Save' : 'Finish'}
           </Button>

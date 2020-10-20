@@ -4,12 +4,12 @@
   margin-top: 45px;
 }
 
-.flexCont {
+.formSection {
   max-width: 400px;
   width: 100%;
 }
 
-.leftCont {
+.avatarInputCont {
   display: flex;
   justify-content: left;
 }

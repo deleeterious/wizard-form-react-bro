@@ -22,7 +22,6 @@ import DateInput from 'components/Inputs/DateInput'
 import RadioInput from 'components/Inputs/RadioInput'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
-import classes from './ProfileForm.module.css'
 
 const ProfileForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
@@ -47,8 +46,8 @@ const ProfileForm = ({ isEdit, handleSave }) => {
   }
 
   return (
-    <div className={classes.form}>
-      <div className={classes.flexCont}>
+    <div className={commonStyles.form}>
+      <div className={commonStyles.flexCont}>
         <TextInput
           type="text"
           title="First name"
@@ -73,7 +72,7 @@ const ProfileForm = ({ isEdit, handleSave }) => {
         />
       </div>
 
-      <div className={classes.flexCont}>
+      <div className={commonStyles.flexCont}>
         <TextInput
           type="text"
           name="email"
@@ -95,8 +94,8 @@ const ProfileForm = ({ isEdit, handleSave }) => {
           {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
 
           <Button
+            className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
-            className={commonStyles.r0}
           >
             {isEdit ? 'Save' : 'Forward'}
           </Button>

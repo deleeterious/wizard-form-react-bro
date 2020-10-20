@@ -3,6 +3,8 @@ export const PROFILE_FORM_STAGE = 'PROFILE_FORM_STAGE'
 export const CONTACTS_FORM_STAGE = 'CONTACTS_FORM_STAGE'
 export const CAPABILITIES_FORM_STAGE = 'CAPABILITIES_FORM_STAGE'
 
+export const PHONE_MASK = '+38 (999) 999 99 99'
+
 export const languages = [
   { value: 'en', label: 'English' },
   { value: 'en', label: 'French' },

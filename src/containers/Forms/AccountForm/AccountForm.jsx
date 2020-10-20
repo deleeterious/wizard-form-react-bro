@@ -43,14 +43,16 @@ const AccountForm = ({ handleSave, isEdit }) => {
 
   return (
     <div className={classes.form}>
-      <div className={concatStyles(classes.flexCont, classes.leftCont)}>
+      <div
+        className={concatStyles(classes.formSection, classes.avatarInputCont)}
+      >
         <AvatarInput
           refRegister={register()}
           errorMessage={errors?.avatarData?.message}
         />
       </div>
 
-      <div className={classes.flexCont}>
+      <div className={classes.formSection}>
         <TextInput
           type="text"
           name="userName"
@@ -78,9 +80,9 @@ const AccountForm = ({ handleSave, isEdit }) => {
         />
         <div className={commonStyles.buttons}>
           <Button
+            className={commonStyles.positionRight}
             disabled={Object.keys(errors).length}
             handleClick={isEdit ? handleSave : handleClickForward}
-            className={commonStyles.r0}
           >
             {isEdit ? 'Save' : 'Forward'}
           </Button>
