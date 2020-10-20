@@ -7,11 +7,11 @@ import LinkBack from 'components/LinkBack'
 import classes from './Title.module.css'
 
 const Title = ({ children, linkBackPath, linkBackTitle }) => (
-  <div className={classes.titleCont}>
+  <div className={classes.title}>
     {linkBackPath ? (
       <LinkBack to={linkBackPath}>{linkBackTitle}</LinkBack>
     ) : null}
-    <h1 className={classes.title}>{children}</h1>
+    <h1>{children}</h1>
   </div>
 )
 

@@ -8,7 +8,9 @@ import { rootReducer } from './reducers'
 const initialState = {
   activeFormStage: ACCOUNT_FORM_STAGE,
   users: [],
-  user: {}
+  user: {},
+  isFetching: false,
+  error: ''
 }
 
 const store = createStore(

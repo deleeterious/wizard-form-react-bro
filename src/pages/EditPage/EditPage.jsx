@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
-// constants
-import { ACCOUNT_FORM_STAGE } from 'constants.js'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
 import { changeActiveFormStage, getUser } from 'redux/actions'
+// constants
+import { ACCOUNT_FORM_STAGE } from 'constants.js'
 // components
 import Title from 'components/Title'
 // containers

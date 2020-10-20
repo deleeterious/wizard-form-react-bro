@@ -1,7 +1,6 @@
 import React from 'react'
 // react-redux
 import { useSelector } from 'react-redux'
-
 // components
 import Title from 'components/Title'
 // containers

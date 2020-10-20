@@ -6,11 +6,29 @@ import {
   LOAD_USERS,
   GET_USER,
   UPDATE_USER,
-  DELETE_USER
+  DELETE_USER,
+  FETCHING_PENDING,
+  FETCHING_SUCCESS,
+  FETCHING_ERROR
 } from 'redux/types'
+
+export const fetchingPending = () => ({
+  type: FETCHING_PENDING
+})
+
+export const fetchingSuccess = () => ({
+  type: FETCHING_SUCCESS
+})
+
+export const fetchingError = (payload) => ({
+  type: FETCHING_ERROR,
+  payload
+})
 
 export const loadUsers = () => {
   return (dispatch) => {
+    dispatch(fetchingPending())
+
     db.table('users')
       .toArray()
       .then((users) => {
@@ -18,12 +36,19 @@ export const loadUsers = () => {
           type: LOAD_USERS,
           payload: users
         })
+
+        dispatch(fetchingSuccess())
+      })
+      .catch((err) => {
+        dispatch(fetchingError(err))
       })
   }
 }
 
 export const getUser = (id) => {
   return (dispatch) => {
+    dispatch(fetchingPending())
+
     db.table('users')
       .get(+id)
       .then((user) => {
@@ -31,6 +56,11 @@ export const getUser = (id) => {
           type: GET_USER,
           payload: user
         })
+
+        dispatch(fetchingSuccess())
+      })
+      .catch((err) => {
+        dispatch(fetchingError(err))
       })
   }
 }
@@ -45,6 +75,9 @@ export const updateUser = (id, changes) => {
           payload: { id, changes }
         })
       })
+      .catch((err) => {
+        throw new Error(err)
+      })
   }
 }
 
@@ -58,6 +91,9 @@ export const addUser = (user) => {
           payload: { ...user, id }
         })
       })
+      .catch((err) => {
+        throw new Error(err)
+      })
   }
 }
 
@@ -70,6 +106,9 @@ export const deleteUser = (id) => {
           type: DELETE_USER,
           payload: id
         })
+      })
+      .catch((err) => {
+        throw new Error(err)
       })
   }
 }

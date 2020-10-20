@@ -9,9 +9,12 @@ import classes from './Button.module.css'
 const Button = ({ children, className, handleClick, disabled }) => (
   <div className={classes.btnCont}>
     <button
-      // disabled={disabled}
       onClick={handleClick}
-      className={concatStyles(classes.button, className)}
+      className={concatStyles(
+        classes.button,
+        className,
+        disabled ? classes.disabled : null
+      )}
     >
       {children}
     </button>
@@ -21,8 +24,8 @@ const Button = ({ children, className, handleClick, disabled }) => (
 Button.propTypes = {
   children: T.string,
   className: T.string,
-  onClick: T.func,
-  disabled: T.bool
+  handleClick: T.func,
+  disabled: T.oneOfType([T.bool, T.number])
 }
 
 export default Button

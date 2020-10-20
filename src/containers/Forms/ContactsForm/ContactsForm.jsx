@@ -55,6 +55,7 @@ const ContactsForm = ({ isEdit, handleSave }) => {
 
   const handleClickBack = (e) => {
     e.preventDefault()
+    setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
     dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
 

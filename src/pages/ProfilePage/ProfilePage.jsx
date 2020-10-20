@@ -1,31 +1,18 @@
 import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
-// components
-import Title from 'components/Title'
-import UserInfo from 'components/UserInfo'
-// import db from 'db'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from 'redux/actions'
-
-// TODO add missing params error handler
+// components
+import Title from 'components/Title'
+import UserInfo from 'components/UserInfo'
+import Spinner from 'components/Spinner'
 
 const ProfilePage = ({ match }) => {
-  // BD request
-  // const [user, setUser] = useState({})
-
-  // useEffect(() => {
-  //   db.table('users')
-  //     .get(+match.params.id)
-  //     .then((data) => {
-  //       setUser(data)
-  //     })
-  // }, [])
-
   const dispatch = useDispatch()
 
-  const user = useSelector((state) => state.user)
+  const { user, isFetching } = useSelector((state) => state)
 
   useEffect(() => {
     dispatch(getUser(match.params.id))
@@ -37,7 +24,7 @@ const ProfilePage = ({ match }) => {
       <Title linkBackPath="/" linkBackTitle="Users List">
         {user.userName}
       </Title>
-      <UserInfo user={user} />
+      {isFetching ? <Spinner /> : <UserInfo user={user} />}
     </main>
   )
 }

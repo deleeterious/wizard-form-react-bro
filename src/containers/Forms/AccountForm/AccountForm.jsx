@@ -4,7 +4,7 @@ import T from 'prop-types'
 // react-hook-form
 import { useFormContext } from 'react-hook-form'
 // react-redux
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
 // utils
 import { concatStyles } from 'utils'
@@ -13,8 +13,9 @@ import { PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
-  requiredValidation,
-  passwordRepeatValidation
+  passwordRepeatValidation,
+  passwordValidation,
+  userNameValidation
 } from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput'
@@ -26,6 +27,8 @@ import classes from './AccountForm.module.css'
 
 const AccountForm = ({ handleSave, isEdit }) => {
   const dispatch = useDispatch()
+
+  const user = useSelector((state) => state.user)
 
   const { register, watch, trigger, errors } = useFormContext()
 
@@ -43,7 +46,7 @@ const AccountForm = ({ handleSave, isEdit }) => {
       <div className={concatStyles(classes.flexCont, classes.leftCont)}>
         <AvatarInput
           refRegister={register()}
-          errorMessage={errors?.avatar?.message}
+          errorMessage={errors?.avatarData?.message}
         />
       </div>
 
@@ -52,7 +55,7 @@ const AccountForm = ({ handleSave, isEdit }) => {
           type="text"
           name="userName"
           title="User Name"
-          refRegister={register(requiredValidation())}
+          refRegister={register(userNameValidation(isEdit ? user : {}))}
           errorMessage={errors?.userName?.message}
         />
 
@@ -60,7 +63,9 @@ const AccountForm = ({ handleSave, isEdit }) => {
           type="password"
           name="password"
           title="Password"
-          refRegister={register(requiredValidation())}
+          refRegister={register(
+            passwordValidation(/* watch('passwordRepeat') */)
+          )}
           errorMessage={errors?.password?.message}
         />
 
@@ -73,6 +78,7 @@ const AccountForm = ({ handleSave, isEdit }) => {
         />
         <div className={commonStyles.buttons}>
           <Button
+            disabled={Object.keys(errors).length}
             handleClick={isEdit ? handleSave : handleClickForward}
             className={commonStyles.r0}
           >

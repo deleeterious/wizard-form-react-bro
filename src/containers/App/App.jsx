@@ -17,16 +17,18 @@ import ProfilePage from 'pages/ProfilePage'
 import EditPage from 'pages/EditPage/EditPage'
 
 const App = () => (
-  <Router className="app">
-    <Route component={Header} />
-    <Switch>
-      <Route exact path="/edit/:id" component={EditPage} />
-      <Route exact path="/profile/:id" component={ProfilePage} />
-      <Route exact path="/new-user" component={FormsPage} />
-      <Route exact path="/" component={UserListPage} />
-      <Redirect to="/" />
-    </Switch>
-  </Router>
+  <div className="app">
+    <Router>
+      <Header />
+      <Switch>
+        <Route exact path="/edit/:id" component={EditPage} />
+        <Route exact path="/profile/:id" component={ProfilePage} />
+        <Route exact path="/new-user" component={FormsPage} />
+        <Route exact path="/" component={UserListPage} />
+        <Redirect to="/" />
+      </Switch>
+    </Router>
+  </div>
 )
 
 export default App

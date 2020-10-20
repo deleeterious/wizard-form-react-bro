@@ -1,14 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // react-redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadUsers } from 'redux/actions'
 // components
 import Title from 'components/Title'
 import NoUserIndicator from 'components/NoUserIndicator'
+import Spinner from 'components/Spinner'
 // containers
 import UserList from 'containers/UserList'
 
 const UserListPage = () => {
-  const users = useSelector((state) => state.users)
+  const dispatch = useDispatch()
+
+  const { users, isFetching } = useSelector((state) => state)
+
+  useEffect(() => dispatch(loadUsers()), [])
+
+  if (isFetching) {
+    return (
+      <main className="container">
+        <Title>List of users</Title>
+        <Spinner />
+      </main>
+    )
+  }
 
   return (
     <main className="container">

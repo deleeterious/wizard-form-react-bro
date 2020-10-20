@@ -14,7 +14,7 @@
   cursor: pointer;
 }
 
-.button:disabled {
+.disabled {
   background: #c1cfe0;
 }
 

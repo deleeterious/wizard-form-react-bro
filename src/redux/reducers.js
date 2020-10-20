@@ -2,6 +2,9 @@ import {
   ADD_USER,
   CHANGE_ACTIVE_FORM_STAGE,
   DELETE_USER,
+  FETCHING_ERROR,
+  FETCHING_PENDING,
+  FETCHING_SUCCESS,
   GET_USER,
   LOAD_USERS,
   UPDATE_USER
@@ -44,6 +47,24 @@ export const rootReducer = (state, { type, payload }) => {
         ...state,
         activeFormStage: payload
       }
+    case FETCHING_PENDING: {
+      return {
+        ...state,
+        isFetching: true
+      }
+    }
+    case FETCHING_SUCCESS: {
+      return {
+        ...state,
+        isFetching: false
+      }
+    }
+    case FETCHING_ERROR: {
+      return {
+        ...state,
+        error: payload
+      }
+    }
 
     default:
       return state

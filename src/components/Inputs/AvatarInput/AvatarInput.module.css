@@ -15,8 +15,15 @@
   justify-content: center;
   margin-top: 15px;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .avatarData {
   display: none;
+}
+
+.avatarCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -7,6 +7,7 @@ import { useFormContext } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
 // helpers
+import { setToLocalStorage } from 'helpers/localStorageHelper'
 import { additionInfoValidation, skillsValidation } from 'helpers/validations'
 // constants
 import { CONTACTS_FORM_STAGE, skillsList } from 'constants.js'
@@ -30,6 +31,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
 
   const handleClickBack = (e) => {
     e.preventDefault()
+    setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
     dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
 

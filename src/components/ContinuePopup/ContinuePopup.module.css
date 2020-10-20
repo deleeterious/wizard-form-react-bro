@@ -16,11 +16,13 @@
 
 .popupBtn {
   font-weight: 800;
+  cursor: pointer;
 }
 
 .close {
   position: absolute;
   right: 25px;
+  cursor: pointer;
 }
 
 .close:hover path {

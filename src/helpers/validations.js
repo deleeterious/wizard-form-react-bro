@@ -1,19 +1,35 @@
+import db from 'db'
+
+const isUniquePropValidation = async (value, currentUser, prop) => {
+  const users = await db.table('users').toArray()
+
+  const foundUser = users.find((user) => user[prop] === value)
+
+  if (foundUser) {
+    if (foundUser[prop] !== currentUser[prop]) {
+      return 'This name is already used'
+    }
+  }
+
+  return true
+}
+
 // Common validation
 
 export const requiredValidation = () => ({ required: 'This field is required' })
 
 // Account form validation
 
-export const avatarValidation = () => ({
-  validate: (value) =>
-    value.length === 0 || +value[0].size < 1e6 || 'File size is more than 1MB'
+export const userNameValidation = (currentUser) => ({
+  required: 'This field is required',
+  validate: (value) => isUniquePropValidation(value, currentUser, 'userName')
 })
 
-export const userNameValidation = (users) => ({
+export const passwordValidation = (passwordRepeat) => ({
   required: 'This field is required',
-  validate: (value) =>
-    !users.find((user) => user.userName === value) ||
-    'This username is already used'
+  // validate: (value) => passwordRepeat === value || "Password don't match",
+  minLength: { value: 8, message: 'Password min length 8 symbols' },
+  pattern: { value: /\d/, message: 'Password must have least 1 number' }
 })
 
 export const passwordRepeatValidation = (password) => ({
@@ -29,10 +45,13 @@ export const birthDateValidation = () => ({
     'You are under 18 years old'
 })
 
-export const emailValidation = (users) => ({
+export const emailValidation = (currentUser) => ({
   required: 'This field is required',
-  validate: (value) =>
-    !users.find((user) => user.email === value) || 'This email is already used'
+  pattern: {
+    value: /\w+[@]\w+[.]\w+/,
+    message: 'Invalid email'
+  },
+  validate: (value) => isUniquePropValidation(value, currentUser, 'email')
 })
 
 // Contacts form validation

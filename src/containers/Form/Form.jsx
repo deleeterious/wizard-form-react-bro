@@ -40,20 +40,24 @@ const Form = ({ isEdit }) => {
   const { activeFormStage, user } = useSelector((state) => state)
 
   const methods = useForm({
+    mode: 'onChange',
     shouldUnregister: false
   })
 
-  const { getValues, handleSubmit, reset, watch, formState } = methods
+  const { getValues, handleSubmit, reset, watch, trigger, formState } = methods
 
   const onSubmit = (data) => {
     dispatch(addUser(data))
     history.push('/')
   }
 
-  const onSave = (e) => {
+  const onSave = async (e) => {
     e.preventDefault()
-    dispatch(updateUser(user.id, getValues()))
-    history.push(`profile/${user.id}`)
+    const result = await trigger()
+    if (result) {
+      dispatch(updateUser(user.id, getValues()))
+      history.push(`profile/${user.id}`)
+    }
   }
 
   const handleContinue = () => {

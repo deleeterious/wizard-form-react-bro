@@ -2,7 +2,7 @@ import React from 'react'
 // prop-types
 import T from 'prop-types'
 // react-redux
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
 // useForm
 import { useFormContext } from 'react-hook-form'
@@ -10,7 +10,11 @@ import { useFormContext } from 'react-hook-form'
 import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
-import { birthDateValidation, requiredValidation } from 'helpers/validations'
+import {
+  birthDateValidation,
+  emailValidation,
+  requiredValidation
+} from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput'
 import Button from 'components/Button'
@@ -22,6 +26,8 @@ import classes from './ProfileForm.module.css'
 
 const ProfileForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
+
+  const user = useSelector((state) => state.user)
 
   const { register, trigger, errors, control } = useFormContext()
 
@@ -36,6 +42,7 @@ const ProfileForm = ({ isEdit, handleSave }) => {
 
   const handleClickBack = (e) => {
     e.preventDefault()
+    setToLocalStorage('newUserStage', ACCOUNT_FORM_STAGE)
     dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
   }
 
@@ -71,7 +78,7 @@ const ProfileForm = ({ isEdit, handleSave }) => {
           type="text"
           name="email"
           title="Email"
-          refRegister={register(requiredValidation())}
+          refRegister={register(emailValidation(isEdit ? user : {}))}
           errorMessage={errors?.email?.message}
         />
 

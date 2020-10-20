@@ -13,13 +13,23 @@ import ValidationError from 'components/ValidationError'
 import classes from './AvatarInput.module.css'
 
 const AvatarInput = ({ refRegister, errorMessage }) => {
-  const { setValue, watch } = useFormContext()
+  const { setValue, setError, watch } = useFormContext()
 
-  const handleLoadLocalFile = (event) => {
+  const handleLoadLocalFile = (e) => {
+    e.preventDefault()
     const reader = new FileReader()
-    const file = event.target.files[0]
+    const file = e.target.files[0]
     reader.onloadend = () => {
-      setValue('avatarData', reader.result, { shouldDirty: true })
+      const fileSizeMB = file.size / 1024 / 1024
+
+      if (fileSizeMB > 1) {
+        setError('avatarData', {
+          type: 'manual',
+          message: 'Image max size 1 MB'
+        })
+      } else {
+        setValue('avatarData', reader.result, { shouldDirty: true })
+      }
     }
     reader.readAsDataURL(file)
   }
