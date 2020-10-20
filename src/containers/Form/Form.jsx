@@ -48,6 +48,7 @@ const Form = ({ isEdit }) => {
 
   const onSubmit = (data) => {
     dispatch(addUser(data))
+    localStorage.clear()
     history.push('/')
   }
 
@@ -81,15 +82,18 @@ const Form = ({ isEdit }) => {
   useEffect(
     () => () => {
       if (!isPopup && !isEdit) {
-        if (formState.isDirty)
+        if (formState.isDirty) {
           setToLocalStorage('newUser', {
             ...getFromLocalStorage('newUser'),
             ...getValues()
           })
+        }
       }
     },
     [watch()]
   )
+
+  useEffect(() => () => dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE)), [])
 
   return (
     <FormProvider {...methods}>

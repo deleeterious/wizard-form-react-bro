@@ -2,12 +2,17 @@ import React, { useState } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // useForm
 import { useFormContext } from 'react-hook-form'
 import { changeActiveFormStage } from 'redux/actions'
+// assets
+import { ReactComponent as DeletePhoneBtn } from 'assets/icons/minus.svg'
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 import {
   faxValidation,
   requiredValidation,
@@ -28,20 +33,33 @@ import MaskInput from 'components/Inputs/MaskInput'
 import AddButton from 'components/AddButton'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
+import classes from './ContactsForm.module.css'
 
 const ContactsForm = ({ isEdit, handleSave }) => {
   const dispatch = useDispatch()
 
-  const { register, trigger, errors, control } = useFormContext()
+  const user = useSelector((state) => state.user)
 
-  const [phones, setPhones] = useState([{ id: 0 }])
+  const { register, trigger, setValue, errors, control } = useFormContext()
 
-  const handleClick = (e) => {
+  const newUserPhones = isEdit
+    ? user.phones.filter((item) => item !== '')
+    : getFromLocalStorage('newUser').phones.filter((item) => item !== '')
+
+  const initialPhones = newUserPhones?.length
+    ? [...new Array(newUserPhones.length)].map((_, i) => ({ id: i }))
+    : [{ id: 0 }]
+
+  const [phones, setPhones] = useState(initialPhones)
+
+  const handleAddPhone = (e) => {
     e.preventDefault()
-    setPhones((prevState) => [
-      ...prevState,
-      { id: prevState[prevState.length - 1].id + 1 }
-    ])
+    setPhones((prevState) => [...prevState, { id: prevState.length }])
+  }
+
+  const handleDeletePhone = (id) => {
+    setPhones((prevState) => [...prevState.filter((item) => item.id !== id)])
+    setValue(`phones[${id}]`, '', { shouldDirty: true })
   }
 
   const handleClickForward = async (e) => {
@@ -106,24 +124,31 @@ const ContactsForm = ({ isEdit, handleSave }) => {
         />
 
         {phones.map((phone) => (
-          <MaskInput
-            key={phone.id}
-            title={`Phone #${phone.id + 1}`}
-            control={control}
-            name={`phones[${phone.id}]`}
-            placeholder="+38 (XXX) XXX XX XX"
-            mask={PHONE_MASK}
-            rules={phoneValidation()}
-            errorMessage={
-              errors.phones && errors.phones[phone.id]
-                ? errors.phones[phone.id].message
-                : ''
-            }
-          />
+          <div className={classes.phoneCont} key={phone.id}>
+            <MaskInput
+              title={`Phone #${phone.id + 1}`}
+              control={control}
+              name={`phones[${phone.id}]`}
+              placeholder="+38 (XXX) XXX XX XX"
+              mask={PHONE_MASK}
+              rules={phoneValidation()}
+              errorMessage={
+                errors.phones && errors.phones[phone.id]
+                  ? errors.phones[phone.id].message
+                  : ''
+              }
+            />
+            {phones.length === 1 || (
+              <DeletePhoneBtn
+                onClick={() => handleDeletePhone(phone.id)}
+                className={classes.deletePhoneBtn}
+              />
+            )}
+          </div>
         ))}
 
         {phones.length !== 3 && (
-          <AddButton onClick={handleClick}>add phone number</AddButton>
+          <AddButton onClick={handleAddPhone}>add phone number</AddButton>
         )}
 
         <div className={commonStyles.buttons}>

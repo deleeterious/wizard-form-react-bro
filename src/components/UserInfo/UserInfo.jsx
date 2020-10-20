@@ -138,12 +138,17 @@ const UserInfo = ({ user }) => {
                 </a>
               </div>
             </div>
-            {phones?.map((phone, i) => (
-              <div className={classes.infoListItem} key={i}>
-                <div className={classes.infoListItemTitle}>Phone#{i + 1}:</div>
-                <div className={classes.infoListItemValue}>{phone}</div>
-              </div>
-            ))}
+            {phones?.map((phone, i) => {
+              if (phone)
+                return (
+                  <div className={classes.infoListItem} key={i}>
+                    <div className={classes.infoListItemTitle}>
+                      Phone#{i + 1}:
+                    </div>
+                    <div className={classes.infoListItemValue}>{phone}</div>
+                  </div>
+                )
+            })}
           </div>
         </div>
         <div className={classes.sectionCont}>
