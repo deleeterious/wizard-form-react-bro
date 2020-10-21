@@ -65,14 +65,14 @@ export const getUser = (id) => {
   }
 }
 
-export const updateUser = (id, changes) => {
+export const updateUser = (id, payload) => {
   return (dispatch) => {
     db.table('users')
-      .update(id, { ...changes })
+      .update(id, { ...payload })
       .then(() => {
         dispatch({
           type: UPDATE_USER,
-          payload: { id, changes }
+          payload: { id, changes: payload }
         })
       })
       .catch((err) => {
@@ -90,6 +90,8 @@ export const addUser = (user) => {
           type: ADD_USER,
           payload: { ...user, id }
         })
+
+        localStorage.clear()
       })
       .catch((err) => {
         throw new Error(err)

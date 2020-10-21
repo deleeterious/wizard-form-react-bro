@@ -16,10 +16,10 @@ import ValidationError from 'components/ValidationError'
 import commonStyles from 'components/Inputs/common/styles.module.css'
 import classes from './DateInput.module.css'
 
-const DateInput = ({ control, rules, errorMessage, name }) => (
+const DateInput = ({ control, rules, label, errorMessage, name }) => (
   <div className={commonStyles.inputCont}>
     <label htmlFor={name}>
-      <div className={commonStyles.inputLabel}>Birth date</div>
+      <div className={commonStyles.inputLabel}>{label}</div>
       <Controller
         control={control}
         name={name}
@@ -58,6 +58,7 @@ const DateInput = ({ control, rules, errorMessage, name }) => (
 
 DateInput.propTypes = {
   control: T.object,
+  label: T.string,
   rules: T.object,
   errorMessage: T.string,
   name: T.string

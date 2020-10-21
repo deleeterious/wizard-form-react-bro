@@ -12,9 +12,12 @@ import { ReactComponent as PassNotVisibleIcon } from 'assets/icons/pass-notvisib
 // utils
 import { concatStyles } from 'utils'
 // constants
-import { ACCOUNT_FORM_STAGE, PROFILE_FORM_STAGE } from 'constants.js'
+import { PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 import {
   passwordRepeatValidation,
   passwordValidation,
@@ -53,8 +56,17 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
-      setToLocalStorage('submittedStages', [ACCOUNT_FORM_STAGE])
-      setSubmittedStages((prevState) => [...prevState, ACCOUNT_FORM_STAGE])
+
+      setToLocalStorage('submittedStages', {
+        ...getFromLocalStorage('submittedStages'),
+        ACCOUNT_FORM_STAGE: true
+      })
+
+      setSubmittedStages((prevState) => ({
+        ...prevState,
+        ACCOUNT_FORM_STAGE: true
+      }))
+
       dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
     }
   }

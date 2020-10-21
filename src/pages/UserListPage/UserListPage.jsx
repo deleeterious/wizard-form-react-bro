@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadUsers } from 'redux/actions'
 // components
 import Title from 'components/Title'
-import NoUserIndicator from 'components/NoUserIndicator'
+import NoUsersPlaceholder from 'components/NoUsersPlaceholder'
 import Spinner from 'components/Spinner'
 // containers
 import UserList from 'containers/UserList'
@@ -28,7 +28,7 @@ const UserListPage = () => {
   return (
     <main className="container">
       <Title>List of users</Title>
-      {users.length ? <UserList users={users} /> : <NoUserIndicator />}
+      {users.length ? <UserList users={users} /> : <NoUsersPlaceholder />}
     </main>
   )
 }

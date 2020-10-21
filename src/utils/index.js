@@ -30,6 +30,6 @@ export const parseLastUpdateDate = (value) => {
 
   if (passedTime.getMinutes() >= 5)
     return `${passedTime.getMinutes()} minutes ago`
-  if (passedTime.getMinutes() < 5) return 'few minutes ago'
   if (passedTime.getMinutes() < 1) return 'just now'
+  if (passedTime.getMinutes() < 5) return 'few minutes ago'
 }

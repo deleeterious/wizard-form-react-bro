@@ -29,7 +29,7 @@ import ProfileForm from 'containers/Forms/ProfileForm'
 import ContactsForm from 'containers/Forms/ContactsForm'
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
 
-const Form = ({ setSubmittedStages, isEdit }) => {
+const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -48,7 +48,6 @@ const Form = ({ setSubmittedStages, isEdit }) => {
 
   const onSubmit = (data) => {
     dispatch(addUser({ ...data, lastUpdate: new Date() }))
-    localStorage.clear()
     history.push('/')
   }
 
@@ -74,6 +73,7 @@ const Form = ({ setSubmittedStages, isEdit }) => {
 
   const handleClose = () => {
     localStorage.clear()
+    setToLocalStorage('submittedStages', submittedStages)
     setIsPopup(false)
   }
 
@@ -81,19 +81,16 @@ const Form = ({ setSubmittedStages, isEdit }) => {
     if (isEdit) reset({ ...user })
   }, [user])
 
-  useEffect(
-    () => () => {
-      if (!isPopup && !isEdit) {
-        if (formState.isDirty) {
-          setToLocalStorage('newUser', {
-            ...getFromLocalStorage('newUser'),
-            ...getValues()
-          })
-        }
+  useEffect(() => {
+    if (!isPopup && !isEdit) {
+      if (formState.isDirty) {
+        setToLocalStorage('newUser', {
+          ...getFromLocalStorage('newUser'),
+          ...getValues()
+        })
       }
-    },
-    [watch()]
-  )
+    }
+  }, [watch()])
 
   useEffect(() => () => dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE)), [])
 
@@ -141,6 +138,7 @@ const Form = ({ setSubmittedStages, isEdit }) => {
 
 Form.propTypes = {
   setSubmittedStages: T.func,
+  submittedStages: T.object,
   activeFormStage: T.string,
   isEdit: T.bool
 }

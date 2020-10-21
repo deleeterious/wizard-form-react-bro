@@ -21,7 +21,6 @@ import {
 // constants
 import {
   CAPABILITIES_FORM_STAGE,
-  CONTACTS_FORM_STAGE,
   languages,
   PHONE_MASK,
   PROFILE_FORM_STAGE
@@ -52,7 +51,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const newUserPhones = isEdit
     ? user.phones?.filter((item) => item !== '')
-    : getFromLocalStorage('newUser').phones?.filter((item) => item !== '')
+    : getFromLocalStorage('newUser')?.phones?.filter((item) => item !== '')
 
   const initialPhones = newUserPhones?.length
     ? [...new Array(newUserPhones.length)].map((_, i) => ({ id: i }))
@@ -75,11 +74,17 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE)
-      setToLocalStorage('submittedStages', [
+
+      setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
-        CONTACTS_FORM_STAGE
-      ])
-      setSubmittedStages((prevState) => [...prevState, CONTACTS_FORM_STAGE])
+        CONTACTS_FORM_STAGE: true
+      })
+
+      setSubmittedStages((prevState) => ({
+        ...prevState,
+        CONTACTS_FORM_STAGE: true
+      }))
+
       dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
     }
   }

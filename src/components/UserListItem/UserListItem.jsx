@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // redux
 import { useDispatch } from 'react-redux'
 import { deleteUser } from 'redux/actions'
@@ -32,7 +32,7 @@ const UserListItem = ({ user }) => {
     lastUpdate
   } = user
 
-  function handleOutSideClick(e) {
+  const handleOutSideClick = (e) => {
     const domNode = document.getElementById('deleteBtn')
 
     if (!e.path.includes(domNode)) {
@@ -46,7 +46,14 @@ const UserListItem = ({ user }) => {
     document.addEventListener('click', handleOutSideClick)
   }
 
-  const handleDelete = () => dispatch(deleteUser(id))
+  const handleDelete = () => {
+    dispatch(deleteUser(id))
+  }
+
+  useEffect(
+    () => () => document.removeEventListener('click', handleOutSideClick),
+    []
+  )
 
   return (
     <div

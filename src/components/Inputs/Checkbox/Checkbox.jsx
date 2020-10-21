@@ -3,9 +3,9 @@ import React from 'react'
 import T from 'prop-types'
 // css
 import commonStyles from 'components/Inputs/common/styles.module.css'
-import classes from './CheckboxInput.module.css'
+import classes from './Checkbox.module.css'
 
-const CheckboxInput = ({ children, title }) => {
+const Checkbox = ({ children, title }) => {
   return (
     <div className={commonStyles.inputCont}>
       <label htmlFor="checkbox" className={classes.checkboxCont}>
@@ -16,9 +16,9 @@ const CheckboxInput = ({ children, title }) => {
   )
 }
 
-CheckboxInput.propTypes = {
-  // children: T.object,
+Checkbox.propTypes = {
+  children: T.arrayOf(T.element),
   title: T.string
 }
 
-export default CheckboxInput
+export default Checkbox

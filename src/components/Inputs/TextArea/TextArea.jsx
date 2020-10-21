@@ -5,9 +5,9 @@ import T from 'prop-types'
 import ValidationError from 'components/ValidationError'
 // css
 import commonClasses from 'components/Inputs/common/styles.module.css'
-import classes from './TextareaInput.module.css'
+import classes from './TextArea.module.css'
 
-const TextareaInput = ({ refRegister, name, title, errorMessage }) => {
+const TextArea = ({ refRegister, name, title, errorMessage }) => {
   return (
     <div className={commonClasses.inputCont}>
       <label htmlFor={name}>
@@ -19,11 +19,11 @@ const TextareaInput = ({ refRegister, name, title, errorMessage }) => {
   )
 }
 
-TextareaInput.propTypes = {
+TextArea.propTypes = {
   refRegister: T.func,
   name: T.string,
   title: T.string,
   errorMessage: T.string
 }
 
-export default TextareaInput
+export default TextArea

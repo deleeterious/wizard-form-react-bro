@@ -7,11 +7,7 @@ import { changeActiveFormStage } from 'redux/actions'
 // useForm
 import { useFormContext } from 'react-hook-form'
 // constants
-import {
-  ACCOUNT_FORM_STAGE,
-  CONTACTS_FORM_STAGE,
-  PROFILE_FORM_STAGE
-} from 'constants.js'
+import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js'
 // helpers
 import {
   getFromLocalStorage,
@@ -42,11 +38,17 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
     const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
-      setToLocalStorage('submittedStages', [
+
+      setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
-        PROFILE_FORM_STAGE
-      ])
-      setSubmittedStages((prevState) => [...prevState, PROFILE_FORM_STAGE])
+        PROFILE_FORM_STAGE: true
+      })
+
+      setSubmittedStages((prevState) => ({
+        ...prevState,
+        PROFILE_FORM_STAGE: true
+      }))
+
       dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
     }
   }
@@ -78,6 +80,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
         <DateInput
           name="birthDate"
+          label="Birth date"
           control={control}
           rules={birthDateValidation()}
           errorMessage={errors?.birthDate?.message}

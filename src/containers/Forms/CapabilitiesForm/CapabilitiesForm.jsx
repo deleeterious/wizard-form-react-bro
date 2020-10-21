@@ -10,16 +10,14 @@ import { changeActiveFormStage } from 'redux/actions'
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import { additionInfoValidation, skillsValidation } from 'helpers/validations'
 // constants
-import { CONTACTS_FORM_STAGE, skillsList } from 'constants.js'
+import { CONTACTS_FORM_STAGE, skillsList, CHECKBOXES } from 'constants.js'
 // utils
 import { concatStyles } from 'utils'
 // component
 import SelectInput from 'components/Inputs/SelectInput'
-import TextareaInput from 'components/Inputs/TextareaInput'
+import TextArea from 'components/Inputs/TextArea'
 import Button from 'components/Button'
-import CheckboxInput from 'components/Inputs/CheckboxInput'
-import CheckboxInputItem from 'components/Inputs/CheckboxInput/CheckboxInputItem'
-
+import Checkbox from 'components/Inputs/Checkbox'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './CapabilitiesForm.module.css'
@@ -48,51 +46,33 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
           errorMessage={errors?.skills?.message}
         />
 
-        <TextareaInput
+        <TextArea
           name="additionInfo"
           refRegister={register(additionInfoValidation())}
           title="Additional information"
           errorMessage={errors?.additionInfo?.message}
         />
       </div>
+
       <div className={commonStyles.flexCont}>
-        <CheckboxInput title="Hobbies">
-          <CheckboxInputItem
-            title="Art"
-            name="hobbies[0]"
-            refRegister={register()}
-          />
-
-          <CheckboxInputItem
-            title="Sport, fitness and staff like that"
-            name="hobbies[1]"
-            refRegister={register()}
-          />
-
-          <CheckboxInputItem
-            title="I just want to play games, I’m not living in this life"
-            name="hobbies[2]"
-            refRegister={register()}
-          />
-
-          <CheckboxInputItem
-            title="I’m a female... I’m doing nothing. Every day."
-            name="hobbies[3]"
-            refRegister={register()}
-          />
-
-          <CheckboxInputItem
-            title="Guitar, guitar and guitar again. I’m fall in love with it."
-            name="hobbies[4]"
-            refRegister={register()}
-          />
-
-          <CheckboxInputItem
-            title="WTF is “hobbies”???"
-            name="hobbies[5]"
-            refRegister={register()}
-          />
-        </CheckboxInput>
+        <Checkbox title="Hobbies">
+          {CHECKBOXES.map((title, i) => (
+            <label
+              key={i}
+              htmlFor={`hobbies[${i}]`}
+              className={classes.checkboxLabelCont}
+            >
+              <input
+                name={`hobbies[${i}]`}
+                id={`hobbies[${i}]`}
+                value={title}
+                type="checkbox"
+                ref={register()}
+              />
+              <span className={classes.checkboxLabel}>{title}</span>
+            </label>
+          ))}
+        </Checkbox>
 
         <div className={commonStyles.buttons}>
           {isEdit || <Button handleClick={handleClickBack}>Back</Button>}

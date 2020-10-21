@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 // css
-import classes from './NoUserIndicator.module.css'
+import classes from './NoUsersPlaceholder.module.css'
 
-const NoUserIndicator = () => (
+const NoUsersPlaceholder = () => (
   <div className={classes.indicatorCont}>
     <h2 className={classes.indicatorTitle}>No users here :(</h2>
     <div className={classes.newUserBtn}>
@@ -14,4 +14,4 @@ const NoUserIndicator = () => (
   </div>
 )
 
-export default NoUserIndicator
+export default NoUsersPlaceholder

@@ -29,30 +29,28 @@ const FormNavigation = ({ submittedStages, isEdit }) => {
       <FormNavigationItem
         title="1. Account"
         isActive={activeFormStage === ACCOUNT_FORM_STAGE}
-        isSubmitted={isEdit || submittedStages.includes(ACCOUNT_FORM_STAGE)}
+        isSubmitted={isEdit || submittedStages?.ACCOUNT_FORM_STAGE}
         onStepChange={onStepChange(ACCOUNT_FORM_STAGE)}
       />
 
       <FormNavigationItem
         title="2. Profile"
         isActive={activeFormStage === PROFILE_FORM_STAGE}
-        isSubmitted={isEdit || submittedStages.includes(PROFILE_FORM_STAGE)}
+        isSubmitted={isEdit || submittedStages?.PROFILE_FORM_STAGE}
         onStepChange={onStepChange(PROFILE_FORM_STAGE)}
       />
 
       <FormNavigationItem
         title="3. Contacts"
         isActive={activeFormStage === CONTACTS_FORM_STAGE}
-        isSubmitted={isEdit || submittedStages.includes(CONTACTS_FORM_STAGE)}
+        isSubmitted={isEdit || submittedStages?.CONTACTS_FORM_STAGE}
         onStepChange={onStepChange(CONTACTS_FORM_STAGE)}
       />
 
       <FormNavigationItem
         title="4. Capabilities"
         isActive={activeFormStage === CAPABILITIES_FORM_STAGE}
-        isSubmitted={
-          isEdit || submittedStages.includes(CAPABILITIES_FORM_STAGE)
-        }
+        isSubmitted={isEdit || submittedStages?.CAPABILITIES_FORM_STAGE}
         onStepChange={onStepChange(CAPABILITIES_FORM_STAGE)}
       />
     </nav>
@@ -60,7 +58,7 @@ const FormNavigation = ({ submittedStages, isEdit }) => {
 }
 
 FormNavigation.propTypes = {
-  submittedStages: T.arrayOf(T.string),
+  submittedStages: T.object,
   isEdit: T.bool
 }
 
