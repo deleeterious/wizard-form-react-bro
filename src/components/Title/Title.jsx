@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // components
@@ -21,4 +21,4 @@ Title.propTypes = {
   linkBackTitle: T.string
 }
 
-export default Title
+export default memo(Title)

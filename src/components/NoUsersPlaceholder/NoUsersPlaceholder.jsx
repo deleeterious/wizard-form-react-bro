@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 // css
 import classes from './NoUsersPlaceholder.module.css'
@@ -14,4 +14,4 @@ const NoUsersPlaceholder = () => (
   </div>
 )
 
-export default NoUsersPlaceholder
+export default memo(NoUsersPlaceholder)

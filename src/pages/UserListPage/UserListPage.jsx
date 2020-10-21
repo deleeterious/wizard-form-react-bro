@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
 import { loadUsers } from 'redux/actions'
@@ -33,4 +33,4 @@ const UserListPage = () => {
   )
 }
 
-export default UserListPage
+export default memo(UserListPage)

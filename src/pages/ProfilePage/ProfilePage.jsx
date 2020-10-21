@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
@@ -33,4 +33,4 @@ ProfilePage.propTypes = {
   match: T.object
 }
 
-export default ProfilePage
+export default memo(ProfilePage)

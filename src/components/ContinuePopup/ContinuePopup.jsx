@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 import { ReactComponent as CloseIcon } from 'assets/icons/delete.svg'
@@ -26,4 +26,4 @@ ContinuePopup.propTypes = {
   handleClose: T.func
 }
 
-export default ContinuePopup
+export default memo(ContinuePopup)

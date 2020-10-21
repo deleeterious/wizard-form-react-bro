@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
@@ -42,4 +42,4 @@ EditPage.propTypes = {
   match: T.object
 }
 
-export default EditPage
+export default memo(EditPage)

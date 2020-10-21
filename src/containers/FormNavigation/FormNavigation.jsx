@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-redux
@@ -62,4 +62,4 @@ FormNavigation.propTypes = {
   isEdit: T.bool
 }
 
-export default FormNavigation
+export default memo(FormNavigation)

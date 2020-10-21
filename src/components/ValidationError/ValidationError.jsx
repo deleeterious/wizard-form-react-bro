@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // css
@@ -12,4 +12,4 @@ ValidationError.propTypes = {
   errorMessage: T.string
 }
 
-export default ValidationError
+export default memo(ValidationError)

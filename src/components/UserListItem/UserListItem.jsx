@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 // redux
 import { useDispatch } from 'react-redux'
 import { deleteUser } from 'redux/actions'
@@ -71,7 +71,9 @@ const UserListItem = ({ user }) => {
       </div>
       <div className={classes.company}>{company}</div>
       <div className={classes.contacts}>{email}</div>
-      <div className={classes.updates}>{parseLastUpdateDate(lastUpdate)}</div>
+      <div className={classes.updates}>
+        {useMemo(() => parseLastUpdateDate(lastUpdate), [lastUpdate])}
+      </div>
       <div className={classes.buttons}>
         <Link to={`/profile/${id}`} className={classes.editIcon}>
           <EditIcon />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // router
 import { NavLink } from 'react-router-dom'
 // prop-types
@@ -24,4 +24,4 @@ LinkIcon.propTypes = {
   to: T.string
 }
 
-export default LinkIcon
+export default memo(LinkIcon)

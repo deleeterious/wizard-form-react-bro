@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -157,4 +157,4 @@ AccountForm.propTypes = {
   isEdit: T.bool
 }
 
-export default AccountForm
+export default memo(AccountForm)

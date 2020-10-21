@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // components
@@ -26,4 +26,4 @@ UserList.propTypes = {
   users: T.array
 }
 
-export default UserList
+export default memo(UserList)

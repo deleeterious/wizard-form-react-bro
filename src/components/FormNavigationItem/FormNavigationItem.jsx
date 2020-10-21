@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // utils
@@ -27,4 +27,4 @@ FormNavigationItem.propTypes = {
   onStepChange: T.func
 }
 
-export default FormNavigationItem
+export default memo(FormNavigationItem)

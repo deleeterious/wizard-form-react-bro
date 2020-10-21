@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
@@ -191,4 +191,4 @@ ContactsForm.propTypes = {
   isEdit: T.bool
 }
 
-export default ContactsForm
+export default memo(ContactsForm)

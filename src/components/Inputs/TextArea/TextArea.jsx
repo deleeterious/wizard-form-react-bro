@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // components
@@ -26,4 +26,4 @@ TextArea.propTypes = {
   errorMessage: T.string
 }
 
-export default TextArea
+export default memo(TextArea)

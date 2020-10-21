@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -65,4 +65,4 @@ AvatarInput.propTypes = {
   errorMessage: T.string
 }
 
-export default AvatarInput
+export default memo(AvatarInput)
