@@ -140,6 +140,7 @@ const Form = ({ setSubmittedStages, isEdit }) => {
 }
 
 Form.propTypes = {
+  setSubmittedStages: T.func,
   activeFormStage: T.string,
   isEdit: T.bool
 }

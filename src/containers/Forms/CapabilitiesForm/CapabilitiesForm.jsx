@@ -27,7 +27,7 @@ import classes from './CapabilitiesForm.module.css'
 const CapabilitiesForm = ({ handleSave, isEdit }) => {
   const dispatch = useDispatch()
 
-  const { register, errors, control } = useFormContext()
+  const { register, errors, control, formState } = useFormContext()
 
   const handleClickBack = (e) => {
     e.preventDefault()
@@ -97,6 +97,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
         <div className={commonStyles.buttons}>
           {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
           <Button
+            disabled={!formState.isValid}
             handleClick={isEdit ? handleSave : null}
             className={concatStyles(
               commonStyles.positionRight,

@@ -35,7 +35,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
   const user = useSelector((state) => state.user)
 
-  const { register, trigger, errors, control } = useFormContext()
+  const { register, trigger, errors, control, formState } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
@@ -106,6 +106,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
           {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
 
           <Button
+            disabled={!formState.isValid}
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
           >

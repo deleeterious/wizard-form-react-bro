@@ -41,7 +41,14 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const user = useSelector((state) => state.user)
 
-  const { register, trigger, setValue, errors, control } = useFormContext()
+  const {
+    register,
+    trigger,
+    setValue,
+    errors,
+    control,
+    formState
+  } = useFormContext()
 
   const newUserPhones = isEdit
     ? user.phones?.filter((item) => item !== '')
@@ -161,6 +168,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
           {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
 
           <Button
+            disabled={!formState.isValid}
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
           >

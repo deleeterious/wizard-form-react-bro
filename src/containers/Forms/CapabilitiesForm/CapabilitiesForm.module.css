@@ -5,3 +5,7 @@
 .finish:hover {
   background: #41c48d;
 }
+
+.finish:disabled {
+  background: #83ffcb;
+}

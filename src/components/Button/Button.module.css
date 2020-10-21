@@ -14,10 +14,11 @@
   cursor: pointer;
 }
 
-.disabled {
-  background: #c1cfe0;
-}
-
 .button:hover {
   background: #4e86e4;
+}
+
+.disabled,
+.disabled:hover {
+  background: #c1cfe0;
 }

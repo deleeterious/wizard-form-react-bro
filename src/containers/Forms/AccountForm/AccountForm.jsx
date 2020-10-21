@@ -38,7 +38,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     passwordRepeat: false
   })
 
-  const { register, watch, trigger, errors } = useFormContext()
+  const { register, watch, trigger, errors, formState } = useFormContext()
 
   const handleShowPass = (e, target) => {
     e.preventDefault()
@@ -128,7 +128,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         <div className={commonStyles.buttons}>
           <Button
             className={commonStyles.positionRight}
-            disabled={Object.keys(errors).length}
+            disabled={!formState.isValid}
             handleClick={isEdit ? handleSave : handleClickForward}
           >
             {isEdit ? 'Save' : 'Forward'}
