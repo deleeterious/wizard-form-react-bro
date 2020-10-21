@@ -47,7 +47,7 @@ const Form = ({ setSubmittedStages, isEdit }) => {
   const { getValues, handleSubmit, reset, watch, trigger, formState } = methods
 
   const onSubmit = (data) => {
-    dispatch(addUser(data))
+    dispatch(addUser({ ...data, lastUpdate: new Date() }))
     localStorage.clear()
     history.push('/')
   }
@@ -56,7 +56,7 @@ const Form = ({ setSubmittedStages, isEdit }) => {
     e.preventDefault()
     const result = await trigger()
     if (result) {
-      dispatch(updateUser(user.id, getValues()))
+      dispatch(updateUser(user.id, { ...getValues(), lastUpdate: new Date() }))
       history.push(`profile/${user.id}`)
     }
   }

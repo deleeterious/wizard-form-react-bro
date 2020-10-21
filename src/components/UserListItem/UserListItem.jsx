@@ -12,7 +12,7 @@ import AvatarImage from 'components/AvatarImage'
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg'
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg'
 // utils
-import { concatStyles } from 'utils'
+import { concatStyles, parseLastUpdateDate } from 'utils'
 // css
 import classes from './UserListItem.module.css'
 
@@ -21,7 +21,16 @@ const UserListItem = ({ user }) => {
 
   const dispatch = useDispatch()
 
-  const { userName, firstName, lastName, company, email, id, avatarData } = user
+  const {
+    userName,
+    firstName,
+    lastName,
+    company,
+    email,
+    id,
+    avatarData,
+    lastUpdate
+  } = user
 
   function handleOutSideClick(e) {
     const domNode = document.getElementById('deleteBtn')
@@ -55,7 +64,7 @@ const UserListItem = ({ user }) => {
       </div>
       <div className={classes.company}>{company}</div>
       <div className={classes.contacts}>{email}</div>
-      <div className={classes.updates}>last updates</div>
+      <div className={classes.updates}>{parseLastUpdateDate(lastUpdate)}</div>
       <div className={classes.buttons}>
         <Link to={`/profile/${id}`} className={classes.editIcon}>
           <EditIcon />
@@ -87,6 +96,7 @@ UserListItem.propTypes = {
     company: T.string,
     email: T.string,
     id: T.number,
+    lastUpdate: T.object,
     avatarData: T.string
   })
 }
