@@ -9,7 +9,7 @@ import { changeActiveFormStage } from 'redux/actions'
 // utils
 import { concatStyles } from 'utils'
 // constants
-import { PROFILE_FORM_STAGE } from 'constants.js'
+import { ACCOUNT_FORM_STAGE, PROFILE_FORM_STAGE } from 'constants.js'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import {
@@ -25,7 +25,7 @@ import Button from 'components/Button'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
 
-const AccountForm = ({ handleSave, isEdit }) => {
+const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user)
@@ -37,6 +37,8 @@ const AccountForm = ({ handleSave, isEdit }) => {
     const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
+      setToLocalStorage('submittedStages', [ACCOUNT_FORM_STAGE])
+      setSubmittedStages((prevState) => [...prevState, ACCOUNT_FORM_STAGE])
       dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
     }
   }
@@ -93,8 +95,9 @@ const AccountForm = ({ handleSave, isEdit }) => {
 }
 
 AccountForm.propTypes = {
-  isEdit: T.bool,
-  handleSave: T.func
+  setSubmittedStages: T.func,
+  handleSave: T.func,
+  isEdit: T.bool
 }
 
 export default AccountForm

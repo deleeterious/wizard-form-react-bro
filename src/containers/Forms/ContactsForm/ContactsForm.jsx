@@ -21,6 +21,7 @@ import {
 // constants
 import {
   CAPABILITIES_FORM_STAGE,
+  CONTACTS_FORM_STAGE,
   languages,
   PHONE_MASK,
   PROFILE_FORM_STAGE
@@ -35,7 +36,7 @@ import AddButton from 'components/AddButton'
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ContactsForm.module.css'
 
-const ContactsForm = ({ isEdit, handleSave }) => {
+const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user)
@@ -43,8 +44,8 @@ const ContactsForm = ({ isEdit, handleSave }) => {
   const { register, trigger, setValue, errors, control } = useFormContext()
 
   const newUserPhones = isEdit
-    ? user.phones.filter((item) => item !== '')
-    : getFromLocalStorage('newUser').phones.filter((item) => item !== '')
+    ? user.phones?.filter((item) => item !== '')
+    : getFromLocalStorage('newUser').phones?.filter((item) => item !== '')
 
   const initialPhones = newUserPhones?.length
     ? [...new Array(newUserPhones.length)].map((_, i) => ({ id: i }))
@@ -67,6 +68,11 @@ const ContactsForm = ({ isEdit, handleSave }) => {
     const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE)
+      setToLocalStorage('submittedStages', [
+        ...getFromLocalStorage('submittedStages'),
+        CONTACTS_FORM_STAGE
+      ])
+      setSubmittedStages((prevState) => [...prevState, CONTACTS_FORM_STAGE])
       dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
     }
   }
@@ -167,8 +173,9 @@ const ContactsForm = ({ isEdit, handleSave }) => {
 }
 
 ContactsForm.propTypes = {
-  isEdit: T.bool,
-  handleSave: T.func
+  setSubmittedStages: T.func,
+  handleSave: T.func,
+  isEdit: T.bool
 }
 
 export default ContactsForm

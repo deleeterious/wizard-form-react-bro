@@ -7,6 +7,7 @@ import {
   FETCHING_SUCCESS,
   GET_USER,
   LOAD_USERS,
+  SUBMITTED_STAGES,
   UPDATE_USER
 } from './types'
 

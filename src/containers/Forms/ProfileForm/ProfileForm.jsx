@@ -7,9 +7,16 @@ import { changeActiveFormStage } from 'redux/actions'
 // useForm
 import { useFormContext } from 'react-hook-form'
 // constants
-import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js'
+import {
+  ACCOUNT_FORM_STAGE,
+  CONTACTS_FORM_STAGE,
+  PROFILE_FORM_STAGE
+} from 'constants.js'
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 import {
   birthDateValidation,
   emailValidation,
@@ -23,7 +30,7 @@ import RadioInput from 'components/Inputs/RadioInput'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
 
-const ProfileForm = ({ isEdit, handleSave }) => {
+const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user)
@@ -35,6 +42,11 @@ const ProfileForm = ({ isEdit, handleSave }) => {
     const result = await trigger()
     if (result) {
       setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
+      setToLocalStorage('submittedStages', [
+        ...getFromLocalStorage('submittedStages'),
+        PROFILE_FORM_STAGE
+      ])
+      setSubmittedStages((prevState) => [...prevState, PROFILE_FORM_STAGE])
       dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
     }
   }
@@ -106,8 +118,9 @@ const ProfileForm = ({ isEdit, handleSave }) => {
 }
 
 ProfileForm.propTypes = {
-  isEdit: T.bool,
-  handleSave: T.func
+  setSubmittedStages: T.func,
+  handleSave: T.func,
+  isEdit: T.bool
 }
 
 export default ProfileForm

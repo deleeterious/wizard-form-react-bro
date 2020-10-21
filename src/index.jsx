@@ -15,3 +15,7 @@ ReactDOM.render(
 )
 
 serviceWorker.unregister()
+
+// TODO: add show pass btn
+// TODO: style complete stages
+// TODO: last updated

@@ -29,7 +29,7 @@ import ProfileForm from 'containers/Forms/ProfileForm'
 import ContactsForm from 'containers/Forms/ContactsForm'
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
 
-const Form = ({ isEdit }) => {
+const Form = ({ setSubmittedStages, isEdit }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -66,6 +66,8 @@ const Form = ({ isEdit }) => {
 
     if (getFromLocalStorage('newUserStage'))
       dispatch(changeActiveFormStage(getFromLocalStorage('newUserStage')))
+
+    setSubmittedStages(getFromLocalStorage('submittedStages'))
 
     setIsPopup(false)
   }
@@ -106,15 +108,27 @@ const Form = ({ isEdit }) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {activeFormStage === ACCOUNT_FORM_STAGE && (
-          <AccountForm handleSave={onSave} isEdit={isEdit} />
+          <AccountForm
+            setSubmittedStages={setSubmittedStages}
+            handleSave={onSave}
+            isEdit={isEdit}
+          />
         )}
 
         {activeFormStage === PROFILE_FORM_STAGE && (
-          <ProfileForm handleSave={onSave} isEdit={isEdit} />
+          <ProfileForm
+            setSubmittedStages={setSubmittedStages}
+            handleSave={onSave}
+            isEdit={isEdit}
+          />
         )}
 
         {activeFormStage === CONTACTS_FORM_STAGE && (
-          <ContactsForm handleSave={onSave} isEdit={isEdit} />
+          <ContactsForm
+            setSubmittedStages={setSubmittedStages}
+            handleSave={onSave}
+            isEdit={isEdit}
+          />
         )}
 
         {activeFormStage === CAPABILITIES_FORM_STAGE && (

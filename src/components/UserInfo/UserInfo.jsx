@@ -201,7 +201,7 @@ UserInfo.propTypes = {
     password: T.string,
     firstName: T.string,
     lastName: T.string,
-    birthDate: T.object,
+    birthDate: T.oneOfType([T.object, T.string]),
     email: T.string,
     address: T.string,
     company: T.string,

@@ -10,6 +10,10 @@
   font-size: 24px;
 }
 
+.submitted {
+  color: #475666;
+}
+
 .active {
   background: #4e86e4;
   color: #fff;

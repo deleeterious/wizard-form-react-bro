@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // react-redux
 import { useSelector } from 'react-redux'
 // components
@@ -10,11 +10,16 @@ import FormNavigation from 'containers/FormNavigation'
 const FormsPage = () => {
   const activeFormStage = useSelector((state) => state.activeFormStage)
 
+  const [submittedStages, setSubmittedStages] = useState([])
+
   return (
     <main className="container">
       <Title>Adding new user</Title>
-      <FormNavigation activeFormStage={activeFormStage} />
-      <Form />
+      <FormNavigation
+        submittedStages={submittedStages}
+        activeFormStage={activeFormStage}
+      />
+      <Form setSubmittedStages={setSubmittedStages} />
     </main>
   )
 }

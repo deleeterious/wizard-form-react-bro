@@ -1,4 +1,8 @@
 import db from 'db'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 
 import {
   ADD_USER,
@@ -9,7 +13,8 @@ import {
   DELETE_USER,
   FETCHING_PENDING,
   FETCHING_SUCCESS,
-  FETCHING_ERROR
+  FETCHING_ERROR,
+  SUBMITTED_STAGES
 } from 'redux/types'
 
 export const fetchingPending = () => ({
