@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
@@ -49,24 +49,29 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     formState
   } = useFormContext()
 
-  const newUserPhones = isEdit
-    ? user.phones?.filter((item) => item !== '')
-    : getFromLocalStorage('newUser')?.phones?.filter((item) => item !== '')
+  const [phones, setPhones] = useState([])
 
-  const initialPhones = newUserPhones?.length
-    ? [...new Array(newUserPhones.length)].map((_, i) => ({ id: i }))
-    : [{ id: 0 }]
+  useEffect(() => {
+    const newUserPhones = isEdit
+      ? user?.phones?.filter((item) => item)
+      : getFromLocalStorage('newUser')?.phones?.filter((item) => item)
 
-  const [phones, setPhones] = useState(initialPhones)
+    setPhones(newUserPhones?.length ? newUserPhones : [''])
+  }, [isEdit, user])
+
+  useEffect(() => {
+    setValue('phones', phones, { shouldDirty: true })
+  }, [setValue, phones])
 
   const handleAddPhone = (e) => {
     e.preventDefault()
-    setPhones((prevState) => [...prevState, { id: prevState.length }])
+    setPhones((prevState) => [...prevState, ''])
   }
 
-  const handleDeletePhone = (id) => {
-    setPhones((prevState) => [...prevState.filter((item) => item.id !== id)])
-    setValue(`phones[${id}]`, '', { shouldDirty: true })
+  const handleDeletePhone = (i) => {
+    const newArr = [...phones]
+    newArr.splice(i, 1)
+    setPhones(newArr)
   }
 
   const handleClickForward = async (e) => {
@@ -97,7 +102,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   return (
     <div className={commonStyles.form}>
-      <div className={commonStyles.flexCont}>
+      <div className={commonStyles.formSection}>
         <TextInput
           type="text"
           name="company"
@@ -130,8 +135,9 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         />
       </div>
 
-      <div className={commonStyles.flexCont}>
+      <div className={commonStyles.formSection}>
         <MaskInput
+          value=""
           title="Fax"
           control={control}
           name="fax"
@@ -141,39 +147,46 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
           errorMessage={errors?.fax?.message}
         />
 
-        {phones.map((phone) => (
-          <div className={classes.phoneCont} key={phone.id}>
+        {phones?.map((phone, i) => (
+          <div className={classes.phoneCont} key={i}>
             <MaskInput
-              title={`Phone #${phone.id + 1}`}
+              value={phone}
+              title={`Phone #${i + 1}`}
               control={control}
-              name={`phones[${phone.id}]`}
+              name={`phones[${i}]`}
               placeholder="+38 (XXX) XXX XX XX"
               mask={PHONE_MASK}
               rules={phoneValidation()}
               errorMessage={
-                errors.phones && errors.phones[phone.id]
-                  ? errors.phones[phone.id].message
+                errors.phones && errors.phones[i]
+                  ? errors.phones[i].message
                   : ''
               }
             />
-            {phones.length === 1 || (
+            {phones?.length === 1 || (
               <DeletePhoneBtn
-                onClick={() => handleDeletePhone(phone.id)}
+                onClick={() => handleDeletePhone(i)}
                 className={classes.deletePhoneBtn}
               />
             )}
           </div>
         ))}
 
-        {phones.length !== 3 && (
+        {phones?.length !== 3 && (
           <AddButton onClick={handleAddPhone}>add phone number</AddButton>
         )}
 
         <div className={commonStyles.buttons}>
-          {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
+          {isEdit || (
+            <Button disabled={false} handleClick={handleClickBack}>
+              Back
+            </Button>
+          )}
 
           <Button
-            disabled={!formState.isValid}
+            disabled={
+              isEdit ? !formState.isDirty : !!Object.keys(errors).length
+            }
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
           >

@@ -61,7 +61,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
   return (
     <div className={commonStyles.form}>
-      <div className={commonStyles.flexCont}>
+      <div className={commonStyles.formSection}>
         <TextInput
           type="text"
           title="First name"
@@ -87,7 +87,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
         />
       </div>
 
-      <div className={commonStyles.flexCont}>
+      <div className={commonStyles.formSection}>
         <TextInput
           type="text"
           name="email"
@@ -106,10 +106,16 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
         <RadioInput refRegister={register()} />
 
         <div className={commonStyles.buttons}>
-          {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
+          {isEdit || (
+            <Button disabled={false} handleClick={handleClickBack}>
+              Back
+            </Button>
+          )}
 
           <Button
-            disabled={!formState.isValid}
+            disabled={
+              isEdit ? !formState.isDirty : !!Object.keys(errors).length
+            }
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
           >

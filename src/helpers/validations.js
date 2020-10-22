@@ -7,7 +7,7 @@ const isUniquePropValidation = async (value, currentUser, prop) => {
 
   if (foundUser) {
     if (foundUser[prop] !== currentUser[prop]) {
-      return 'This name is already used'
+      return `This ${prop} is already used`
     }
   }
 
@@ -59,7 +59,7 @@ export const emailValidation = (currentUser) => ({
 export const faxValidation = () => ({
   pattern: {
     value: /(\+\d\d) (\(\d\d\d\)) \d\d\d \d\d \d\d/,
-    message: 'Invalid phone number'
+    message: 'Invalid fax number'
   }
 })
 
@@ -73,7 +73,7 @@ export const phoneValidation = () => ({
 // Capabilities form validation
 
 export const skillsValidation = () => ({
-  validate: (value) => value.length >= 3 || 'Choose three or more skills'
+  validate: (value) => value?.length >= 3 || 'Choose three or more skills'
 })
 
 export const additionInfoValidation = () => ({

@@ -1,0 +1,19 @@
+.infoList {
+  width: 67%;
+}
+
+.infoListItem {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.infoListItemTitle {
+  width: 50%;
+  color: #475666;
+  font-weight: 500;
+}
+
+.infoListItemValue {
+  width: 50%;
+  color: #657c9a;
+}

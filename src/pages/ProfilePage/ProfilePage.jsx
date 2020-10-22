@@ -16,8 +16,7 @@ const ProfilePage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [dispatch, match.params.id])
 
   return (
     <main className="container">

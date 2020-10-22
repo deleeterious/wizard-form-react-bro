@@ -47,6 +47,7 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
         <input
           type="file"
           name="avatar"
+          accept="image/png,image/jpeg,image/jpg"
           id="avatar"
           className={classes.fileInput}
           onChange={handleLoadLocalFile}

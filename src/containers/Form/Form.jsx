@@ -81,6 +81,13 @@ const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
     if (isEdit) reset({ ...user })
   }, [user])
 
+  useEffect(
+    () => () => {
+      if (isEdit) reset({ ...user })
+    },
+    [activeFormStage]
+  )
+
   useEffect(() => {
     if (!isPopup && !isEdit) {
       if (formState.isDirty) {

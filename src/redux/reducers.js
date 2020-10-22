@@ -4,24 +4,25 @@ import {
   DELETE_USER,
   FETCHING_ERROR,
   FETCHING_PENDING,
-  FETCHING_SUCCESS,
-  GET_USER,
-  LOAD_USERS,
+  LOAD_USER_SUCCESS,
+  LOAD_USERS_SUCCESS,
   UPDATE_USER
 } from './types'
 
 export const rootReducer = (state, { type, payload }) => {
   switch (type) {
-    case LOAD_USERS: {
+    case LOAD_USERS_SUCCESS: {
       return {
         ...state,
-        users: payload
+        users: payload,
+        isFetching: false
       }
     }
-    case GET_USER:
+    case LOAD_USER_SUCCESS:
       return {
         ...state,
-        user: payload
+        user: payload,
+        isFetching: false
       }
     case ADD_USER:
       return {
@@ -32,8 +33,11 @@ export const rootReducer = (state, { type, payload }) => {
       return {
         ...state,
         users: [
-          ...state.users.filter((user) => user.id !== payload.id),
-          { ...state.user, ...payload.changes }
+          ...state.users.map((user) => {
+            if (user.id === payload.id)
+              return { ...state.user, ...payload.changes }
+            return user
+          })
         ]
       }
     }
@@ -51,12 +55,6 @@ export const rootReducer = (state, { type, payload }) => {
       return {
         ...state,
         isFetching: true
-      }
-    }
-    case FETCHING_SUCCESS: {
-      return {
-        ...state,
-        isFetching: false
       }
     }
     case FETCHING_ERROR: {

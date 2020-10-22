@@ -14,20 +14,16 @@ const UserListPage = () => {
 
   const { users, isFetching } = useSelector((state) => state)
 
-  useEffect(() => dispatch(loadUsers()), [])
+  useEffect(() => dispatch(loadUsers()), [dispatch])
 
   if (isFetching) {
-    return (
-      <main className="container">
-        <Title>List of users</Title>
-        <Spinner />
-      </main>
-    )
+    return <Spinner />
   }
 
   return (
     <main className="container">
       <Title>List of users</Title>
+
       {users.length ? <UserList users={users} /> : <NoUsersPlaceholder />}
     </main>
   )
