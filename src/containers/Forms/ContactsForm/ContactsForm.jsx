@@ -133,6 +133,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         <SelectInput
           title="Main languages"
           name="language"
+          isEdit={isEdit}
           options={languages}
           errorMessage={errors?.language?.message}
         />

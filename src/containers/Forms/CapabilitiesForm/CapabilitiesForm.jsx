@@ -42,6 +42,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
           name="skills"
           options={skillsList}
           isMulti
+          isEdit={isEdit}
           errorMessage={errors?.skills?.message}
         />
 

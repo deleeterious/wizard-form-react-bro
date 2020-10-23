@@ -10,7 +10,7 @@ import { ACCOUNT_FORM_STAGE } from 'constants.js'
 import Title from 'components/Title'
 // containers
 import FormNavigation from 'containers/FormNavigation'
-import Form from 'containers/Form'
+import EditForm from 'containers/Form/EditForm'
 
 const EditPage = ({ match }) => {
   const dispatch = useDispatch()
@@ -33,7 +33,7 @@ const EditPage = ({ match }) => {
         Editing
       </Title>
       <FormNavigation activeFormStage={activeFormStage} isEdit />
-      <Form isEdit />
+      <EditForm />
     </main>
   )
 }

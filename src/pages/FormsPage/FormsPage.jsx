@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux'
 // components
 import Title from 'components/Title'
 // containers
-import Form from 'containers/Form'
 import FormNavigation from 'containers/FormNavigation'
+import CreateForm from 'containers/Form/CreateForm'
 
 const FormsPage = () => {
   const activeFormStage = useSelector((state) => state.activeFormStage)
@@ -24,7 +24,7 @@ const FormsPage = () => {
         submittedStages={submittedStages}
         activeFormStage={activeFormStage}
       />
-      <Form
+      <CreateForm
         submittedStages={submittedStages}
         setSubmittedStages={setSubmittedStages}
       />

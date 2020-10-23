@@ -10,8 +10,18 @@ import commonStyles from 'components/Inputs/common/styles.module.css'
 import ValidationError from 'components/ValidationError'
 import { skillsValidation } from 'helpers/validations'
 import { getFromLocalStorage } from 'helpers/localStorageHelper'
+import { useSelector } from 'react-redux'
 
-const SelectInput = ({ options, title, name, isMulti, errorMessage }) => {
+const SelectInput = ({
+  options,
+  title,
+  name,
+  isMulti,
+  errorMessage,
+  isEdit
+}) => {
+  const user = useSelector((state) => state.user)
+
   const customStyles = {
     clearIndicator: () => ({
       display: 'none'
@@ -55,7 +65,9 @@ const SelectInput = ({ options, title, name, isMulti, errorMessage }) => {
 
   useEffect(() => {
     register(
-      { name },
+      {
+        name
+      },
       { required: true, validate: isMulti && skillsValidation() }
     )
   }, [])
@@ -65,7 +77,9 @@ const SelectInput = ({ options, title, name, isMulti, errorMessage }) => {
       <label htmlFor={name}>
         <div className={commonStyles.inputLabel}>{title}</div>
         <ReactSelect
-          defaultValue={getFromLocalStorage('newUser')[name]}
+          defaultValue={
+            isEdit ? user[name] : getFromLocalStorage('newUser')[name]
+          }
           hideSelectedOptions
           options={options}
           styles={customStyles}
@@ -85,7 +99,8 @@ SelectInput.propTypes = {
   title: T.string,
   name: T.string,
   isMulti: T.bool,
-  errorMessage: T.string
+  errorMessage: T.string,
+  isEdit: T.bool
 }
 
 export default SelectInput

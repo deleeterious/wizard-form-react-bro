@@ -6,7 +6,7 @@ import T from 'prop-types'
 import { FormProvider, useForm } from 'react-hook-form'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser, changeActiveFormStage, updateUser } from 'redux/actions'
+import { addUser, changeActiveFormStage } from 'redux/actions'
 // react-router-dom
 import { useHistory } from 'react-router-dom'
 // constants
@@ -29,37 +29,28 @@ import ProfileForm from 'containers/Forms/ProfileForm'
 import ContactsForm from 'containers/Forms/ContactsForm'
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
 
-const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
+const Form = ({ submittedStages, setSubmittedStages }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const [isPopup, setIsPopup] = useState(
-    isEdit ? false : !!getFromLocalStorage('newUser')
-  )
+  const [isPopup, setIsPopup] = useState(!!getFromLocalStorage('newUser'))
 
-  const { activeFormStage, user } = useSelector((state) => state)
+  const activeFormStage = useSelector((state) => state.activeFormStage)
 
   const methods = useForm({
     mode: 'onChange',
     shouldUnregister: false
   })
 
-  const { getValues, handleSubmit, reset, watch, trigger, formState } = methods
+  const { getValues, handleSubmit, reset, watch, formState } = methods
 
+  // User is added in last form stage (CapabilitiesForm) on click 'Finish'
   const onSubmit = (data) => {
     dispatch(addUser({ ...data, lastUpdate: new Date() }))
     history.push('/')
   }
 
-  const onSave = async (e) => {
-    e.preventDefault()
-    const result = await trigger()
-    if (result) {
-      dispatch(updateUser(user.id, { ...getValues(), lastUpdate: new Date() }))
-      history.push(`profile/${user.id}`)
-    }
-  }
-
+  // Popup: reset data if confirm continue
   const handleContinue = () => {
     reset(getFromLocalStorage('newUser'))
 
@@ -71,25 +62,16 @@ const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
     setIsPopup(false)
   }
 
+  // Popup: clear localStorage if cancel continue
   const handleClose = () => {
     localStorage.clear()
     setToLocalStorage('submittedStages', submittedStages)
     setIsPopup(false)
   }
 
+  // Save data to localStorage on change inputs value
   useEffect(() => {
-    if (isEdit) reset({ ...user })
-  }, [user])
-
-  useEffect(
-    () => () => {
-      if (isEdit) reset({ ...user })
-    },
-    [activeFormStage]
-  )
-
-  useEffect(() => {
-    if (!isPopup && !isEdit) {
+    if (!isPopup) {
       if (formState.isDirty) {
         setToLocalStorage('newUser', {
           ...getFromLocalStorage('newUser'),
@@ -99,6 +81,7 @@ const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
     }
   }, [watch()])
 
+  // Return to first step when component unmount
   useEffect(() => () => dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE)), [])
 
   return (
@@ -112,32 +95,18 @@ const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {activeFormStage === ACCOUNT_FORM_STAGE && (
-          <AccountForm
-            setSubmittedStages={setSubmittedStages}
-            handleSave={onSave}
-            isEdit={isEdit}
-          />
+          <AccountForm setSubmittedStages={setSubmittedStages} />
         )}
 
         {activeFormStage === PROFILE_FORM_STAGE && (
-          <ProfileForm
-            setSubmittedStages={setSubmittedStages}
-            handleSave={onSave}
-            isEdit={isEdit}
-          />
+          <ProfileForm setSubmittedStages={setSubmittedStages} />
         )}
 
         {activeFormStage === CONTACTS_FORM_STAGE && (
-          <ContactsForm
-            setSubmittedStages={setSubmittedStages}
-            handleSave={onSave}
-            isEdit={isEdit}
-          />
+          <ContactsForm setSubmittedStages={setSubmittedStages} />
         )}
 
-        {activeFormStage === CAPABILITIES_FORM_STAGE && (
-          <CapabilitiesForm handleSave={onSave} isEdit={isEdit} />
-        )}
+        {activeFormStage === CAPABILITIES_FORM_STAGE && <CapabilitiesForm />}
       </form>
     </FormProvider>
   )
@@ -145,9 +114,7 @@ const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
 
 Form.propTypes = {
   setSubmittedStages: T.func,
-  submittedStages: T.object,
-  activeFormStage: T.string,
-  isEdit: T.bool
+  submittedStages: T.object
 }
 
 export default memo(Form)
