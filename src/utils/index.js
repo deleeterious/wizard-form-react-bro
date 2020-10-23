@@ -1,3 +1,5 @@
+import faker from 'faker'
+
 export const concatStyles = (...classesArr) => classesArr.join(' ')
 
 export const parseDate = (value) => {
@@ -32,4 +34,40 @@ export const parseLastUpdateDate = (value) => {
     return `${passedTime.getMinutes()} minutes ago`
   if (passedTime.getMinutes() < 1) return 'just now'
   if (passedTime.getMinutes() < 5) return 'few minutes ago'
+}
+
+export class FakeUser {
+  constructor() {
+    this.additionInfo = faker.lorem.words(15)
+    this.address = faker.address.city()
+    this.avatarData = faker.image.imageUrl()
+    this.birthDate = faker.date.recent()
+    this.company = faker.company.companyName()
+    this.email = faker.internet.email()
+    this.facebookLink = faker.internet.url()
+    this.fax = faker.phone.phoneNumber('+38 (###) ### ## ##')
+    this.firstName = faker.name.firstName()
+    this.gender = faker.name.gender()
+    this.githubLink = faker.internet.url()
+    this.hobbies = [
+      faker.random.boolean(),
+      faker.random.boolean(),
+      faker.random.boolean(),
+      faker.random.boolean(),
+      faker.random.boolean(),
+      faker.random.boolean()
+    ]
+    this.language = { value: 'null', label: faker.random.word() }
+    this.lastName = faker.name.lastName()
+    this.lastUpdate = new Date()
+    this.password = 'password1'
+    this.passwordRepeat = 'password1'
+    this.phones = [faker.phone.phoneNumber('+38 (###) ### ## ##')]
+    this.skills = [
+      { value: 'null', label: faker.random.word() },
+      { value: 'null', label: faker.random.word() },
+      { value: 'null', label: faker.random.word() }
+    ]
+    this.userName = faker.random.word()
+  }
 }
