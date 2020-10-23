@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -10,6 +10,7 @@ import commonStyles from 'components/Inputs/common/styles.module.css'
 import ValidationError from 'components/ValidationError'
 
 const MaskInput = ({
+  value,
   control,
   name,
   placeholder,
@@ -25,7 +26,7 @@ const MaskInput = ({
         <Controller
           as={ReactInputMask}
           name={name}
-          defaultValue=""
+          defaultValue={value}
           placeholder={placeholder}
           className={commonStyles.input}
           mask={mask}
@@ -39,6 +40,7 @@ const MaskInput = ({
 }
 
 MaskInput.propTypes = {
+  value: T.string,
   control: T.object,
   name: T.string,
   placeholder: T.string,
@@ -48,4 +50,4 @@ MaskInput.propTypes = {
   title: T.string
 }
 
-export default MaskInput
+export default memo(MaskInput)

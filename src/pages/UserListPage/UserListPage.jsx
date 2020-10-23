@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
 import { loadUsers } from 'redux/actions'
@@ -14,23 +14,19 @@ const UserListPage = () => {
 
   const { users, isFetching } = useSelector((state) => state)
 
-  useEffect(() => dispatch(loadUsers()), [])
+  useEffect(() => dispatch(loadUsers()), [dispatch])
 
   if (isFetching) {
-    return (
-      <main className="container">
-        <Title>List of users</Title>
-        <Spinner />
-      </main>
-    )
+    return <Spinner />
   }
 
   return (
     <main className="container">
       <Title>List of users</Title>
+
       {users.length ? <UserList users={users} /> : <NoUsersPlaceholder />}
     </main>
   )
 }
 
-export default UserListPage
+export default memo(UserListPage)

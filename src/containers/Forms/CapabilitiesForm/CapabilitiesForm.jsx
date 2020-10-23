@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -35,7 +35,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
 
   return (
     <div className={commonStyles.form}>
-      <div className={commonStyles.flexCont}>
+      <div className={commonStyles.formSection}>
         <SelectInput
           title="Skills"
           name="skills"
@@ -54,7 +54,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
         />
       </div>
 
-      <div className={commonStyles.flexCont}>
+      <div className={commonStyles.formSection}>
         <Checkbox title="Hobbies">
           {CHECKBOXES.map((title, i) => (
             <label
@@ -75,9 +75,13 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
         </Checkbox>
 
         <div className={commonStyles.buttons}>
-          {isEdit || <Button handleClick={handleClickBack}>Back</Button>}
+          {isEdit || (
+            <Button disabled={false} handleClick={handleClickBack}>
+              Back
+            </Button>
+          )}
           <Button
-            disabled={!formState.isValid}
+            disabled={isEdit ? !formState.isDirty : !formState.isValid}
             handleClick={isEdit ? handleSave : null}
             className={concatStyles(
               commonStyles.positionRight,
@@ -97,4 +101,4 @@ CapabilitiesForm.propTypes = {
   handleSave: T.func
 }
 
-export default CapabilitiesForm
+export default memo(CapabilitiesForm)

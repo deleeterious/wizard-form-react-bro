@@ -1,0 +1,16 @@
+.sectionTitle {
+  width: 33%;
+  color: #475666;
+  font-weight: 500;
+  display: flex;
+}
+
+.editIcon {
+  stroke: #475666;
+  fill: #475666;
+  margin-left: 10px;
+}
+
+.editIcon path {
+  fill: #475666;
+}

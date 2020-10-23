@@ -1,11 +1,6 @@
 import React from 'react'
 // prop-types
 import T from 'prop-types'
-// redux
-import { useDispatch } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
-// router
-import { Link } from 'react-router-dom'
 // constants
 import {
   ACCOUNT_FORM_STAGE,
@@ -14,11 +9,11 @@ import {
   CAPABILITIES_FORM_STAGE
 } from 'constants.js'
 // utils
-import { parseDate, concatStyles } from 'utils'
+import { parseDate } from 'utils'
 // components
 import AvatarImage from 'components/AvatarImage'
-// assets
-import { ReactComponent as EditIcon } from 'assets/icons/edit.svg'
+import SectionInfoList from 'components/SectionInfoList/SectionInfoList'
+import SectionInfoTitle from 'components/SectionInfoTitle/SectionInfoTitle'
 // css
 import classes from './UserInfo.module.css'
 
@@ -41,7 +36,39 @@ const UserInfo = ({ user }) => {
     id
   } = user
 
-  const dispatch = useDispatch()
+  const facebookLinkRender = (value) =>
+    value ? (
+      <a className={classes.link} href={value}>
+        {value}
+      </a>
+    ) : (
+      'N/A'
+    )
+
+  const phonesRender = (value) => {
+    return value?.map((phone, i) => {
+      if (phone)
+        return (
+          <div className={classes.infoListItem} key={i}>
+            <div className={classes.infoListItemTitle}>Phone#{i + 1}:</div>
+            <div className={classes.infoListItemValue}>{phone}</div>
+          </div>
+        )
+    })
+  }
+
+  const skillsRender = (value) => value?.map((item) => item.label).join(', ')
+
+  const hobbiesRender = (value) =>
+    value?.filter((item) => item).length
+      ? value
+          ?.filter((item) => item)
+          .map((item, i) => (
+            <p className={classes.hobbiesItem} key={i}>
+              {item}
+            </p>
+          ))
+      : 'N/A'
 
   return (
     <div className={classes.userInfo}>
@@ -50,144 +77,60 @@ const UserInfo = ({ user }) => {
       </div>
       <div className={classes.infoCont}>
         <div className={classes.sectionCont}>
-          <div className={classes.sectionTitle}>
-            <div>Account</div>
-            <Link
-              to={`/edit/${id}`}
-              onClick={() =>
-                dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
-              }
-            >
-              <EditIcon className={classes.editIcon} />
-            </Link>
-          </div>
-          <div className={classes.infoList}>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>User name:</div>
-              <div className={classes.infoListItemValue}>{userName}</div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Password:</div>
-              <div className={classes.infoListItemValue}>{password}</div>
-            </div>
-          </div>
+          <SectionInfoTitle id={id} formStage={ACCOUNT_FORM_STAGE}>
+            Account
+          </SectionInfoTitle>
+
+          <SectionInfoList
+            data={[
+              { label: 'User name', value: userName },
+              { label: 'Password', value: password }
+            ]}
+          />
         </div>
         <div className={classes.sectionCont}>
-          <div className={classes.sectionTitle}>
-            <div>Person</div>
-            <Link
-              to={`/edit/${id}`}
-              onClick={() =>
-                dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
-              }
-            >
-              <EditIcon className={classes.editIcon} />
-            </Link>
-          </div>
-          <div className={classes.infoList}>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>First name:</div>
-              <div className={classes.infoListItemValue}>{firstName}</div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Last name:</div>
-              <div className={classes.infoListItemValue}>{lastName}</div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Birth date:</div>
-              <div className={classes.infoListItemValue}>
-                {parseDate(birthDate)}
-              </div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Email:</div>
-              <div className={classes.infoListItemValue}>{email}</div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Address:</div>
-              <div className={classes.infoListItemValue}>{address}</div>
-            </div>
-          </div>
+          <SectionInfoTitle id={id} formStage={PROFILE_FORM_STAGE}>
+            Person
+          </SectionInfoTitle>
+
+          <SectionInfoList
+            data={[
+              { label: 'First name', value: firstName },
+              { label: 'Last name', value: lastName },
+              { label: 'Birth date', value: parseDate(birthDate) },
+              { label: 'Email', value: email },
+              { label: 'Address', value: address || 'N/A' }
+            ]}
+          />
         </div>
         <div className={classes.sectionCont}>
-          <div className={classes.sectionTitle}>
-            <div>Contacts</div>
-            <Link
-              to={`/edit/${id}`}
-              onClick={() =>
-                dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
-              }
-            >
-              <EditIcon className={classes.editIcon} />
-            </Link>
-          </div>
-          <div className={classes.infoList}>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Company:</div>
-              <div className={classes.infoListItemValue}>{company}</div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Fax:</div>
-              <div className={classes.infoListItemValue}>{fax || 'N/A'}</div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Facebook link:</div>
-              <div className={classes.infoListItemValue}>
-                <a className={classes.link} href={facebookLink}>
-                  facebook.com
-                </a>
-              </div>
-            </div>
-            {phones?.map((phone, i) => {
-              if (phone)
-                return (
-                  <div className={classes.infoListItem} key={i}>
-                    <div className={classes.infoListItemTitle}>
-                      Phone#{i + 1}:
-                    </div>
-                    <div className={classes.infoListItemValue}>{phone}</div>
-                  </div>
-                )
-            })}
-          </div>
+          <SectionInfoTitle id={id} formStage={CONTACTS_FORM_STAGE}>
+            Contacts
+          </SectionInfoTitle>
+
+          <SectionInfoList
+            data={[
+              { label: 'Company', value: company },
+              { label: 'Fax', value: fax || 'N/A' },
+              {
+                label: 'Facebook link',
+                value: facebookLinkRender(facebookLink)
+              },
+              { label: 'Phones', render: phonesRender(phones) }
+            ]}
+          />
         </div>
         <div className={classes.sectionCont}>
-          <div className={classes.sectionTitle}>
-            <div>Capabilities</div>
-            <Link
-              to={`/edit/${id}`}
-              onClick={() =>
-                dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
-              }
-            >
-              <EditIcon className={classes.editIcon} />
-            </Link>
-          </div>
-          <div className={classes.infoList}>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Skills:</div>
-              <div
-                className={concatStyles(
-                  classes.infoListItemValue,
-                  classes.skillsString
-                )}
-              >
-                {skills?.map((item) => item.label).join(', ')}
-              </div>
-            </div>
-            <div className={classes.infoListItem}>
-              <div className={classes.infoListItemTitle}>Hobbies:</div>
-              <div className={classes.infoListItemValue}>
-                {hobbies
-                  ?.filter((item) => item)
-                  .map((item, idx) => (
-                    <p className={classes.hobbiesItem} key={idx}>
-                      {item}
-                    </p>
-                  ))}
-              </div>
-            </div>
-          </div>
+          <SectionInfoTitle id={id} formStage={CAPABILITIES_FORM_STAGE}>
+            Capabilities
+          </SectionInfoTitle>
+
+          <SectionInfoList
+            data={[
+              { label: 'Skills', value: skillsRender(skills) },
+              { label: 'Hobbies', value: hobbiesRender(hobbies) }
+            ]}
+          />
         </div>
       </div>
     </div>

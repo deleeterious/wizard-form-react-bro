@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -47,6 +47,7 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
         <input
           type="file"
           name="avatar"
+          accept="image/png,image/jpeg,image/jpg"
           id="avatar"
           className={classes.fileInput}
           onChange={handleLoadLocalFile}
@@ -65,4 +66,4 @@ AvatarInput.propTypes = {
   errorMessage: T.string
 }
 
-export default AvatarInput
+export default memo(AvatarInput)

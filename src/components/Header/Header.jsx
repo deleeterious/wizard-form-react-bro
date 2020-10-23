@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // utils
 import { concatStyles } from 'utils'
 // assets
@@ -27,4 +27,4 @@ const Header = () => (
   </header>
 )
 
-export default Header
+export default memo(Header)

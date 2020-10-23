@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // utils
@@ -6,9 +6,10 @@ import { concatStyles } from 'utils'
 // css
 import classes from './Button.module.css'
 
-const Button = ({ children, className, handleClick, disabled = false }) => (
+const Button = ({ children, className, handleClick, disabled }) => (
   <div className={classes.btnCont}>
     <button
+      disabled={disabled}
       onClick={handleClick}
       className={concatStyles(
         classes.button,
@@ -28,4 +29,4 @@ Button.propTypes = {
   disabled: T.oneOfType([T.bool, T.number])
 }
 
-export default Button
+export default memo(Button)

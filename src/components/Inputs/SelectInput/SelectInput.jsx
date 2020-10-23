@@ -25,7 +25,8 @@ const SelectInput = ({
     dropdownIndicator: () => ({
       display: 'none'
     }),
-    indicatorSeparator: () => ({
+    indicatorSeparator: (provided) => ({
+      ...provided,
       display: 'none'
     }),
     container: (provided) => ({
@@ -36,9 +37,6 @@ const SelectInput = ({
       fontWeight: 500,
       ':hover': {
         border: '1px solid #a1c4ff'
-      },
-      ':focus': {
-        border: '1px solid #a1c4ff'
       }
     }),
     control: (provided) => ({
@@ -46,10 +44,12 @@ const SelectInput = ({
       border: 'none',
       boxShadow: 'none'
     }),
-    placeholder: () => ({
+    placeholder: (provided) => ({
+      ...provided,
       display: 'none'
     }),
-    menu: () => ({
+    menu: (provided) => ({
+      ...provided,
       border: '1px solid #e7f0ff',
       fontSize: 14,
       fontWeight: 400,
@@ -62,19 +62,15 @@ const SelectInput = ({
       <label htmlFor={name}>
         <div className={commonStyles.inputLabel}>{title}</div>
         <Controller
-          defaultValue=""
+          as={ReactSelect}
           rules={rules}
           name={name}
           control={control}
-          render={({ onChange, value }) => (
-            <ReactSelect
-              isMulti={isMulti}
-              options={options}
-              styles={customStyles}
-              onChange={onChange}
-              value={value}
-            />
-          )}
+          isMulti={isMulti}
+          hideSelectedOptions
+          options={options}
+          menuPosition="fixed"
+          styles={customStyles}
         />
       </label>
       <ValidationError errorMessage={errorMessage} />

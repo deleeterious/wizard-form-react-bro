@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -6,9 +6,6 @@ import { useFormContext } from 'react-hook-form'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
-// assets
-import { ReactComponent as PassVisibleIcon } from 'assets/icons/pass-visible.svg'
-import { ReactComponent as PassNotVisibleIcon } from 'assets/icons/pass-notvisible.svg'
 // utils
 import { concatStyles } from 'utils'
 // constants
@@ -18,15 +15,12 @@ import {
   getFromLocalStorage,
   setToLocalStorage
 } from 'helpers/localStorageHelper'
-import {
-  passwordRepeatValidation,
-  passwordValidation,
-  userNameValidation
-} from 'helpers/validations'
+import { userNameValidation } from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput'
 import AvatarInput from 'components/Inputs/AvatarInput'
 import Button from 'components/Button'
+import PasswordInput from 'components/Inputs/PasswordInput'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
@@ -36,25 +30,12 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const user = useSelector((state) => state.user)
 
-  const [isShowPassword, setShowPassword] = useState({
-    password: false,
-    passwordRepeat: false
-  })
-
-  const { register, watch, trigger, errors, formState } = useFormContext()
-
-  const handleShowPass = (e, target) => {
-    e.preventDefault()
-    setShowPassword((prevState) => ({
-      ...prevState,
-      [target]: !prevState[target]
-    }))
-  }
+  const { register, trigger, errors, formState } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
-    const result = await trigger()
-    if (result) {
+    const isValid = await trigger()
+    if (isValid) {
       setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
 
       setToLocalStorage('submittedStages', {
@@ -91,56 +72,16 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
           errorMessage={errors?.userName?.message}
         />
 
-        <div className={classes.passwordInputCont}>
-          <TextInput
-            type="text"
-            name="password"
-            title="Password"
-            className={!isShowPassword.password ? classes.showPass : null}
-            refRegister={register(
-              passwordValidation(/* watch('passwordRepeat') */)
-            )}
-            errorMessage={errors?.password?.message}
-          />
+        <PasswordInput name="password" title="Password" />
 
-          <button
-            className={classes.showPassBtn}
-            onClick={(e) => handleShowPass(e, 'password')}
-          >
-            {isShowPassword.password ? (
-              <PassNotVisibleIcon />
-            ) : (
-              <PassVisibleIcon />
-            )}
-          </button>
-        </div>
-
-        <div className={classes.passwordInputCont}>
-          <TextInput
-            type="text"
-            name="passwordRepeat"
-            title="Repeat password"
-            className={!isShowPassword.passwordRepeat ? classes.showPass : null}
-            refRegister={register(passwordRepeatValidation(watch('password')))}
-            errorMessage={errors?.passwordRepeat?.message}
-          />
-
-          <button
-            className={classes.showPassBtn}
-            onClick={(e) => handleShowPass(e, 'passwordRepeat')}
-          >
-            {isShowPassword.passwordRepeat ? (
-              <PassNotVisibleIcon />
-            ) : (
-              <PassVisibleIcon />
-            )}
-          </button>
-        </div>
+        <PasswordInput name="passwordRepeat" title="Repeat password" />
 
         <div className={commonStyles.buttons}>
           <Button
             className={commonStyles.positionRight}
-            disabled={!formState.isValid}
+            disabled={
+              isEdit ? !formState.isDirty : !!Object.keys(errors).length
+            }
             handleClick={isEdit ? handleSave : handleClickForward}
           >
             {isEdit ? 'Save' : 'Forward'}
@@ -157,4 +98,4 @@ AccountForm.propTypes = {
   isEdit: T.bool
 }
 
-export default AccountForm
+export default memo(AccountForm)

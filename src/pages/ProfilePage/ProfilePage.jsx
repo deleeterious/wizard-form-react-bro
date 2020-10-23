@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
 // redux
@@ -16,8 +16,7 @@ const ProfilePage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [dispatch, match.params.id])
 
   return (
     <main className="container">
@@ -33,4 +32,4 @@ ProfilePage.propTypes = {
   match: T.object
 }
 
-export default ProfilePage
+export default memo(ProfilePage)

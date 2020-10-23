@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
 // css
@@ -21,4 +21,4 @@ Checkbox.propTypes = {
   title: T.string
 }
 
-export default Checkbox
+export default memo(Checkbox)

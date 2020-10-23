@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -81,6 +81,13 @@ const Form = ({ submittedStages, setSubmittedStages, isEdit }) => {
     if (isEdit) reset({ ...user })
   }, [user])
 
+  useEffect(
+    () => () => {
+      if (isEdit) reset({ ...user })
+    },
+    [activeFormStage]
+  )
+
   useEffect(() => {
     if (!isPopup && !isEdit) {
       if (formState.isDirty) {
@@ -143,4 +150,4 @@ Form.propTypes = {
   isEdit: T.bool
 }
 
-export default Form
+export default memo(Form)

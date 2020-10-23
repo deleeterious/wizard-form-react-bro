@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 // react-redux
 import { useSelector } from 'react-redux'
 // components
@@ -32,4 +32,4 @@ const FormsPage = () => {
   )
 }
 
-export default FormsPage
+export default memo(FormsPage)
