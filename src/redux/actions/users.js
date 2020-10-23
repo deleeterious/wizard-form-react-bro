@@ -86,3 +86,11 @@ export const deleteUser = (id) => {
       });
   };
 };
+
+export const generateUsers = (generatedUsers) => {
+  return async (dispatch) => {
+    await db.table('users').clear();
+    await db.table('users').bulkAdd(generatedUsers);
+    dispatch(loadUsers());
+  };
+};
