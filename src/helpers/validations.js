@@ -25,9 +25,8 @@ export const userNameValidation = (currentUser) => ({
   validate: (value) => isUniquePropValidation(value, currentUser, 'userName')
 })
 
-export const passwordValidation = (passwordRepeat) => ({
+export const passwordValidation = () => ({
   required: 'This field is required',
-  // validate: (value) => passwordRepeat === value || "Password don't match",
   minLength: { value: 8, message: 'Password min length 8 symbols' },
   pattern: { value: /\d/, message: 'Password must have least 1 number' }
 })

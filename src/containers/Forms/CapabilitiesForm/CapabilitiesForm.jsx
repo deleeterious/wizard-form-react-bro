@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { changeActiveFormStage } from 'redux/actions'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
-import { additionInfoValidation, skillsValidation } from 'helpers/validations'
+import { additionInfoValidation } from 'helpers/validations'
 // constants
 import { CONTACTS_FORM_STAGE, skillsList, CHECKBOXES } from 'constants.js'
 // utils
@@ -25,10 +25,11 @@ import classes from './CapabilitiesForm.module.css'
 const CapabilitiesForm = ({ handleSave, isEdit }) => {
   const dispatch = useDispatch()
 
-  const { register, errors, control, formState } = useFormContext()
+  const { register, clearErrors, errors, formState } = useFormContext()
 
   const handleClickBack = (e) => {
     e.preventDefault()
+    clearErrors()
     setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
     dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
@@ -40,9 +41,8 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
           title="Skills"
           name="skills"
           options={skillsList}
-          control={control}
           isMulti
-          rules={skillsValidation()}
+          isEdit={isEdit}
           errorMessage={errors?.skills?.message}
         />
 

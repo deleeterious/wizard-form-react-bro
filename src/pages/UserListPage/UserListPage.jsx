@@ -22,7 +22,7 @@ const UserListPage = () => {
   const handleGenerateUsers = (e) => {
     e.preventDefault()
     const newUsers = Array.from({ length: 50 }, () => ({ ...new FakeUser() }))
-    dispatch(generateUsers([newUsers]))
+    dispatch(generateUsers(newUsers))
   }
 
   useEffect(() => dispatch(loadUsers()), [dispatch])

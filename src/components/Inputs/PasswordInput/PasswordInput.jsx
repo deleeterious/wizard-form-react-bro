@@ -14,7 +14,7 @@ import {
 // css
 import classes from './PasswordInput.module.css'
 
-const PasswordInput = ({ name, title }) => {
+const PasswordInput = ({ name, title, refRegister }) => {
   const { register, watch, errors } = useFormContext()
 
   const [isShowPassword, setShowPassword] = useState(false)
@@ -31,12 +31,8 @@ const PasswordInput = ({ name, title }) => {
         name={name}
         title={title}
         className={!isShowPassword ? classes.showPass : null}
-        refRegister={register(
-          name === 'password'
-            ? passwordValidation(/* watch('passwordRepeat') */)
-            : passwordRepeatValidation(watch('password'))
-        )}
-        errorMessage={errors?.password?.message}
+        refRegister={refRegister}
+        errorMessage={errors[name]?.message}
       />
 
       <button className={classes.showPassBtn} onClick={handleShowPass}>
