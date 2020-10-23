@@ -1,4 +1,6 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
+// lodash
+import isEmpty from 'lodash/isEmpty'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
@@ -15,7 +17,11 @@ import {
   getFromLocalStorage,
   setToLocalStorage
 } from 'helpers/localStorageHelper'
-import { userNameValidation } from 'helpers/validations'
+import {
+  passwordRepeatValidation,
+  passwordValidation,
+  userNameValidation
+} from 'helpers/validations'
 // components
 import TextInput from 'components/Inputs/TextInput'
 import AvatarInput from 'components/Inputs/AvatarInput'
@@ -30,7 +36,16 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const user = useSelector((state) => state.user)
 
-  const { register, trigger, errors, formState } = useFormContext()
+  const {
+    register,
+    trigger,
+    watch,
+    getValues,
+    errors,
+    formState
+  } = useFormContext()
+
+  useEffect(() => {}, [])
 
   const handleClickForward = async (e) => {
     e.preventDefault()
@@ -72,15 +87,25 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
           errorMessage={errors?.userName?.message}
         />
 
-        <PasswordInput name="password" title="Password" />
+        <PasswordInput
+          refRegister={register(passwordValidation(watch('passwordRepeat')))}
+          name="password"
+          title="Password"
+        />
 
-        <PasswordInput name="passwordRepeat" title="Repeat password" />
+        <PasswordInput
+          refRegister={register(passwordRepeatValidation(watch('password')))}
+          name="passwordRepeat"
+          title="Repeat password"
+        />
 
         <div className={commonStyles.buttons}>
           <Button
             className={commonStyles.positionRight}
             disabled={
-              isEdit ? !formState.isDirty : !!Object.keys(errors).length
+              isEdit
+                ? !formState.isDirty
+                : isEmpty(getValues()) || !isEmpty(errors)
             }
             handleClick={isEdit ? handleSave : handleClickForward}
           >

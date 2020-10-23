@@ -6,10 +6,9 @@ import { concatStyles } from 'utils'
 // css
 import classes from './Button.module.css'
 
-const Button = ({ children, className, handleClick, disabled }) => (
+const Button = ({ children, className, handleClick, disabled = true }) => (
   <div className={classes.btnCont}>
     <button
-      disabled={disabled}
       onClick={handleClick}
       className={concatStyles(
         classes.button,

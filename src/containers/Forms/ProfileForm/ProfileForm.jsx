@@ -1,4 +1,6 @@
 import React, { memo } from 'react'
+// lodash
+import isEmpty from 'lodash/isEmpty'
 // prop-types
 import T from 'prop-types'
 // react-redux
@@ -31,7 +33,15 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
   const user = useSelector((state) => state.user)
 
-  const { register, trigger, errors, control, formState } = useFormContext()
+  const {
+    register,
+    trigger,
+    clearErrors,
+    getValues,
+    errors,
+    control,
+    formState
+  } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
@@ -55,6 +65,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
   const handleClickBack = (e) => {
     e.preventDefault()
+    clearErrors()
     setToLocalStorage('newUserStage', ACCOUNT_FORM_STAGE)
     dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
   }
@@ -113,9 +124,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
           )}
 
           <Button
-            disabled={
-              isEdit ? !formState.isDirty : !!Object.keys(errors).length
-            }
+            disabled={isEdit ? !formState.isDirty : !isEmpty(errors)}
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
           >

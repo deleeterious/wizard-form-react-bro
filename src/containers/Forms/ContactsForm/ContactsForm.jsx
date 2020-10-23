@@ -1,4 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
+// lodash
+import isEmpty from 'lodash/isEmpty'
 // prop-types
 import T from 'prop-types'
 // redux
@@ -44,6 +46,8 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     register,
     trigger,
     setValue,
+    getValues,
+    clearErrors,
     errors,
     control,
     formState
@@ -96,6 +100,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const handleClickBack = (e) => {
     e.preventDefault()
+    clearErrors()
     setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
     dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
   }
@@ -185,7 +190,9 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
           <Button
             disabled={
-              isEdit ? !formState.isDirty : !!Object.keys(errors).length
+              isEdit
+                ? !formState.isDirty
+                : isEmpty(getValues()) || !isEmpty(errors)
             }
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}

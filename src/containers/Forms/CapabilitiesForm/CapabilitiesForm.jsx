@@ -25,10 +25,11 @@ import classes from './CapabilitiesForm.module.css'
 const CapabilitiesForm = ({ handleSave, isEdit }) => {
   const dispatch = useDispatch()
 
-  const { register, errors, control, formState } = useFormContext()
+  const { register, clearErrors, errors, control, formState } = useFormContext()
 
   const handleClickBack = (e) => {
     e.preventDefault()
+    clearErrors()
     setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
     dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
   }
