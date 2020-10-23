@@ -131,11 +131,9 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         />
 
         <SelectInput
-          control={control}
-          options={languages}
           title="Main languages"
           name="language"
-          rules={requiredValidation()}
+          options={languages}
           errorMessage={errors?.language?.message}
         />
       </div>

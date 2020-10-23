@@ -1,23 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
-import { Controller } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 // react-datepicker
 import ReactSelect from 'react-select'
 // css
 import commonStyles from 'components/Inputs/common/styles.module.css'
 import ValidationError from 'components/ValidationError'
+import { skillsValidation } from 'helpers/validations'
+import { getFromLocalStorage } from 'helpers/localStorageHelper'
 
-const SelectInput = ({
-  control,
-  options,
-  title,
-  name,
-  isMulti,
-  rules,
-  errorMessage
-}) => {
+const SelectInput = ({ options, title, name, isMulti, errorMessage }) => {
   const customStyles = {
     clearIndicator: () => ({
       display: 'none'
@@ -57,20 +51,28 @@ const SelectInput = ({
     })
   }
 
+  const { setValue, register } = useFormContext()
+
+  useEffect(() => {
+    register(
+      { name },
+      { required: true, validate: isMulti && skillsValidation() }
+    )
+  }, [])
+
   return (
     <div className={commonStyles.inputCont}>
       <label htmlFor={name}>
         <div className={commonStyles.inputLabel}>{title}</div>
-        <Controller
-          as={ReactSelect}
-          rules={rules}
-          name={name}
-          control={control}
-          isMulti={isMulti}
+        <ReactSelect
+          defaultValue={getFromLocalStorage('newUser')[name]}
           hideSelectedOptions
           options={options}
-          menuPosition="fixed"
           styles={customStyles}
+          isMulti={isMulti}
+          onChange={(value) => {
+            setValue(name, value, { shouldDirty: true })
+          }}
         />
       </label>
       <ValidationError errorMessage={errorMessage} />
@@ -79,12 +81,10 @@ const SelectInput = ({
 }
 
 SelectInput.propTypes = {
-  control: T.object,
   options: T.array,
   title: T.string,
   name: T.string,
   isMulti: T.bool,
-  rules: T.object,
   errorMessage: T.string
 }
 

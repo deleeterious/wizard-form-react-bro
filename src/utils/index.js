@@ -5,7 +5,7 @@ export const parseDate = (value) => {
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 }
 
-export const parseLastUpdateDate = (value) => {
+export const formatToRelativeTime = (value) => {
   // const passedTime = new Date(new Date() - new Date(2019, 8, 19, 9, 30, 0, 0))
   const passedTime = new Date(new Date() - value)
 

@@ -12,7 +12,7 @@ import AvatarImage from 'components/AvatarImage'
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg'
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg'
 // utils
-import { concatStyles, parseLastUpdateDate } from 'utils'
+import { concatStyles, formatToRelativeTime } from 'utils'
 // css
 import classes from './UserListItem.module.css'
 
@@ -72,7 +72,7 @@ const UserListItem = ({ user }) => {
       <div className={classes.company}>{company}</div>
       <div className={classes.contacts}>{email}</div>
       <div className={classes.updates}>
-        {useMemo(() => parseLastUpdateDate(lastUpdate), [lastUpdate])}
+        {useMemo(() => formatToRelativeTime(lastUpdate), [lastUpdate])}
       </div>
       <div className={classes.buttons}>
         <Link to={`/profile/${id}`} className={classes.editIcon}>
