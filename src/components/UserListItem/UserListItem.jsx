@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 // redux
 import { useDispatch } from 'react-redux';
 import { deleteUser } from 'redux/actions/users';

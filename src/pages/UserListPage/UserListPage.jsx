@@ -26,6 +26,8 @@ const UserListPage = () => {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = data?.slice(indexOfFirstUser, indexOfLastUser);
 
+  useEffect(() => dispatch(loadUsers()), [dispatch]);
+
   const onChangePage = (e, pageNumber) => {
     e.preventDefault();
     setCurrentPage(pageNumber);
