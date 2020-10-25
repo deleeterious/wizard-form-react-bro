@@ -39,6 +39,7 @@ const Pagination = ({
 Pagination.propTypes = {
   totalUsers: T.number,
   usersPerPage: T.number,
+  currentPage: T.number,
   handleChangePage: T.func
 }
 
