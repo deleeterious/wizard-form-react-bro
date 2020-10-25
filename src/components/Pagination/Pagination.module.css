@@ -11,6 +11,7 @@
   border: none;
   background: none;
   cursor: pointer;
+  padding: 2px 8px;
   font-size: 14px;
   font-weight: 500;
   color: #4a82e1;
@@ -18,4 +19,9 @@
 
 .button:hover {
   color: #8fabda;
+}
+
+.active {
+  border: 1px solid #4a82e1;
+  border-radius: 2px;
 }
