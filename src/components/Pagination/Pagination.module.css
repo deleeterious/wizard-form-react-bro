@@ -1,0 +1,21 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 50px auto 20px auto;
+  width: 50%;
+}
+
+.button {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a82e1;
+}
+
+.button:hover {
+  color: #8fabda;
+}

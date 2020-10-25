@@ -20,6 +20,7 @@
   },
   "plugins": ["react", "prettier", "react-hooks"],
   "rules": {
+    "no-plusplus": "off",
     "prettier/prettier": "warn",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
