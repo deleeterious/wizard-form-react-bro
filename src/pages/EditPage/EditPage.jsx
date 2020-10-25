@@ -22,7 +22,7 @@ const EditPage = ({ match }) => {
     return () => {
       dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
     }
-  }, [match.params.id])
+  }, [dispatch, match.params.id])
 
   return (
     <main className="container">

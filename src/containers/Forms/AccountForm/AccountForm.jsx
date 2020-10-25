@@ -36,14 +36,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const user = useSelector((state) => state.user)
 
-  const {
-    register,
-    trigger,
-    watch,
-    getValues,
-    errors,
-    formState
-  } = useFormContext()
+  const { register, trigger, watch, errors, formState } = useFormContext()
 
   useEffect(() => {}, [])
 
@@ -102,11 +95,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         <div className={commonStyles.buttons}>
           <Button
             className={commonStyles.positionRight}
-            disabled={
-              isEdit
-                ? !formState.isDirty
-                : isEmpty(getValues()) || !isEmpty(errors)
-            }
+            disabled={isEdit ? !formState.isDirty : !isEmpty(errors)}
             handleClick={isEdit ? handleSave : handleClickForward}
           >
             {isEdit ? 'Save' : 'Forward'}

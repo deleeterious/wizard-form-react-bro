@@ -46,7 +46,6 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     register,
     trigger,
     setValue,
-    getValues,
     clearErrors,
     errors,
     control,
@@ -188,11 +187,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
           )}
 
           <Button
-            disabled={
-              isEdit
-                ? !formState.isDirty
-                : isEmpty(getValues()) || !isEmpty(errors)
-            }
+            disabled={isEdit ? !formState.isDirty : !isEmpty(errors)}
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : handleClickForward}
           >

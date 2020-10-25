@@ -21,6 +21,7 @@ import Checkbox from 'components/Inputs/Checkbox'
 // css
 import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './CapabilitiesForm.module.css'
+import { isEmpty } from 'lodash'
 
 const CapabilitiesForm = ({ handleSave, isEdit }) => {
   const dispatch = useDispatch()
@@ -81,7 +82,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
             </Button>
           )}
           <Button
-            disabled={isEdit ? !formState.isDirty : !formState.isValid}
+            disabled={isEdit ? !formState.isDirty : !isEmpty(errors)}
             handleClick={isEdit ? handleSave : null}
             className={concatStyles(
               commonStyles.positionRight,

@@ -37,7 +37,6 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
     register,
     trigger,
     clearErrors,
-    getValues,
     errors,
     control,
     formState

@@ -70,7 +70,7 @@ const SelectInput = ({
       },
       { required: true, validate: isMulti && skillsValidation() }
     )
-  }, [])
+  }, [isMulti, name, register])
 
   return (
     <div className={commonStyles.inputCont}>

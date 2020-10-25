@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+// prop-types
+import T from 'prop-types'
 // react-hook-form
 import { useFormContext } from 'react-hook-form'
 // components
@@ -6,16 +8,11 @@ import TextInput from 'components/Inputs/TextInput'
 // assets
 import { ReactComponent as PassVisibleIcon } from 'assets/icons/pass-visible.svg'
 import { ReactComponent as PassNotVisibleIcon } from 'assets/icons/pass-notvisible.svg'
-// helpers
-import {
-  passwordRepeatValidation,
-  passwordValidation
-} from 'helpers/validations'
 // css
 import classes from './PasswordInput.module.css'
 
 const PasswordInput = ({ name, title, refRegister }) => {
-  const { register, watch, errors } = useFormContext()
+  const { errors } = useFormContext()
 
   const [isShowPassword, setShowPassword] = useState(false)
 
@@ -40,6 +37,12 @@ const PasswordInput = ({ name, title, refRegister }) => {
       </button>
     </div>
   )
+}
+
+PasswordInput.propTypes = {
+  name: T.string,
+  title: T.string,
+  refRegister: T.func
 }
 
 export default PasswordInput

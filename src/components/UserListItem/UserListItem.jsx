@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 // redux
 import { useDispatch } from 'react-redux'
 import { deleteUser } from 'redux/actions'
@@ -32,14 +32,14 @@ const UserListItem = ({ user }) => {
     lastUpdate
   } = user
 
-  const handleOutSideClick = (e) => {
+  const handleOutSideClick = useCallback((e) => {
     const domNode = document.getElementById('deleteBtn')
 
     if (!e.path.includes(domNode)) {
       document.removeEventListener('click', handleOutSideClick)
       setIsDeleting(false)
     }
-  }
+  }, [])
 
   const handleSetDeleting = () => {
     setIsDeleting(true)
@@ -52,7 +52,7 @@ const UserListItem = ({ user }) => {
 
   useEffect(
     () => () => document.removeEventListener('click', handleOutSideClick),
-    []
+    [handleOutSideClick]
   )
 
   return (
