@@ -10,7 +10,3 @@
 .container {
   padding: 0 calc(50% - 485px);
 }
-
-.container:last-child {
-  margin-bottom: 50px;
-}

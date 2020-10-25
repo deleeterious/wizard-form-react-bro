@@ -1,31 +1,35 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { generateUsers, loadUsers } from 'redux/actions'
-// utils
-import { FakeUser } from 'utils'
+import { loadUsers } from 'redux/actions'
 // components
 import Title from 'components/Title'
 import NoUsersPlaceholder from 'components/NoUsersPlaceholder'
 import Spinner from 'components/Spinner'
+
+import Pagination from 'components/Pagination'
 // containers
 import UserList from 'containers/UserList'
-import Button from 'components/Button'
-// css
-import classes from './UserListPage.module.css'
+import GenerateUsersButton from 'components/GenerateUsersButton/GenerateUsersButton'
 
 const UserListPage = () => {
   const dispatch = useDispatch()
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [usersPerPage] = useState(5)
+
   const { users, isFetching } = useSelector((state) => state)
 
-  const handleGenerateUsers = (e) => {
-    e.preventDefault()
-    const newUsers = Array.from({ length: 50 }, () => ({ ...new FakeUser() }))
-    dispatch(generateUsers(newUsers))
-  }
-
   useEffect(() => dispatch(loadUsers()), [dispatch])
+
+  const indexOfLastUser = currentPage * usersPerPage
+  const indexOfFirstUser = indexOfLastUser - usersPerPage
+  const currentUsers = users?.slice(indexOfFirstUser, indexOfLastUser)
+
+  const onChangePage = (e, pageNumber) => {
+    e.preventDefault()
+    setCurrentPage(pageNumber)
+  }
 
   if (isFetching) {
     return <Spinner />
@@ -34,10 +38,19 @@ const UserListPage = () => {
   return (
     <main className="container">
       <Title>List of users</Title>
-      {users.length ? <UserList users={users} /> : <NoUsersPlaceholder />}
-      <Button handleClick={handleGenerateUsers} className={classes.generateBtn}>
-        Generate users
-      </Button>
+      {users.length ? (
+        <UserList users={currentUsers} />
+      ) : (
+        <NoUsersPlaceholder />
+      )}
+
+      <GenerateUsersButton />
+
+      <Pagination
+        usersPerPage={usersPerPage}
+        totalUsers={users.length}
+        handleChangePage={onChangePage}
+      />
     </main>
   )
 }
