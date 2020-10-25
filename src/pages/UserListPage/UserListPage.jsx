@@ -47,6 +47,7 @@ const UserListPage = () => {
       <GenerateUsersButton />
 
       <Pagination
+        currentPage={currentPage}
         usersPerPage={usersPerPage}
         totalUsers={users.length}
         handleChangePage={onChangePage}
