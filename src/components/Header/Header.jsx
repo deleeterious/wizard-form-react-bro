@@ -20,7 +20,11 @@ const Header = () => (
       </Link>
     </div>
     <div className={classes.links}>
-      <LinkIcon text="Add new user" icon={<NewUserIcon />} to="/new-user" />
+      <LinkIcon
+        text="Add new user"
+        icon={<NewUserIcon />}
+        to="/new-user/account"
+      />
 
       <LinkIcon text="List of users" icon={<ListUsersIcon />} to="/" />
     </div>

@@ -3,11 +3,12 @@ import React, { memo, useEffect, useState } from 'react'
 import isEmpty from 'lodash/isEmpty'
 // prop-types
 import T from 'prop-types'
+// react-router-dom
+import { useHistory } from 'react-router-dom'
 // redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 // useForm
 import { useFormContext } from 'react-hook-form'
-import { changeActiveFormStage } from 'redux/actions'
 // assets
 import { ReactComponent as DeletePhoneBtn } from 'assets/icons/minus.svg'
 // helpers
@@ -38,7 +39,7 @@ import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './ContactsForm.module.css'
 
 const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
-  const dispatch = useDispatch()
+  const history = useHistory()
 
   const user = useSelector((state) => state.user)
 
@@ -94,7 +95,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         CONTACTS_FORM_STAGE: true
       }))
 
-      dispatch(changeActiveFormStage(CAPABILITIES_FORM_STAGE))
+      history.push('/new-user/capabilities')
     }
   }
 
@@ -102,7 +103,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     e.preventDefault()
     clearErrors()
     setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
-    dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
+    history.push('/new-user/profile')
   }
 
   return (

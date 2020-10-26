@@ -1,9 +1,8 @@
 import React, { memo } from 'react'
 // prop-types
 import T from 'prop-types'
-// react-redux
-import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
+// react-router-dom
+import { useHistory, useParams } from 'react-router-dom'
 // constants
 import {
   ACCOUNT_FORM_STAGE,
@@ -17,12 +16,12 @@ import FormNavigationItem from 'components/FormNavigationItem'
 import classes from './FormNavigation.module.css'
 
 const FormNavigation = ({ submittedStages, isEdit }) => {
-  const dispatch = useDispatch()
+  const history = useHistory()
 
-  const { activeFormStage } = useSelector((state) => state)
+  const { id, activeFormStage } = useParams()
 
   const onStepChange = (stage) =>
-    isEdit ? () => dispatch(changeActiveFormStage(stage)) : undefined
+    isEdit ? () => history.push(`/edit/${id}/${stage}`) : undefined
 
   return (
     <nav className={classes.nav}>

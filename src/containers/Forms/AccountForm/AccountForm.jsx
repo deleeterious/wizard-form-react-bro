@@ -1,13 +1,14 @@
 import React, { memo, useEffect } from 'react'
 // lodash
 import isEmpty from 'lodash/isEmpty'
+// react-router-dom
+import { useHistory } from 'react-router-dom'
 // prop-types
 import T from 'prop-types'
 // react-hook-form
 import { useFormContext } from 'react-hook-form'
 // react-redux
-import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
+import { useSelector } from 'react-redux'
 // utils
 import { concatStyles } from 'utils'
 // constants
@@ -32,7 +33,7 @@ import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './AccountForm.module.css'
 
 const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
-  const dispatch = useDispatch()
+  const history = useHistory()
 
   const user = useSelector((state) => state.user)
 
@@ -63,7 +64,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         ACCOUNT_FORM_STAGE: true
       }))
 
-      dispatch(changeActiveFormStage(PROFILE_FORM_STAGE))
+      history.push('/new-user/profile')
     }
   }
 

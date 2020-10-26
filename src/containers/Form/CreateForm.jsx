@@ -5,10 +5,10 @@ import T from 'prop-types'
 // react-hook-form
 import { FormProvider, useForm } from 'react-hook-form'
 // react-redux
-import { useDispatch, useSelector } from 'react-redux'
-import { addUser, changeActiveFormStage } from 'redux/actions'
+import { useDispatch } from 'react-redux'
+import { addUser } from 'redux/actions'
 // react-router-dom
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 // constants
 import {
   ACCOUNT_FORM_STAGE,
@@ -32,10 +32,9 @@ import CapabilitiesForm from 'containers/Forms/CapabilitiesForm'
 const Form = ({ submittedStages, setSubmittedStages }) => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const { activeFormStage } = useParams()
 
   const [isPopup, setIsPopup] = useState(!!getFromLocalStorage('newUser'))
-
-  const activeFormStage = useSelector((state) => state.activeFormStage)
 
   const methods = useForm({
     mode: 'onChange',
@@ -55,7 +54,7 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
     reset(getFromLocalStorage('newUser'))
 
     if (getFromLocalStorage('newUserStage'))
-      dispatch(changeActiveFormStage(getFromLocalStorage('newUserStage')))
+      history.push(`/new-user/${getFromLocalStorage('newUserStage')}`)
 
     setSubmittedStages(getFromLocalStorage('submittedStages'))
 
@@ -81,8 +80,10 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
     }
   }, [watch()])
 
-  // Return to first step when component unmount
-  useEffect(() => () => dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE)), [])
+  useEffect(() => {
+    if (activeFormStage !== ACCOUNT_FORM_STAGE)
+      history.push('/new-user/account')
+  }, [])
 
   return (
     <FormProvider {...methods}>

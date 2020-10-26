@@ -6,9 +6,9 @@ import T from 'prop-types'
 import { FormProvider, useForm } from 'react-hook-form'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, updateUser } from 'redux/actions'
+import { updateUser } from 'redux/actions'
 // react-router-dom
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 // constants
 import {
   ACCOUNT_FORM_STAGE,
@@ -26,8 +26,9 @@ const Form = () => {
   const isEdit = true
   const dispatch = useDispatch()
   const history = useHistory()
+  const { activeFormStage } = useParams()
 
-  const { activeFormStage, user } = useSelector((state) => state)
+  const { user } = useSelector((state) => state)
 
   const methods = useForm({
     mode: 'onChange',
@@ -58,9 +59,6 @@ const Form = () => {
     },
     [activeFormStage]
   )
-
-  // Return to first step when component unmount
-  useEffect(() => () => dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE)), [])
 
   return (
     <FormProvider {...methods}>

@@ -3,9 +3,8 @@ import React, { memo } from 'react'
 import T from 'prop-types'
 // react-hook-form
 import { useFormContext } from 'react-hook-form'
-// redux
-import { useDispatch } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
+// react-router-dom
+import { useHistory } from 'react-router-dom'
 // helpers
 import { setToLocalStorage } from 'helpers/localStorageHelper'
 import { additionInfoValidation } from 'helpers/validations'
@@ -23,7 +22,7 @@ import commonStyles from 'containers/Forms/common/style.module.css'
 import classes from './CapabilitiesForm.module.css'
 
 const CapabilitiesForm = ({ handleSave, isEdit }) => {
-  const dispatch = useDispatch()
+  const history = useHistory()
 
   const { register, clearErrors, errors, formState } = useFormContext()
 
@@ -31,7 +30,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
     e.preventDefault()
     clearErrors()
     setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
-    dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
+    history.push('/new-user/contacts')
   }
 
   return (

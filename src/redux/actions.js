@@ -105,8 +105,3 @@ export const deleteUser = (id) => {
       })
   }
 }
-
-export const changeActiveFormStage = (payload) => ({
-  type: CHANGE_ACTIVE_FORM_STAGE,
-  payload
-})

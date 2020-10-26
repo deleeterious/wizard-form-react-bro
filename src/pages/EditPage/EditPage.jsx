@@ -3,9 +3,8 @@ import React, { memo, useEffect } from 'react'
 import T from 'prop-types'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage, getUser } from 'redux/actions'
-// constants
-import { ACCOUNT_FORM_STAGE } from 'constants.js'
+import { getUser } from 'redux/actions'
+
 // components
 import Title from 'components/Title'
 // containers
@@ -19,9 +18,6 @@ const EditPage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id))
-    return () => {
-      dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
-    }
   }, [match.params.id])
 
   return (

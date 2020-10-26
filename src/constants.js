@@ -1,7 +1,7 @@
-export const ACCOUNT_FORM_STAGE = 'ACCOUNT_FORM_STAGE'
-export const PROFILE_FORM_STAGE = 'PROFILE_FORM_STAGE'
-export const CONTACTS_FORM_STAGE = 'CONTACTS_FORM_STAGE'
-export const CAPABILITIES_FORM_STAGE = 'CAPABILITIES_FORM_STAGE'
+export const ACCOUNT_FORM_STAGE = 'account'
+export const PROFILE_FORM_STAGE = 'profile'
+export const CONTACTS_FORM_STAGE = 'contacts'
+export const CAPABILITIES_FORM_STAGE = 'capabilities'
 
 export const PHONE_MASK = '+38 (999) 999 99 99'
 

@@ -3,9 +3,10 @@ import React, { memo } from 'react'
 import isEmpty from 'lodash/isEmpty'
 // prop-types
 import T from 'prop-types'
+// react-router-dom
+import { useHistory } from 'react-router-dom'
 // react-redux
-import { useDispatch, useSelector } from 'react-redux'
-import { changeActiveFormStage } from 'redux/actions'
+import { useSelector } from 'react-redux'
 // useForm
 import { useFormContext } from 'react-hook-form'
 // constants
@@ -29,7 +30,7 @@ import RadioInput from 'components/Inputs/RadioInput'
 import commonStyles from 'containers/Forms/common/style.module.css'
 
 const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
-  const dispatch = useDispatch()
+  const history = useHistory()
 
   const user = useSelector((state) => state.user)
 
@@ -37,7 +38,6 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
     register,
     trigger,
     clearErrors,
-    getValues,
     errors,
     control,
     formState
@@ -59,7 +59,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
         PROFILE_FORM_STAGE: true
       }))
 
-      dispatch(changeActiveFormStage(CONTACTS_FORM_STAGE))
+      history.push('/new-user/contacts')
     }
   }
 
@@ -67,7 +67,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
     e.preventDefault()
     clearErrors()
     setToLocalStorage('newUserStage', ACCOUNT_FORM_STAGE)
-    dispatch(changeActiveFormStage(ACCOUNT_FORM_STAGE))
+    history.push('/new-user/account')
   }
 
   return (
