@@ -9,7 +9,10 @@ import ReactSelect from 'react-select'
 import commonStyles from 'components/Inputs/common/styles.module.css'
 import ValidationError from 'components/ValidationError'
 import { skillsValidation } from 'helpers/validations'
-import { getFromLocalStorage } from 'helpers/localStorageHelper'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from 'helpers/localStorageHelper'
 import { useSelector } from 'react-redux'
 
 const SelectInput = ({
@@ -85,7 +88,11 @@ const SelectInput = ({
           styles={customStyles}
           isMulti={isMulti}
           onChange={(value) => {
-            setValue(name, value, { shouldDirty: true })
+            setValue(name, value)
+            setToLocalStorage('newUser', {
+              ...getFromLocalStorage('newUser'),
+              [name]: value
+            })
           }}
         />
       </label>

@@ -44,7 +44,7 @@
 
 .buttons {
   width: 10%;
-  z-index: 100;
+  z-index: 1;
 
   display: flex;
   justify-content: space-evenly;
