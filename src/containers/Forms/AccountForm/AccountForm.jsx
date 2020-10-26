@@ -50,7 +50,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const handleClickForward = async (e) => {
     e.preventDefault()
-    const isValid = await trigger()
+    const isValid = await trigger(['userName, password,passwordRepeat'])
     if (isValid) {
       setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
 

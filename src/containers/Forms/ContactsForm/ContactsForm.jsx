@@ -48,7 +48,6 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     trigger,
     setValue,
     getValues,
-    clearErrors,
     errors,
     control,
     formState
@@ -81,7 +80,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const handleClickForward = async (e) => {
     e.preventDefault()
-    const result = await trigger()
+    const result = await trigger(['company', 'language'])
     if (result) {
       setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE)
 
@@ -101,7 +100,6 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   const handleClickBack = (e) => {
     e.preventDefault()
-    clearErrors()
     setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
     history.push('/new-user/profile')
   }

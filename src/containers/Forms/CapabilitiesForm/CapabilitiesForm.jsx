@@ -24,11 +24,10 @@ import classes from './CapabilitiesForm.module.css'
 const CapabilitiesForm = ({ handleSave, isEdit }) => {
   const history = useHistory()
 
-  const { register, clearErrors, errors, formState } = useFormContext()
+  const { register, errors, formState } = useFormContext()
 
   const handleClickBack = (e) => {
     e.preventDefault()
-    clearErrors()
     setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
     history.push('/new-user/contacts')
   }

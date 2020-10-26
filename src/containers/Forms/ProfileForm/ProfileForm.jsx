@@ -34,18 +34,16 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
   const { data } = useSelector((state) => state.currentUser)
 
-  const {
-    register,
-    trigger,
-    clearErrors,
-    errors,
-    control,
-    formState
-  } = useFormContext()
+  const { register, trigger, errors, control, formState } = useFormContext()
 
   const handleClickForward = async (e) => {
     e.preventDefault()
-    const result = await trigger()
+    const result = await trigger([
+      'firstName',
+      'lastName',
+      'birthDate',
+      'email'
+    ])
     if (result) {
       setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
 
@@ -65,7 +63,6 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
   const handleClickBack = (e) => {
     e.preventDefault()
-    clearErrors()
     setToLocalStorage('newUserStage', ACCOUNT_FORM_STAGE)
     history.push('/new-user/account')
   }
