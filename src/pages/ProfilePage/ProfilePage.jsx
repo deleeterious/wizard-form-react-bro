@@ -3,7 +3,7 @@ import React, { memo, useEffect } from 'react'
 import T from 'prop-types'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser } from 'redux/actions'
+import { getUser } from 'redux/actions/currentUser'
 // components
 import Title from 'components/Title'
 import UserInfo from 'components/UserInfo'
@@ -12,7 +12,7 @@ import Spinner from 'components/Spinner'
 const ProfilePage = ({ match }) => {
   const dispatch = useDispatch()
 
-  const { user, isFetching } = useSelector((state) => state)
+  const { data, isFetching } = useSelector((state) => state.currentUser)
 
   useEffect(() => {
     dispatch(getUser(match.params.id))
@@ -21,9 +21,9 @@ const ProfilePage = ({ match }) => {
   return (
     <main className="container">
       <Title linkBackPath="/" linkBackTitle="Users List">
-        {user.userName}
+        {data.userName}
       </Title>
-      {isFetching ? <Spinner /> : <UserInfo user={user} />}
+      {isFetching ? <Spinner /> : <UserInfo user={data} />}
     </main>
   )
 }

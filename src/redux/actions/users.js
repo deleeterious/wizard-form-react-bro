@@ -1,28 +1,16 @@
 import db from 'db'
-
 import {
   ADD_USER,
-  CHANGE_ACTIVE_FORM_STAGE,
-  LOAD_USERS_SUCCESS,
-  LOAD_USER_SUCCESS,
-  UPDATE_USER,
   DELETE_USER,
-  FETCHING_PENDING,
-  FETCHING_ERROR
+  LOAD_USERS_FAILED,
+  LOAD_USERS_PENDING,
+  LOAD_USERS_SUCCESS,
+  UPDATE_USER
 } from 'redux/types'
-
-export const fetchingPending = () => ({
-  type: FETCHING_PENDING
-})
-
-export const fetchingError = (payload) => ({
-  type: FETCHING_ERROR,
-  payload
-})
 
 export const loadUsers = () => {
   return (dispatch) => {
-    dispatch(fetchingPending())
+    dispatch({ type: LOAD_USERS_PENDING })
 
     db.table('users')
       .toArray()
@@ -33,25 +21,7 @@ export const loadUsers = () => {
         })
       })
       .catch((err) => {
-        dispatch(fetchingError(err))
-      })
-  }
-}
-
-export const getUser = (id) => {
-  return (dispatch) => {
-    dispatch(fetchingPending())
-
-    db.table('users')
-      .get(+id)
-      .then((user) => {
-        dispatch({
-          type: LOAD_USER_SUCCESS,
-          payload: user
-        })
-      })
-      .catch((err) => {
-        dispatch(fetchingError(err))
+        dispatch({ type: LOAD_USERS_FAILED, payload: err })
       })
   }
 }

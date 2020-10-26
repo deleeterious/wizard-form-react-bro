@@ -32,7 +32,7 @@ import commonStyles from 'containers/Forms/common/style.module.css'
 const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
   const history = useHistory()
 
-  const user = useSelector((state) => state.user)
+  const { data } = useSelector((state) => state.currentUser)
 
   const {
     register,
@@ -103,7 +103,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
           type="text"
           name="email"
           title="Email"
-          refRegister={register(emailValidation(isEdit ? user : {}))}
+          refRegister={register(emailValidation(isEdit ? data : {}))}
           errorMessage={errors?.email?.message}
         />
 

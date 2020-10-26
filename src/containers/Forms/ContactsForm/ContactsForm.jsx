@@ -41,7 +41,7 @@ import classes from './ContactsForm.module.css'
 const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
   const history = useHistory()
 
-  const user = useSelector((state) => state.user)
+  const { data } = useSelector((state) => state.currentUser)
 
   const {
     register,
@@ -58,11 +58,11 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
   useEffect(() => {
     const newUserPhones = isEdit
-      ? user?.phones?.filter((item) => item)
+      ? data?.phones?.filter((item) => item)
       : getFromLocalStorage('newUser')?.phones?.filter((item) => item)
 
     setPhones(newUserPhones?.length ? newUserPhones : [''])
-  }, [isEdit, user])
+  }, [isEdit, data])
 
   useEffect(() => {
     setValue('phones', phones, { shouldDirty: true })

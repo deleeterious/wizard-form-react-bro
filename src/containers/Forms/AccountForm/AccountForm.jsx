@@ -35,7 +35,7 @@ import classes from './AccountForm.module.css'
 const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
   const history = useHistory()
 
-  const user = useSelector((state) => state.user)
+  const data = useSelector((state) => state.currentUser)
 
   const {
     register,
@@ -84,7 +84,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
           type="text"
           name="userName"
           title="User Name"
-          refRegister={register(userNameValidation(isEdit ? user : {}))}
+          refRegister={register(userNameValidation(isEdit ? data : {}))}
           errorMessage={errors?.userName?.message}
         />
 

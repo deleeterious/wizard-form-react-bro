@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 // redux
 import { useDispatch } from 'react-redux'
-import { deleteUser } from 'redux/actions'
+import { deleteUser } from 'redux/actions/users'
 // router
 import { Link } from 'react-router-dom'
 // prop-types

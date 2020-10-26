@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { loadUsers } from 'redux/actions'
+import { loadUsers } from 'redux/actions/users'
 // components
 import Title from 'components/Title'
 import NoUsersPlaceholder from 'components/NoUsersPlaceholder'
@@ -12,7 +12,7 @@ import UserList from 'containers/UserList'
 const UserListPage = () => {
   const dispatch = useDispatch()
 
-  const { users, isFetching } = useSelector((state) => state)
+  const { data, isFetching } = useSelector((state) => state.users)
 
   useEffect(() => dispatch(loadUsers()), [dispatch])
 
@@ -24,7 +24,7 @@ const UserListPage = () => {
     <main className="container">
       <Title>List of users</Title>
 
-      {users.length ? <UserList users={users} /> : <NoUsersPlaceholder />}
+      {data.length ? <UserList users={data} /> : <NoUsersPlaceholder />}
     </main>
   )
 }

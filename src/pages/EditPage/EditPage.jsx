@@ -3,7 +3,7 @@ import React, { memo, useEffect } from 'react'
 import T from 'prop-types'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser } from 'redux/actions'
+import { getUser } from 'redux/actions/currentUser'
 
 // components
 import Title from 'components/Title'

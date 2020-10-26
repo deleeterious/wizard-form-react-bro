@@ -23,7 +23,7 @@ const SelectInput = ({
   errorMessage,
   isEdit
 }) => {
-  const user = useSelector((state) => state.user)
+  const { data } = useSelector((state) => state.currentUser)
 
   const customStyles = {
     clearIndicator: () => ({
@@ -81,7 +81,7 @@ const SelectInput = ({
         <div className={commonStyles.inputLabel}>{title}</div>
         <ReactSelect
           defaultValue={
-            isEdit ? user[name] : getFromLocalStorage('newUser')[name]
+            isEdit ? data[name] : getFromLocalStorage('newUser')[name]
           }
           hideSelectedOptions
           options={options}

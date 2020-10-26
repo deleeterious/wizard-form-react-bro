@@ -6,7 +6,7 @@ import T from 'prop-types'
 import { FormProvider, useForm } from 'react-hook-form'
 // react-redux
 import { useDispatch } from 'react-redux'
-import { addUser } from 'redux/actions'
+import { addUser } from 'redux/actions/users'
 // react-router-dom
 import { useHistory, useParams } from 'react-router-dom'
 // constants

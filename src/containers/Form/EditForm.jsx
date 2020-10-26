@@ -6,7 +6,7 @@ import T from 'prop-types'
 import { FormProvider, useForm } from 'react-hook-form'
 // react-redux
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUser } from 'redux/actions'
+import { updateUser } from 'redux/actions/users'
 // react-router-dom
 import { useHistory, useParams } from 'react-router-dom'
 // constants
@@ -28,7 +28,7 @@ const Form = () => {
   const history = useHistory()
   const { activeFormStage } = useParams()
 
-  const { user } = useSelector((state) => state)
+  const { data } = useSelector((state) => state.currentUser)
 
   const methods = useForm({
     mode: 'onChange',
@@ -42,20 +42,20 @@ const Form = () => {
     e.preventDefault()
     const result = await trigger()
     if (result) {
-      dispatch(updateUser(user.id, { ...getValues(), lastUpdate: new Date() }))
-      history.push(`profile/${user.id}`)
+      dispatch(updateUser(data.id, { ...getValues(), lastUpdate: new Date() }))
+      history.push(`profile/${data.id}`)
     }
   }
 
   // When component did mount, push to form inputs data from redux
   useEffect(() => {
-    if (isEdit) reset({ ...user })
-  }, [user])
+    if (isEdit) reset({ ...data })
+  }, [data])
 
   // If you go other stage and don't save form, reset values, on component unmount
   useEffect(
     () => () => {
-      if (isEdit) reset({ ...user })
+      if (isEdit) reset({ ...data })
     },
     [activeFormStage]
   )
