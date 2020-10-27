@@ -1,7 +1,7 @@
-import React, { memo } from 'react'
-import { Link } from 'react-router-dom'
+import React, { memo } from 'react';
+import { Link } from 'react-router-dom';
 // css
-import classes from './NoUsersPlaceholder.module.css'
+import classes from './NoUsersPlaceholder.module.css';
 
 const NoUsersPlaceholder = () => (
   <div className={classes.indicatorCont}>
@@ -12,6 +12,6 @@ const NoUsersPlaceholder = () => (
       </Link>
     </div>
   </div>
-)
+);
 
-export default memo(NoUsersPlaceholder)
+export default memo(NoUsersPlaceholder);

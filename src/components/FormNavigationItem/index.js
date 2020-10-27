@@ -1,3 +1,3 @@
-import FormNavigationItem from './FormNavigationItem'
+import FormNavigationItem from './FormNavigationItem';
 
-export default FormNavigationItem
+export default FormNavigationItem;

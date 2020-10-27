@@ -1,3 +1,3 @@
-import RadioInput from './RadioInput'
+import RadioInput from './RadioInput';
 
-export default RadioInput
+export default RadioInput;

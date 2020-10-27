@@ -1,3 +1,3 @@
-import AvatarInput from './AvatarInput'
+import AvatarInput from './AvatarInput';
 
-export default AvatarInput
+export default AvatarInput;

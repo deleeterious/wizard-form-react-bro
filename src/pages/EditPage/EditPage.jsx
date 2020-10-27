@@ -1,24 +1,24 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // redux
-import { useDispatch, useSelector } from 'react-redux'
-import { getUser } from 'redux/actions/currentUser'
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from 'redux/actions/currentUser';
 
 // components
-import Title from 'components/Title'
+import Title from 'components/Title';
 // containers
-import FormNavigation from 'containers/FormNavigation'
-import EditForm from 'containers/Form/EditForm'
+import FormNavigation from 'containers/FormNavigation';
+import EditForm from 'containers/Form/EditForm';
 
 const EditPage = ({ match }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const activeFormStage = useSelector((state) => state.activeFormStage)
+  const activeFormStage = useSelector((state) => state.activeFormStage);
 
   useEffect(() => {
-    dispatch(getUser(match.params.id))
-  }, [match.params.id])
+    dispatch(getUser(match.params.id));
+  }, [match.params.id]);
 
   return (
     <main className="container">
@@ -31,11 +31,11 @@ const EditPage = ({ match }) => {
       <FormNavigation activeFormStage={activeFormStage} isEdit />
       <EditForm />
     </main>
-  )
-}
+  );
+};
 
 EditPage.propTypes = {
-  match: T.object
-}
+  match: T.object,
+};
 
-export default memo(EditPage)
+export default memo(EditPage);

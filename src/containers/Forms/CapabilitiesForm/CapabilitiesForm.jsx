@@ -1,36 +1,36 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-hook-form
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form';
 // react-router-dom
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper'
-import { additionInfoValidation } from 'helpers/validations'
+import { setToLocalStorage } from 'helpers/localStorageHelper';
+import { additionInfoValidation } from 'helpers/validations';
 // constants
-import { CONTACTS_FORM_STAGE, skillsList, CHECKBOXES } from 'constants.js'
+import { CONTACTS_FORM_STAGE, skillsList, CHECKBOXES } from 'constants.js';
 // utils
-import { concatStyles } from 'utils'
+import { concatStyles } from 'utils';
 // component
-import SelectInput from 'components/Inputs/SelectInput'
-import TextArea from 'components/Inputs/TextArea'
-import Button from 'components/Button'
-import Checkbox from 'components/Inputs/Checkbox'
+import SelectInput from 'components/Inputs/SelectInput';
+import TextArea from 'components/Inputs/TextArea';
+import Button from 'components/Button';
+import Checkbox from 'components/Inputs/Checkbox';
 // css
-import commonStyles from 'containers/Forms/common/style.module.css'
-import classes from './CapabilitiesForm.module.css'
+import commonStyles from 'containers/Forms/common/style.module.css';
+import classes from './CapabilitiesForm.module.css';
 
 const CapabilitiesForm = ({ handleSave, isEdit }) => {
-  const history = useHistory()
+  const history = useHistory();
 
-  const { register, errors, formState } = useFormContext()
+  const { register, errors, formState } = useFormContext();
 
   const handleClickBack = (e) => {
-    e.preventDefault()
-    setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
-    history.push('/new-user/contacts')
-  }
+    e.preventDefault();
+    setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE);
+    history.push('/new-user/contacts');
+  };
 
   return (
     <div className={commonStyles.form}>
@@ -91,12 +91,12 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 CapabilitiesForm.propTypes = {
   isEdit: T.bool,
-  handleSave: T.func
-}
+  handleSave: T.func,
+};
 
-export default memo(CapabilitiesForm)
+export default memo(CapabilitiesForm);

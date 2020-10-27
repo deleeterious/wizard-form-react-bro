@@ -1,21 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 // redux
-import store from 'redux/store'
-import { Provider } from 'react-redux'
+import store from 'redux/store';
+import { Provider } from 'react-redux';
 // containers
-import App from 'containers/App'
-import * as serviceWorker from './serviceWorker'
+import App from 'containers/App';
+import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById('root')
-)
+);
 
-serviceWorker.unregister()
-
-// TODO: add show pass btn
-// TODO: style complete stages
-// TODO: last updated
+serviceWorker.unregister();

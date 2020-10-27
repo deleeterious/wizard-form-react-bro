@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // router
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // css
-import classes from './LinkIcon.module.css'
+import classes from './LinkIcon.module.css';
 
 const LinkIcon = ({ icon, text, to }) => (
   <NavLink
@@ -16,12 +16,12 @@ const LinkIcon = ({ icon, text, to }) => (
     <div className={classes.icon}>{icon}</div>
     <div className={classes.text}>{text}</div>
   </NavLink>
-)
+);
 
 LinkIcon.propTypes = {
   icon: T.element,
   text: T.string,
-  to: T.string
-}
+  to: T.string,
+};
 
-export default memo(LinkIcon)
+export default memo(LinkIcon);

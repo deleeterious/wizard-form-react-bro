@@ -1,47 +1,47 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react';
 // lodash
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash/isEmpty';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-router-dom
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 // redux
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 // useForm
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form';
 // assets
-import { ReactComponent as DeletePhoneBtn } from 'assets/icons/minus.svg'
+import { ReactComponent as DeletePhoneBtn } from 'assets/icons/minus.svg';
 // helpers
 import {
   getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+  setToLocalStorage,
+} from 'helpers/localStorageHelper';
 import {
   faxValidation,
   requiredValidation,
-  phoneValidation
-} from 'helpers/validations'
+  phoneValidation,
+} from 'helpers/validations';
 // constants
 import {
   CAPABILITIES_FORM_STAGE,
   languages,
   PHONE_MASK,
-  PROFILE_FORM_STAGE
-} from 'constants.js'
+  PROFILE_FORM_STAGE,
+} from 'constants.js';
 // components
-import TextInput from 'components/Inputs/TextInput'
-import Button from 'components/Button'
-import SelectInput from 'components/Inputs/SelectInput'
-import MaskInput from 'components/Inputs/MaskInput'
-import AddButton from 'components/AddButton'
+import TextInput from 'components/Inputs/TextInput';
+import Button from 'components/Button';
+import SelectInput from 'components/Inputs/SelectInput';
+import MaskInput from 'components/Inputs/MaskInput';
+import AddButton from 'components/AddButton';
 // css
-import commonStyles from 'containers/Forms/common/style.module.css'
-import classes from './ContactsForm.module.css'
+import commonStyles from 'containers/Forms/common/style.module.css';
+import classes from './ContactsForm.module.css';
 
 const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
-  const history = useHistory()
+  const history = useHistory();
 
-  const { data } = useSelector((state) => state.currentUser)
+  const { data } = useSelector((state) => state.currentUser);
 
   const {
     register,
@@ -50,59 +50,59 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     getValues,
     errors,
     control,
-    formState
-  } = useFormContext()
+    formState,
+  } = useFormContext();
 
-  const [phones, setPhones] = useState([])
+  const [phones, setPhones] = useState([]);
 
   useEffect(() => {
     const newUserPhones = isEdit
       ? data?.phones?.filter((item) => item)
-      : getFromLocalStorage('newUser')?.phones?.filter((item) => item)
+      : getFromLocalStorage('newUser')?.phones?.filter((item) => item);
 
-    setPhones(newUserPhones?.length ? newUserPhones : [''])
-  }, [isEdit, data])
+    setPhones(newUserPhones?.length ? newUserPhones : ['']);
+  }, [isEdit, data]);
 
   useEffect(() => {
-    setValue('phones', phones, { shouldDirty: true })
-  }, [setValue, phones])
+    setValue('phones', phones, { shouldDirty: true });
+  }, [setValue, phones]);
 
   const handleAddPhone = (e) => {
-    e.preventDefault()
-    setPhones((prevState) => [...prevState, ''])
-  }
+    e.preventDefault();
+    setPhones((prevState) => [...prevState, '']);
+  };
 
   const handleDeletePhone = (i) => {
-    const newArr = [...phones]
-    newArr.splice(i, 1)
-    setPhones(newArr)
-  }
+    const newArr = [...phones];
+    newArr.splice(i, 1);
+    setPhones(newArr);
+  };
 
   const handleClickForward = async (e) => {
-    e.preventDefault()
-    const result = await trigger(['company', 'language'])
+    e.preventDefault();
+    const result = await trigger(['company', 'language']);
     if (result) {
-      setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE)
+      setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE);
 
       setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
-        CONTACTS_FORM_STAGE: true
-      })
+        CONTACTS_FORM_STAGE: true,
+      });
 
       setSubmittedStages((prevState) => ({
         ...prevState,
-        CONTACTS_FORM_STAGE: true
-      }))
+        CONTACTS_FORM_STAGE: true,
+      }));
 
-      history.push('/new-user/capabilities')
+      history.push('/new-user/capabilities');
     }
-  }
+  };
 
   const handleClickBack = (e) => {
-    e.preventDefault()
-    setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
-    history.push('/new-user/profile')
-  }
+    e.preventDefault();
+    setToLocalStorage('newUserStage', PROFILE_FORM_STAGE);
+    history.push('/new-user/profile');
+  };
 
   return (
     <div className={commonStyles.form}>
@@ -200,13 +200,13 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 ContactsForm.propTypes = {
   setSubmittedStages: T.func,
   handleSave: T.func,
-  isEdit: T.bool
-}
+  isEdit: T.bool,
+};
 
-export default memo(ContactsForm)
+export default memo(ContactsForm);

@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-hook-form
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form';
 // components
-import TextInput from 'components/Inputs/TextInput'
+import TextInput from 'components/Inputs/TextInput';
 // assets
-import { ReactComponent as PassVisibleIcon } from 'assets/icons/pass-visible.svg'
-import { ReactComponent as PassNotVisibleIcon } from 'assets/icons/pass-notvisible.svg'
+import { ReactComponent as PassVisibleIcon } from 'assets/icons/pass-visible.svg';
+import { ReactComponent as PassNotVisibleIcon } from 'assets/icons/pass-notvisible.svg';
 // css
-import classes from './PasswordInput.module.css'
+import classes from './PasswordInput.module.css';
 
 const PasswordInput = ({ name, title, refRegister }) => {
-  const { errors } = useFormContext()
+  const { errors } = useFormContext();
 
-  const [isShowPassword, setShowPassword] = useState(false)
+  const [isShowPassword, setShowPassword] = useState(false);
 
   const handleShowPass = (e) => {
-    e.preventDefault()
-    setShowPassword((prevState) => !prevState)
-  }
+    e.preventDefault();
+    setShowPassword((prevState) => !prevState);
+  };
 
   return (
     <div className={classes.passwordInputCont}>
@@ -36,13 +36,13 @@ const PasswordInput = ({ name, title, refRegister }) => {
         {isShowPassword ? <PassNotVisibleIcon /> : <PassVisibleIcon />}
       </button>
     </div>
-  )
-}
+  );
+};
 
 PasswordInput.propTypes = {
   name: T.string,
   title: T.string,
-  refRegister: T.func
-}
+  refRegister: T.func,
+};
 
-export default PasswordInput
+export default PasswordInput;

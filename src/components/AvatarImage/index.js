@@ -1,3 +1,3 @@
-import AvatarImage from './AvatarImage'
+import AvatarImage from './AvatarImage';
 
-export default AvatarImage
+export default AvatarImage;

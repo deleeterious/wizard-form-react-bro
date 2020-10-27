@@ -1,37 +1,37 @@
 import {
   LOAD_USER_FAILED,
   LOAD_USER_PENDING,
-  LOAD_USER_SUCCESS
-} from 'redux/types'
+  LOAD_USER_SUCCESS,
+} from 'redux/types';
 
 const initialState = {
   data: {},
   isFetching: false,
-  error: {}
-}
+  error: {},
+};
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case LOAD_USER_PENDING: {
       return {
         ...state,
-        isFetching: true
-      }
+        isFetching: true,
+      };
     }
     case LOAD_USER_FAILED: {
       return {
         ...state,
-        error: payload
-      }
+        error: payload,
+      };
     }
     case LOAD_USER_SUCCESS:
       return {
         ...state,
         data: payload,
-        isFetching: false
-      }
+        isFetching: false,
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};

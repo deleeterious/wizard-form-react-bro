@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react';
 // redux
-import { useDispatch } from 'react-redux'
-import { deleteUser } from 'redux/actions/users'
+import { useDispatch } from 'react-redux';
+import { deleteUser } from 'redux/actions/users';
 // router
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // components
-import AvatarImage from 'components/AvatarImage'
+import AvatarImage from 'components/AvatarImage';
 // icons
-import { ReactComponent as EditIcon } from 'assets/icons/edit.svg'
-import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg'
+import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
+import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
 // utils
-import { concatStyles, formatToRelativeTime } from 'utils'
+import { concatStyles, formatToRelativeTime } from 'utils';
 // css
-import classes from './UserListItem.module.css'
+import classes from './UserListItem.module.css';
 
 const UserListItem = ({ user }) => {
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const {
     userName,
@@ -29,31 +29,31 @@ const UserListItem = ({ user }) => {
     email,
     id,
     avatarData,
-    lastUpdate
-  } = user
+    lastUpdate,
+  } = user;
 
   const handleOutSideClick = (e) => {
-    const domNode = document.getElementById('deleteBtn')
+    const domNode = document.getElementById('deleteBtn');
 
     if (!e.path.includes(domNode)) {
-      document.removeEventListener('click', handleOutSideClick)
-      setIsDeleting(false)
+      document.removeEventListener('click', handleOutSideClick);
+      setIsDeleting(false);
     }
-  }
+  };
 
   const handleSetDeleting = () => {
-    setIsDeleting(true)
-    document.addEventListener('click', handleOutSideClick)
-  }
+    setIsDeleting(true);
+    document.addEventListener('click', handleOutSideClick);
+  };
 
   const handleDelete = () => {
-    dispatch(deleteUser(id))
-  }
+    dispatch(deleteUser(id));
+  };
 
   useEffect(
     () => () => document.removeEventListener('click', handleOutSideClick),
     []
-  )
+  );
 
   return (
     <div
@@ -94,8 +94,8 @@ const UserListItem = ({ user }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 UserListItem.propTypes = {
   user: T.shape({
@@ -106,8 +106,8 @@ UserListItem.propTypes = {
     email: T.string,
     id: T.number,
     lastUpdate: T.object,
-    avatarData: T.string
-  })
-}
+    avatarData: T.string,
+  }),
+};
 
-export default UserListItem
+export default UserListItem;

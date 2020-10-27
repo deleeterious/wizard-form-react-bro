@@ -1,3 +1,3 @@
-import ContinuePopup from './ContinuePopup'
+import ContinuePopup from './ContinuePopup';
 
-export default ContinuePopup
+export default ContinuePopup;

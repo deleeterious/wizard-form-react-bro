@@ -1,20 +1,20 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-hook-form
-import { Controller } from 'react-hook-form'
+import { Controller } from 'react-hook-form';
 // react-datepicker
-import DatePicker from 'react-date-picker'
+import DatePicker from 'react-date-picker';
 // assets
-import { ReactComponent as CalendarIcon } from 'assets/icons/calendar.svg'
-import { ReactComponent as CalendarArrowRight } from 'assets/icons/calendarArrowRight.svg'
-import { ReactComponent as CalendarArrowLeft } from 'assets/icons/calendarArrowLeft.svg'
+import { ReactComponent as CalendarIcon } from 'assets/icons/calendar.svg';
+import { ReactComponent as CalendarArrowRight } from 'assets/icons/calendarArrowRight.svg';
+import { ReactComponent as CalendarArrowLeft } from 'assets/icons/calendarArrowLeft.svg';
 
 // components
-import ValidationError from 'components/ValidationError'
+import ValidationError from 'components/ValidationError';
 // css
-import commonStyles from 'components/Inputs/common/styles.module.css'
-import classes from './DateInput.module.css'
+import commonStyles from 'components/Inputs/common/styles.module.css';
+import classes from './DateInput.module.css';
 
 const DateInput = ({ control, rules, label, errorMessage, name }) => (
   <div className={commonStyles.inputCont}>
@@ -48,20 +48,20 @@ const DateInput = ({ control, rules, label, errorMessage, name }) => (
                 typeof value === 'string' && value ? new Date(value) : value
               }
             />
-          )
+          );
         }}
       />
       {errorMessage && <ValidationError errorMessage={errorMessage} />}
     </label>
   </div>
-)
+);
 
 DateInput.propTypes = {
   control: T.object,
   label: T.string,
   rules: T.object,
   errorMessage: T.string,
-  name: T.string
-}
+  name: T.string,
+};
 
-export default memo(DateInput)
+export default memo(DateInput);

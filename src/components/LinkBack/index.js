@@ -1,3 +1,3 @@
-import LinkBack from './LinkBack'
+import LinkBack from './LinkBack';
 
-export default LinkBack
+export default LinkBack;

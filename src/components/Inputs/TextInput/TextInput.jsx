@@ -1,11 +1,11 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // component
-import ValidationError from 'components/ValidationError'
+import ValidationError from 'components/ValidationError';
 // css
-import commonStyles from 'components/Inputs/common/styles.module.css'
-import { concatStyles } from 'utils'
+import commonStyles from 'components/Inputs/common/styles.module.css';
+import { concatStyles } from 'utils';
 
 const TextInput = ({
   name,
@@ -13,7 +13,7 @@ const TextInput = ({
   title,
   refRegister,
   errorMessage,
-  className
+  className,
 }) => (
   <div className={commonStyles.inputCont}>
     <label htmlFor={name}>
@@ -29,7 +29,7 @@ const TextInput = ({
       {errorMessage && <ValidationError errorMessage={errorMessage} />}
     </label>
   </div>
-)
+);
 
 TextInput.propTypes = {
   name: T.string,
@@ -37,7 +37,7 @@ TextInput.propTypes = {
   title: T.string,
   refRegister: T.func,
   className: T.string,
-  errorMessage: T.string
-}
+  errorMessage: T.string,
+};
 
-export default memo(TextInput)
+export default memo(TextInput);

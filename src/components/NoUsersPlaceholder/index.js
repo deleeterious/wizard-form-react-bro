@@ -1,3 +1,3 @@
-import NoUsersPlaceholder from './NoUsersPlaceholder'
+import NoUsersPlaceholder from './NoUsersPlaceholder';
 
-export default NoUsersPlaceholder
+export default NoUsersPlaceholder;

@@ -1,11 +1,11 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // utils
-import { concatStyles } from 'utils'
+import { concatStyles } from 'utils';
 // css
-import commonStyles from 'components/Inputs/common/styles.module.css'
-import classes from './RadioInput.module.css'
+import commonStyles from 'components/Inputs/common/styles.module.css';
+import classes from './RadioInput.module.css';
 
 const RadioInput = ({ refRegister }) => (
   <div className={commonStyles.inputCont}>
@@ -32,10 +32,10 @@ const RadioInput = ({ refRegister }) => (
       <span className={classes.gender}>Female</span>
     </label>
   </div>
-)
+);
 
 RadioInput.propTypes = {
-  refRegister: T.func
-}
+  refRegister: T.func,
+};
 
-export default memo(RadioInput)
+export default memo(RadioInput);

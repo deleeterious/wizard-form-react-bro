@@ -1,20 +1,20 @@
-import React from 'react'
+import React from 'react';
 // router
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
-  Switch
-} from 'react-router-dom'
+  Switch,
+} from 'react-router-dom';
 // css
-import './App.css'
+import './App.css';
 // components
-import Header from 'components/Header'
+import Header from 'components/Header';
 // pages
-import FormsPage from 'pages/FormsPage'
-import UserListPage from 'pages/UserListPage'
-import ProfilePage from 'pages/ProfilePage'
-import EditPage from 'pages/EditPage/EditPage'
+import FormsPage from 'pages/FormsPage';
+import UserListPage from 'pages/UserListPage';
+import ProfilePage from 'pages/ProfilePage';
+import EditPage from 'pages/EditPage/EditPage';
 
 const App = () => (
   <div className="app">
@@ -29,6 +29,6 @@ const App = () => (
       </Switch>
     </Router>
   </div>
-)
+);
 
-export default App
+export default App;

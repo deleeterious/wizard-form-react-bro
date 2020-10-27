@@ -1,11 +1,11 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // components
-import ValidationError from 'components/ValidationError'
+import ValidationError from 'components/ValidationError';
 // css
-import commonClasses from 'components/Inputs/common/styles.module.css'
-import classes from './TextArea.module.css'
+import commonClasses from 'components/Inputs/common/styles.module.css';
+import classes from './TextArea.module.css';
 
 const TextArea = ({ refRegister, name, title, errorMessage }) => {
   return (
@@ -16,14 +16,14 @@ const TextArea = ({ refRegister, name, title, errorMessage }) => {
         {errorMessage && <ValidationError errorMessage={errorMessage} />}
       </label>
     </div>
-  )
-}
+  );
+};
 
 TextArea.propTypes = {
   refRegister: T.func,
   name: T.string,
   title: T.string,
-  errorMessage: T.string
-}
+  errorMessage: T.string,
+};
 
-export default memo(TextArea)
+export default memo(TextArea);

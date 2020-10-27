@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // utils
-import { concatStyles } from 'utils'
+import { concatStyles } from 'utils';
 // css
-import classes from './FormNavigationItem.module.css'
+import classes from './FormNavigationItem.module.css';
 
 const FormNavigationItem = ({ title, isActive, isSubmitted, onStepChange }) => (
   <div
@@ -18,13 +18,13 @@ const FormNavigationItem = ({ title, isActive, isSubmitted, onStepChange }) => (
   >
     <div>{title}</div>
   </div>
-)
+);
 
 FormNavigationItem.propTypes = {
   title: T.string,
   isActive: T.bool,
   isSubmitted: T.bool,
-  onStepChange: T.func
-}
+  onStepChange: T.func,
+};
 
-export default memo(FormNavigationItem)
+export default memo(FormNavigationItem);

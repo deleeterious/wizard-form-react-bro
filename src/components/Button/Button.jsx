@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // utils
-import { concatStyles } from 'utils'
+import { concatStyles } from 'utils';
 // css
-import classes from './Button.module.css'
+import classes from './Button.module.css';
 
 const Button = ({ children, className, handleClick, disabled = true }) => (
   <div className={classes.btnCont}>
@@ -20,13 +20,13 @@ const Button = ({ children, className, handleClick, disabled = true }) => (
       {children}
     </button>
   </div>
-)
+);
 
 Button.propTypes = {
   children: T.string,
   className: T.string,
   handleClick: T.func,
-  disabled: T.oneOfType([T.bool, T.number])
-}
+  disabled: T.oneOfType([T.bool, T.number]),
+};
 
-export default memo(Button)
+export default memo(Button);

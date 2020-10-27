@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // assets
-import { ReactComponent as AvatarIcon } from 'assets/icons/avatar.svg'
+import { ReactComponent as AvatarIcon } from 'assets/icons/avatar.svg';
 // css
-import classes from './AvatarImage.module.css'
+import classes from './AvatarImage.module.css';
 
 const AvatarImage = ({ avatar, size = { width: 170, height: 170 } }) => (
   <div
@@ -26,11 +26,11 @@ const AvatarImage = ({ avatar, size = { width: 170, height: 170 } }) => (
       />
     )}
   </div>
-)
+);
 
 AvatarImage.propTypes = {
   avatar: T.any,
-  size: T.object
-}
+  size: T.object,
+};
 
-export default memo(AvatarImage)
+export default memo(AvatarImage);

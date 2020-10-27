@@ -1,9 +1,9 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
-import { ReactComponent as CloseIcon } from 'assets/icons/delete.svg'
+import T from 'prop-types';
+import { ReactComponent as CloseIcon } from 'assets/icons/delete.svg';
 // css
-import classes from './ContinuePopup.module.css'
+import classes from './ContinuePopup.module.css';
 
 const ContinuePopup = ({ handleContinue, handleClose }) => (
   <div className={classes.popup}>
@@ -17,11 +17,11 @@ const ContinuePopup = ({ handleContinue, handleClose }) => (
       <CloseIcon />
     </div>
   </div>
-)
+);
 
 ContinuePopup.propTypes = {
   handleContinue: T.func,
-  handleClose: T.func
-}
+  handleClose: T.func,
+};
 
-export default memo(ContinuePopup)
+export default memo(ContinuePopup);

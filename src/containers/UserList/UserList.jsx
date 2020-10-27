@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // components
-import UserListItem from 'components/UserListItem/UserListItem'
+import UserListItem from 'components/UserListItem/UserListItem';
 // css
-import classes from './UserList.module.css'
+import classes from './UserList.module.css';
 
 const UserList = ({ users }) => (
   <section>
@@ -17,13 +17,13 @@ const UserList = ({ users }) => (
       <div className={classes.buttons} />
     </div>
     {users.map((user) => {
-      return <UserListItem key={user.id} user={user} />
+      return <UserListItem key={user.id} user={user} />;
     })}
   </section>
-)
+);
 
 UserList.propTypes = {
-  users: T.array
-}
+  users: T.array,
+};
 
-export default memo(UserList)
+export default memo(UserList);

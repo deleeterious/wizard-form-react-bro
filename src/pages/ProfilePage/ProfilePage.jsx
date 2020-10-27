@@ -1,22 +1,22 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // redux
-import { useDispatch, useSelector } from 'react-redux'
-import { getUser } from 'redux/actions/currentUser'
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from 'redux/actions/currentUser';
 // components
-import Title from 'components/Title'
-import UserInfo from 'components/UserInfo'
-import Spinner from 'components/Spinner'
+import Title from 'components/Title';
+import UserInfo from 'components/UserInfo';
+import Spinner from 'components/Spinner';
 
 const ProfilePage = ({ match }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { data, isFetching } = useSelector((state) => state.currentUser)
+  const { data, isFetching } = useSelector((state) => state.currentUser);
 
   useEffect(() => {
-    dispatch(getUser(match.params.id))
-  }, [dispatch, match.params.id])
+    dispatch(getUser(match.params.id));
+  }, [dispatch, match.params.id]);
 
   return (
     <main className="container">
@@ -25,11 +25,11 @@ const ProfilePage = ({ match }) => {
       </Title>
       {isFetching ? <Spinner /> : <UserInfo user={data} />}
     </main>
-  )
-}
+  );
+};
 
 ProfilePage.propTypes = {
-  match: T.object
-}
+  match: T.object,
+};
 
-export default memo(ProfilePage)
+export default memo(ProfilePage);

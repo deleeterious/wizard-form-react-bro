@@ -1,13 +1,13 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-hook-form
-import { Controller } from 'react-hook-form'
+import { Controller } from 'react-hook-form';
 // react-datepicker
-import ReactInputMask from 'react-input-mask'
+import ReactInputMask from 'react-input-mask';
 // css
-import commonStyles from 'components/Inputs/common/styles.module.css'
-import ValidationError from 'components/ValidationError'
+import commonStyles from 'components/Inputs/common/styles.module.css';
+import ValidationError from 'components/ValidationError';
 
 const MaskInput = ({
   value,
@@ -17,7 +17,7 @@ const MaskInput = ({
   mask,
   errorMessage,
   rules,
-  title
+  title,
 }) => (
   <div className={commonStyles.inputCont}>
     <label htmlFor={name}>
@@ -35,7 +35,7 @@ const MaskInput = ({
     </label>
     <ValidationError errorMessage={errorMessage} />
   </div>
-)
+);
 
 MaskInput.propTypes = {
   value: T.string,
@@ -45,7 +45,7 @@ MaskInput.propTypes = {
   mask: T.string,
   errorMessage: T.string,
   rules: T.object,
-  title: T.string
-}
+  title: T.string,
+};
 
-export default memo(MaskInput)
+export default memo(MaskInput);

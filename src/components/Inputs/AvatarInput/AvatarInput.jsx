@@ -1,38 +1,38 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-hook-form
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form';
 // assets
-import { ReactComponent as AddIcon } from 'assets/icons/add.svg'
+import { ReactComponent as AddIcon } from 'assets/icons/add.svg';
 // components
-import AvatarImage from 'components/AvatarImage'
-import ValidationError from 'components/ValidationError'
+import AvatarImage from 'components/AvatarImage';
+import ValidationError from 'components/ValidationError';
 
 // css
-import classes from './AvatarInput.module.css'
+import classes from './AvatarInput.module.css';
 
 const AvatarInput = ({ refRegister, errorMessage }) => {
-  const { setValue, setError, watch } = useFormContext()
+  const { setValue, setError, watch } = useFormContext();
 
   const handleLoadLocalFile = (e) => {
-    e.preventDefault()
-    const reader = new FileReader()
-    const file = e.target.files[0]
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files[0];
     reader.onloadend = () => {
-      const fileSizeMB = file.size / 1024 / 1024
+      const fileSizeMB = file.size / 1024 / 1024;
 
       if (fileSizeMB > 1) {
         setError('avatarData', {
           type: 'manual',
-          message: 'Image max size 1 MB'
-        })
+          message: 'Image max size 1 MB',
+        });
       } else {
-        setValue('avatarData', reader.result, { shouldDirty: true })
+        setValue('avatarData', reader.result, { shouldDirty: true });
       }
-    }
-    reader.readAsDataURL(file)
-  }
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className={classes.avatarCont}>
@@ -58,12 +58,12 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
       </label>
       <ValidationError errorMessage={errorMessage} />
     </div>
-  )
-}
+  );
+};
 
 AvatarInput.propTypes = {
   refRegister: T.func,
-  errorMessage: T.string
-}
+  errorMessage: T.string,
+};
 
-export default memo(AvatarInput)
+export default memo(AvatarInput);

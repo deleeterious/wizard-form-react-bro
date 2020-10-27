@@ -1,71 +1,71 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // lodash
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash/isEmpty';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-router-dom
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 // react-redux
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 // useForm
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form';
 // constants
-import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js'
+import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js';
 // helpers
 import {
   getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+  setToLocalStorage,
+} from 'helpers/localStorageHelper';
 import {
   birthDateValidation,
   emailValidation,
-  requiredValidation
-} from 'helpers/validations'
+  requiredValidation,
+} from 'helpers/validations';
 // components
-import TextInput from 'components/Inputs/TextInput'
-import Button from 'components/Button'
-import DateInput from 'components/Inputs/DateInput'
-import RadioInput from 'components/Inputs/RadioInput'
+import TextInput from 'components/Inputs/TextInput';
+import Button from 'components/Button';
+import DateInput from 'components/Inputs/DateInput';
+import RadioInput from 'components/Inputs/RadioInput';
 // css
-import commonStyles from 'containers/Forms/common/style.module.css'
+import commonStyles from 'containers/Forms/common/style.module.css';
 
 const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
-  const history = useHistory()
+  const history = useHistory();
 
-  const { data } = useSelector((state) => state.currentUser)
+  const { data } = useSelector((state) => state.currentUser);
 
-  const { register, trigger, errors, control, formState } = useFormContext()
+  const { register, trigger, errors, control, formState } = useFormContext();
 
   const handleClickForward = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const result = await trigger([
       'firstName',
       'lastName',
       'birthDate',
-      'email'
-    ])
+      'email',
+    ]);
     if (result) {
-      setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE)
+      setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE);
 
       setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
-        PROFILE_FORM_STAGE: true
-      })
+        PROFILE_FORM_STAGE: true,
+      });
 
       setSubmittedStages((prevState) => ({
         ...prevState,
-        PROFILE_FORM_STAGE: true
-      }))
+        PROFILE_FORM_STAGE: true,
+      }));
 
-      history.push('/new-user/contacts')
+      history.push('/new-user/contacts');
     }
-  }
+  };
 
   const handleClickBack = (e) => {
-    e.preventDefault()
-    setToLocalStorage('newUserStage', ACCOUNT_FORM_STAGE)
-    history.push('/new-user/account')
-  }
+    e.preventDefault();
+    setToLocalStorage('newUserStage', ACCOUNT_FORM_STAGE);
+    history.push('/new-user/account');
+  };
 
   return (
     <div className={commonStyles.form}>
@@ -130,13 +130,13 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 ProfileForm.propTypes = {
   setSubmittedStages: T.func,
   handleSave: T.func,
-  isEdit: T.bool
-}
+  isEdit: T.bool,
+};
 
-export default memo(ProfileForm)
+export default memo(ProfileForm);

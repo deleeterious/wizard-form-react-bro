@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-redux
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 // react-hook-form
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form';
 // react-datepicker
-import ReactSelect from 'react-select'
+import ReactSelect from 'react-select';
 // css
-import commonStyles from 'components/Inputs/common/styles.module.css'
-import ValidationError from 'components/ValidationError'
+import commonStyles from 'components/Inputs/common/styles.module.css';
+import ValidationError from 'components/ValidationError';
 // helpers
-import { skillsValidation } from 'helpers/validations'
+import { skillsValidation } from 'helpers/validations';
 import {
   getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+  setToLocalStorage,
+} from 'helpers/localStorageHelper';
 
 const SelectInput = ({
   options,
@@ -23,20 +23,20 @@ const SelectInput = ({
   name,
   isMulti,
   errorMessage,
-  isEdit
+  isEdit,
 }) => {
-  const { data } = useSelector((state) => state.currentUser)
+  const { data } = useSelector((state) => state.currentUser);
 
   const customStyles = {
     clearIndicator: () => ({
-      display: 'none'
+      display: 'none',
     }),
     dropdownIndicator: () => ({
-      display: 'none'
+      display: 'none',
     }),
     indicatorSeparator: (provided) => ({
       ...provided,
-      display: 'none'
+      display: 'none',
     }),
     container: (provided) => ({
       ...provided,
@@ -45,37 +45,37 @@ const SelectInput = ({
       fontSize: 14,
       fontWeight: 500,
       ':hover': {
-        border: '1px solid #a1c4ff'
-      }
+        border: '1px solid #a1c4ff',
+      },
     }),
     control: (provided) => ({
       ...provided,
       border: 'none',
-      boxShadow: 'none'
+      boxShadow: 'none',
     }),
     placeholder: (provided) => ({
       ...provided,
-      display: 'none'
+      display: 'none',
     }),
     menu: (provided) => ({
       ...provided,
       border: '1px solid #e7f0ff',
       fontSize: 14,
       fontWeight: 400,
-      color: '#657C9A'
-    })
-  }
+      color: '#657C9A',
+    }),
+  };
 
-  const { setValue, register } = useFormContext()
+  const { setValue, register } = useFormContext();
 
   useEffect(() => {
     register(
       {
-        name
+        name,
       },
       { required: true, validate: isMulti && skillsValidation() }
-    )
-  }, [isMulti, name, register])
+    );
+  }, [isMulti, name, register]);
 
   return (
     <div className={commonStyles.inputCont}>
@@ -90,18 +90,18 @@ const SelectInput = ({
           styles={customStyles}
           isMulti={isMulti}
           onChange={(value) => {
-            setValue(name, value)
+            setValue(name, value);
             setToLocalStorage('newUser', {
               ...getFromLocalStorage('newUser'),
-              [name]: value
-            })
+              [name]: value,
+            });
           }}
         />
       </label>
       <ValidationError errorMessage={errorMessage} />
     </div>
-  )
-}
+  );
+};
 
 SelectInput.propTypes = {
   options: T.array,
@@ -109,7 +109,7 @@ SelectInput.propTypes = {
   name: T.string,
   isMulti: T.bool,
   errorMessage: T.string,
-  isEdit: T.bool
-}
+  isEdit: T.bool,
+};
 
-export default SelectInput
+export default SelectInput;

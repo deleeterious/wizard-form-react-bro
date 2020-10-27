@@ -1,3 +1,3 @@
-import SectionInfoTitle from './SectionInfoTitle'
+import SectionInfoTitle from './SectionInfoTitle';
 
-export default SectionInfoTitle
+export default SectionInfoTitle;

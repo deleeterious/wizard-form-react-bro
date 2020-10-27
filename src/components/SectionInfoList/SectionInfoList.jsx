@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // css
-import classes from './SectionInfoList.module.css'
+import classes from './SectionInfoList.module.css';
 
 const SectionInfoList = ({ data }) => (
   <div className={classes.infoList}>
@@ -16,10 +16,10 @@ const SectionInfoList = ({ data }) => (
         )
     )}
   </div>
-)
+);
 
 SectionInfoList.propTypes = {
-  data: T.arrayOf(T.object)
-}
+  data: T.arrayOf(T.object),
+};
 
-export default SectionInfoList
+export default SectionInfoList;

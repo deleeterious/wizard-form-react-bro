@@ -1,6 +1,6 @@
-import Dexie from 'dexie'
+import Dexie from 'dexie';
 
-const db = new Dexie('UsersDB')
-db.version(1).stores({ users: '++id' })
+const db = new Dexie('UsersDB');
+db.version(1).stores({ users: '++id' });
 
-export default db
+export default db;

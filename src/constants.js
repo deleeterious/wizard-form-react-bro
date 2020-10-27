@@ -1,9 +1,9 @@
-export const ACCOUNT_FORM_STAGE = 'account'
-export const PROFILE_FORM_STAGE = 'profile'
-export const CONTACTS_FORM_STAGE = 'contacts'
-export const CAPABILITIES_FORM_STAGE = 'capabilities'
+export const ACCOUNT_FORM_STAGE = 'account';
+export const PROFILE_FORM_STAGE = 'profile';
+export const CONTACTS_FORM_STAGE = 'contacts';
+export const CAPABILITIES_FORM_STAGE = 'capabilities';
 
-export const PHONE_MASK = '+38 (999) 999 99 99'
+export const PHONE_MASK = '+38 (999) 999 99 99';
 
 export const languages = [
   { value: 'English', label: 'English' },
@@ -29,8 +29,8 @@ export const languages = [
   { value: 'Javanese', label: 'Javanese' },
   { value: 'Punjabi', label: 'Punjabi' },
   { value: 'Thai', label: 'Thai' },
-  { value: 'Korean', label: 'Korean' }
-]
+  { value: 'Korean', label: 'Korean' },
+];
 
 export const skillsList = [
   { value: 'html', label: 'HTML' },
@@ -50,8 +50,8 @@ export const skillsList = [
   { value: 'git', label: 'Git' },
   { value: 'docker', label: 'Docker' },
   { value: 'aws lambda', label: 'AWS Lambda' },
-  { value: 'firebase', label: 'Firebase' }
-]
+  { value: 'firebase', label: 'Firebase' },
+];
 
 export const CHECKBOXES = [
   'Art',
@@ -59,5 +59,5 @@ export const CHECKBOXES = [
   'I just want to play games, I’m not living in this life',
   'I’m a female... I’m doing nothing. Every day.',
   'Guitar, guitar and guitar again. I’m fall in love with it.',
-  'WTF is “hobbies”???'
-]
+  'WTF is “hobbies”???',
+];

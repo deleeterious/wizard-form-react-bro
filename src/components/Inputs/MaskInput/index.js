@@ -1,3 +1,3 @@
-import MaskInput from './MaskInput'
+import MaskInput from './MaskInput';
 
-export default MaskInput
+export default MaskInput;

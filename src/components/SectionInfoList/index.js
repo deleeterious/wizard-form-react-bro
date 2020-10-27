@@ -1,3 +1,3 @@
-import SectionInfoList from './SectionInfoList'
+import SectionInfoList from './SectionInfoList';
 
-export default SectionInfoList
+export default SectionInfoList;

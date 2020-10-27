@@ -1,21 +1,21 @@
-import React from 'react'
+import React from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // constants
 import {
   ACCOUNT_FORM_STAGE,
   PROFILE_FORM_STAGE,
   CONTACTS_FORM_STAGE,
-  CAPABILITIES_FORM_STAGE
-} from 'constants.js'
+  CAPABILITIES_FORM_STAGE,
+} from 'constants.js';
 // utils
-import { parseDate } from 'utils'
+import { parseDate } from 'utils';
 // components
-import AvatarImage from 'components/AvatarImage'
-import SectionInfoList from 'components/SectionInfoList/SectionInfoList'
-import SectionInfoTitle from 'components/SectionInfoTitle/SectionInfoTitle'
+import AvatarImage from 'components/AvatarImage';
+import SectionInfoList from 'components/SectionInfoList/SectionInfoList';
+import SectionInfoTitle from 'components/SectionInfoTitle/SectionInfoTitle';
 // css
-import classes from './UserInfo.module.css'
+import classes from './UserInfo.module.css';
 
 const UserInfo = ({ user }) => {
   const {
@@ -33,8 +33,8 @@ const UserInfo = ({ user }) => {
     phones,
     skills,
     hobbies,
-    id
-  } = user
+    id,
+  } = user;
 
   const facebookLinkRender = (value) =>
     value ? (
@@ -43,7 +43,7 @@ const UserInfo = ({ user }) => {
       </a>
     ) : (
       'N/A'
-    )
+    );
 
   const phonesRender = (value) => {
     return value?.map((phone, i) => {
@@ -53,11 +53,11 @@ const UserInfo = ({ user }) => {
             <div className={classes.infoListItemTitle}>Phone#{i + 1}:</div>
             <div className={classes.infoListItemValue}>{phone}</div>
           </div>
-        )
-    })
-  }
+        );
+    });
+  };
 
-  const skillsRender = (value) => value?.map((item) => item.label).join(', ')
+  const skillsRender = (value) => value?.map((item) => item.label).join(', ');
 
   const hobbiesRender = (value) =>
     value?.filter((item) => item).length
@@ -68,7 +68,7 @@ const UserInfo = ({ user }) => {
               {item}
             </p>
           ))
-      : 'N/A'
+      : 'N/A';
 
   return (
     <div className={classes.userInfo}>
@@ -84,7 +84,7 @@ const UserInfo = ({ user }) => {
           <SectionInfoList
             data={[
               { label: 'User name', value: userName },
-              { label: 'Password', value: password }
+              { label: 'Password', value: password },
             ]}
           />
         </div>
@@ -99,7 +99,7 @@ const UserInfo = ({ user }) => {
               { label: 'Last name', value: lastName },
               { label: 'Birth date', value: parseDate(birthDate) },
               { label: 'Email', value: email },
-              { label: 'Address', value: address || 'N/A' }
+              { label: 'Address', value: address || 'N/A' },
             ]}
           />
         </div>
@@ -114,9 +114,9 @@ const UserInfo = ({ user }) => {
               { label: 'Fax', value: fax || 'N/A' },
               {
                 label: 'Facebook link',
-                value: facebookLinkRender(facebookLink)
+                value: facebookLinkRender(facebookLink),
               },
-              { label: 'Phones', render: phonesRender(phones) }
+              { label: 'Phones', render: phonesRender(phones) },
             ]}
           />
         </div>
@@ -128,14 +128,14 @@ const UserInfo = ({ user }) => {
           <SectionInfoList
             data={[
               { label: 'Skills', value: skillsRender(skills) },
-              { label: 'Hobbies', value: hobbiesRender(hobbies) }
+              { label: 'Hobbies', value: hobbiesRender(hobbies) },
             ]}
           />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 UserInfo.propTypes = {
   user: T.shape({
@@ -153,8 +153,8 @@ UserInfo.propTypes = {
     phones: T.arrayOf(T.string),
     skills: T.arrayOf(T.object),
     hobbies: T.array,
-    id: T.number
-  })
-}
+    id: T.number,
+  }),
+};
 
-export default UserInfo
+export default UserInfo;

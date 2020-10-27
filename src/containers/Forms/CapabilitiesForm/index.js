@@ -1,3 +1,3 @@
-import CapabilitiesForm from './CapabilitiesForm'
+import CapabilitiesForm from './CapabilitiesForm';
 
-export default CapabilitiesForm
+export default CapabilitiesForm;

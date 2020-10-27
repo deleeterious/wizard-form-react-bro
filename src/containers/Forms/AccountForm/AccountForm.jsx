@@ -1,41 +1,41 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect } from 'react';
 // lodash
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash/isEmpty';
 // react-router-dom
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // react-hook-form
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form';
 // react-redux
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 // utils
-import { concatStyles } from 'utils'
+import { concatStyles } from 'utils';
 // constants
-import { PROFILE_FORM_STAGE } from 'constants.js'
+import { PROFILE_FORM_STAGE } from 'constants.js';
 // helpers
 import {
   getFromLocalStorage,
-  setToLocalStorage
-} from 'helpers/localStorageHelper'
+  setToLocalStorage,
+} from 'helpers/localStorageHelper';
 import {
   passwordRepeatValidation,
   passwordValidation,
-  userNameValidation
-} from 'helpers/validations'
+  userNameValidation,
+} from 'helpers/validations';
 // components
-import TextInput from 'components/Inputs/TextInput'
-import AvatarInput from 'components/Inputs/AvatarInput'
-import Button from 'components/Button'
-import PasswordInput from 'components/Inputs/PasswordInput'
+import TextInput from 'components/Inputs/TextInput';
+import AvatarInput from 'components/Inputs/AvatarInput';
+import Button from 'components/Button';
+import PasswordInput from 'components/Inputs/PasswordInput';
 // css
-import commonStyles from 'containers/Forms/common/style.module.css'
-import classes from './AccountForm.module.css'
+import commonStyles from 'containers/Forms/common/style.module.css';
+import classes from './AccountForm.module.css';
 
 const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
-  const history = useHistory()
+  const history = useHistory();
 
-  const { data } = useSelector((state) => state.currentUser)
+  const { data } = useSelector((state) => state.currentUser);
 
   const {
     register,
@@ -43,30 +43,30 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
     watch,
     getValues,
     errors,
-    formState
-  } = useFormContext()
+    formState,
+  } = useFormContext();
 
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   const handleClickForward = async (e) => {
-    e.preventDefault()
-    const isValid = await trigger(['userName', 'password', 'passwordRepeat'])
+    e.preventDefault();
+    const isValid = await trigger(['userName', 'password', 'passwordRepeat']);
     if (isValid) {
-      setToLocalStorage('newUserStage', PROFILE_FORM_STAGE)
+      setToLocalStorage('newUserStage', PROFILE_FORM_STAGE);
 
       setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
-        ACCOUNT_FORM_STAGE: true
-      })
+        ACCOUNT_FORM_STAGE: true,
+      });
 
       setSubmittedStages((prevState) => ({
         ...prevState,
-        ACCOUNT_FORM_STAGE: true
-      }))
+        ACCOUNT_FORM_STAGE: true,
+      }));
 
-      history.push('/new-user/profile')
+      history.push('/new-user/profile');
     }
-  }
+  };
 
   return (
     <div className={classes.form}>
@@ -115,13 +115,13 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 AccountForm.propTypes = {
   setSubmittedStages: T.func,
   handleSave: T.func,
-  isEdit: T.bool
-}
+  isEdit: T.bool,
+};
 
-export default memo(AccountForm)
+export default memo(AccountForm);
