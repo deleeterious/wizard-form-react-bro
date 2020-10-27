@@ -35,7 +35,7 @@ import classes from './AccountForm.module.css'
 const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
   const history = useHistory()
 
-  const data = useSelector((state) => state.currentUser)
+  const { data } = useSelector((state) => state.currentUser)
 
   const {
     register,

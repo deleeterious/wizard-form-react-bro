@@ -7,7 +7,7 @@ const isUniquePropValidation = async (value, currentUser, prop) => {
 
   if (foundUser) {
     if (foundUser[prop] !== currentUser[prop]) {
-      return `This ${prop} is already used`
+      return `This ${prop === 'userName' ? 'user name' : prop} is already used`
     }
   }
 
