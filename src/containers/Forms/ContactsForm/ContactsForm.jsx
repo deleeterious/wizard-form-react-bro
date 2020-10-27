@@ -1,26 +1,18 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 // lodash
 import isEmpty from 'lodash/isEmpty';
 // prop-types
 import T from 'prop-types';
 // react-router-dom
 import { useHistory } from 'react-router-dom';
-// redux
-import { useSelector } from 'react-redux';
-// useForm
+// react-hook-form
 import { useFormContext } from 'react-hook-form';
-// assets
-import { ReactComponent as DeletePhoneBtn } from 'assets/icons/minus.svg';
 // helpers
 import {
   getFromLocalStorage,
   setToLocalStorage,
 } from 'helpers/localStorageHelper';
-import {
-  faxValidation,
-  requiredValidation,
-  phoneValidation,
-} from 'helpers/validations';
+import { faxValidation, requiredValidation } from 'helpers/validations';
 // constants
 import {
   CAPABILITIES_FORM_STAGE,
@@ -30,53 +22,24 @@ import {
 } from 'constants.js';
 // components
 import TextInput from 'components/Inputs/TextInput';
-import Button from 'components/Button';
 import SelectInput from 'components/Inputs/SelectInput';
 import MaskInput from 'components/Inputs/MaskInput';
-import AddButton from 'components/AddButton';
+import PhoneInput from 'components/Inputs/PhoneInput';
+import Button from 'components/Button';
 // css
 import commonStyles from 'containers/Forms/common/style.module.css';
-import classes from './ContactsForm.module.css';
 
 const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
   const history = useHistory();
 
-  const { data } = useSelector((state) => state.currentUser);
-
   const {
     register,
     trigger,
-    setValue,
     getValues,
     errors,
     control,
     formState,
   } = useFormContext();
-
-  const [phones, setPhones] = useState([]);
-
-  useEffect(() => {
-    const newUserPhones = isEdit
-      ? data?.phones?.filter((item) => item)
-      : getFromLocalStorage('newUser')?.phones?.filter((item) => item);
-
-    setPhones(newUserPhones?.length ? newUserPhones : ['']);
-  }, [isEdit, data]);
-
-  useEffect(() => {
-    setValue('phones', phones, { shouldDirty: true });
-  }, [setValue, phones]);
-
-  const handleAddPhone = (e) => {
-    e.preventDefault();
-    setPhones((prevState) => [...prevState, '']);
-  };
-
-  const handleDeletePhone = (i) => {
-    const newArr = [...phones];
-    newArr.splice(i, 1);
-    setPhones(newArr);
-  };
 
   const handleClickForward = async (e) => {
     e.preventDefault();
@@ -150,34 +113,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
           errorMessage={errors?.fax?.message}
         />
 
-        {phones?.map((phone, i) => (
-          <div className={classes.phoneCont} key={i}>
-            <MaskInput
-              value={phone}
-              title={`Phone #${i + 1}`}
-              control={control}
-              name={`phones[${i}]`}
-              placeholder="+38 (XXX) XXX XX XX"
-              mask={PHONE_MASK}
-              rules={phoneValidation()}
-              errorMessage={
-                errors.phones && errors.phones[i]
-                  ? errors.phones[i].message
-                  : ''
-              }
-            />
-            {phones?.length === 1 || (
-              <DeletePhoneBtn
-                onClick={() => handleDeletePhone(i)}
-                className={classes.deletePhoneBtn}
-              />
-            )}
-          </div>
-        ))}
-
-        {phones?.length !== 3 && (
-          <AddButton onClick={handleAddPhone}>add phone number</AddButton>
-        )}
+        <PhoneInput isEdit={isEdit} />
 
         <div className={commonStyles.buttons}>
           {isEdit || (
