@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 // prop-types
 import T from 'prop-types'
+// react-redux
+import { useSelector } from 'react-redux'
 // react-hook-form
 import { useFormContext } from 'react-hook-form'
 // react-datepicker
@@ -8,12 +10,12 @@ import ReactSelect from 'react-select'
 // css
 import commonStyles from 'components/Inputs/common/styles.module.css'
 import ValidationError from 'components/ValidationError'
+// helpers
 import { skillsValidation } from 'helpers/validations'
 import {
   getFromLocalStorage,
   setToLocalStorage
 } from 'helpers/localStorageHelper'
-import { useSelector } from 'react-redux'
 
 const SelectInput = ({
   options,

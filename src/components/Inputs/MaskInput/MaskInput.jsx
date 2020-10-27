@@ -18,26 +18,24 @@ const MaskInput = ({
   errorMessage,
   rules,
   title
-}) => {
-  return (
-    <div className={commonStyles.inputCont}>
-      <label htmlFor={name}>
-        <div className={commonStyles.inputLabel}>{title}</div>
-        <Controller
-          as={ReactInputMask}
-          name={name}
-          defaultValue={value}
-          placeholder={placeholder}
-          className={commonStyles.input}
-          mask={mask}
-          control={control}
-          rules={rules}
-        />
-      </label>
-      <ValidationError errorMessage={errorMessage} />
-    </div>
-  )
-}
+}) => (
+  <div className={commonStyles.inputCont}>
+    <label htmlFor={name}>
+      <div className={commonStyles.inputLabel}>{title}</div>
+      <Controller
+        as={ReactInputMask}
+        name={name}
+        defaultValue={value}
+        placeholder={placeholder}
+        className={commonStyles.input}
+        mask={mask}
+        control={control}
+        rules={rules}
+      />
+    </label>
+    <ValidationError errorMessage={errorMessage} />
+  </div>
+)
 
 MaskInput.propTypes = {
   value: T.string,
