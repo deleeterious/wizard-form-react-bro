@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 // redux
 import { useDispatch } from 'react-redux';
 import { deleteUser } from 'redux/actions/users';
@@ -32,14 +32,18 @@ const UserListItem = ({ user }) => {
     lastUpdate,
   } = user;
 
-  const handleOutSideClick = (e) => {
+  const formatTime = useMemo(() => formatToRelativeTime(lastUpdate), [
+    lastUpdate,
+  ]);
+
+  const handleOutSideClick = useCallback((e) => {
     const domNode = document.getElementById('deleteBtn');
 
     if (!e.path.includes(domNode)) {
       document.removeEventListener('click', handleOutSideClick);
       setIsDeleting(false);
     }
-  };
+  }, []);
 
   const handleSetDeleting = () => {
     setIsDeleting(true);
@@ -52,7 +56,7 @@ const UserListItem = ({ user }) => {
 
   useEffect(
     () => () => document.removeEventListener('click', handleOutSideClick),
-    []
+    [handleOutSideClick]
   );
 
   return (
@@ -71,9 +75,7 @@ const UserListItem = ({ user }) => {
       </div>
       <div className={classes.company}>{company}</div>
       <div className={classes.contacts}>{email}</div>
-      <div className={classes.updates}>
-        {useMemo(() => formatToRelativeTime(lastUpdate), [lastUpdate])}
-      </div>
+      <div className={classes.updates}>{formatTime}</div>
       <div className={classes.buttons}>
         <Link to={`/profile/${id}`} className={classes.editIcon}>
           <EditIcon />

@@ -18,7 +18,7 @@ const EditPage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id));
-  }, [match.params.id]);
+  }, [dispatch, match.params.id]);
 
   return (
     <main className="container">
