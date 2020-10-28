@@ -110,6 +110,7 @@ const ProfileForm = ({
           )}
 
           <Button
+            type="button"
             disabled={isEdit ? !formState.isDirty : !isEmpty(errors)}
             className={commonStyles.positionRight}
             handleClick={isEdit ? handleSave : onClickForward}

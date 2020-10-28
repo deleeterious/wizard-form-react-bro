@@ -105,6 +105,7 @@ const ContactsForm = ({
           )}
 
           <Button
+            type="button"
             disabled={
               isEdit
                 ? !formState.isDirty

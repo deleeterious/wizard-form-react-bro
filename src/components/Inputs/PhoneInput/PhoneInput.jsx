@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 // prop-types
 import T from 'prop-types';
-// react-redux
-import { useSelector } from 'react-redux';
+
 // react-hook-form
-import { useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 // components
 import MaskInput from 'components/Inputs/MaskInput';
 import AddButton from 'components/AddButton';
@@ -13,64 +12,50 @@ import { PHONE_MASK } from 'constants.js';
 // assets
 import { ReactComponent as DeletePhoneBtn } from 'assets/icons/minus.svg';
 // helpers
-import { getFromLocalStorage } from 'helpers/localStorageHelper';
 import { phoneValidation } from 'helpers/validations';
 // css
 import classes from './PhoneInput.module.css';
 
-const PhoneInput = ({ isEdit }) => {
-  const [phones, setPhones] = useState([]);
+const PhoneInput = () => {
+  const { control, errors } = useFormContext();
 
-  const { data } = useSelector((state) => state.currentUser);
-
-  const { setValue, control, errors } = useFormContext();
-
-  useEffect(() => {
-    const newUserPhones = isEdit
-      ? data?.phones?.filter((item) => item)
-      : getFromLocalStorage('newUser')?.phones?.filter((item) => item);
-
-    setPhones(newUserPhones?.length ? newUserPhones : ['']);
-  }, [isEdit, data]);
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'phones',
+  });
 
   useEffect(() => {
-    setValue('phones', phones, { shouldDirty: true });
-  }, [setValue, phones]);
+    if (fields.length === 0) append('');
+  }, [fields, append]);
 
-  const handleAddPhone = (e) => {
-    e.preventDefault();
-    setPhones((prevState) => [...prevState, '']);
-  };
+  const handleAddPhone = () => append('');
 
-  const handleDeletePhone = (i) => {
-    const newArr = [...phones];
-    newArr.splice(i, 1);
-    setPhones(newArr);
-  };
+  const handleDeletePhone = (i) => () => remove(i);
+
   return (
     <>
-      {phones?.map((phone, i) => (
-        <div className={classes.itemContainer} key={i}>
+      {fields?.map((item, i) => (
+        <div className={classes.itemContainer} key={item.id}>
           <MaskInput
-            value={phone}
             title={`Phone #${i + 1}`}
             control={control}
-            name={`phones[${i}]`}
+            name={`phones[${i}].value`}
+            value={item.value}
             placeholder="+38 (XXX) XXX XX XX"
             mask={PHONE_MASK}
             rules={phoneValidation()}
-            errorMessage={errors.phones[i].message}
+            errorMessage={errors.phones ? errors.phones[i]?.value?.message : ''}
           />
-          {phones?.length === 1 || (
+          {fields?.length === 1 || (
             <DeletePhoneBtn
-              onClick={() => handleDeletePhone(i)}
+              onClick={handleDeletePhone(i)}
               className={classes.deleteButton}
             />
           )}
         </div>
       ))}
 
-      {phones?.length !== 3 && (
+      {fields.length !== 3 && (
         <AddButton onClick={handleAddPhone}>add phone number</AddButton>
       )}
     </>

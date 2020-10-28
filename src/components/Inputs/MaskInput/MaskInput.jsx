@@ -25,7 +25,7 @@ const MaskInput = ({
       <Controller
         as={ReactInputMask}
         name={name}
-        defaultValue={value}
+        defaultValue={value || ''}
         placeholder={placeholder}
         className={commonStyles.input}
         mask={mask}
