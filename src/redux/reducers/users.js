@@ -88,6 +88,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         data: [...state.data.filter((user) => user.id !== payload)],
+        isFetching: false,
       };
     case DELETE_USER_PENDING: {
       return {

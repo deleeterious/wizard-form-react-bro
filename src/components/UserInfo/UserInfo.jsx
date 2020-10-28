@@ -47,11 +47,11 @@ const UserInfo = ({ user }) => {
 
   const phonesRender = (value) => {
     return value?.map((phone, i) => {
-      if (phone)
+      if (phone?.value)
         return (
           <div className={classes.infoListItem} key={i}>
             <div className={classes.infoListItemTitle}>Phone#{i + 1}:</div>
-            <div className={classes.infoListItemValue}>{phone}</div>
+            <div className={classes.infoListItemValue}>{phone.value}</div>
           </div>
         );
     });
