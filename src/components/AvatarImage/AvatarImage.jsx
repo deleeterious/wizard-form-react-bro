@@ -8,19 +8,19 @@ import classes from './AvatarImage.module.css';
 
 const AvatarImage = ({ avatar, size = { width: 170, height: 170 } }) => (
   <div
-    className={classes.avatarIconCont}
+    className={classes.iconContainer}
     style={{ width: size.width, height: size.height }}
   >
     {avatar ? (
       <img
         alt="avatar"
         src={avatar}
-        className={classes.avatarIcon}
+        className={classes.icon}
         height={size.height}
       />
     ) : (
       <AvatarIcon
-        className={classes.avatarIcon}
+        className={classes.icon}
         width={size.width}
         height={size.height}
       />

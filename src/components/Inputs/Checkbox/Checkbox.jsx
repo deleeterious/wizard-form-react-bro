@@ -8,7 +8,7 @@ import classes from './Checkbox.module.css';
 const Checkbox = ({ children, title }) => {
   return (
     <div className={commonStyles.inputCont}>
-      <label htmlFor="checkbox" className={classes.checkboxCont}>
+      <label htmlFor="checkbox" className={classes.checkboxContainer}>
         <div className={commonStyles.inputLabel}>{title}</div>
         {children}
       </label>

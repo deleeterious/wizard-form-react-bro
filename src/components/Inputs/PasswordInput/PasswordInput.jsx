@@ -22,7 +22,7 @@ const PasswordInput = ({ name, title, refRegister }) => {
   };
 
   return (
-    <div className={classes.passwordInputCont}>
+    <div className={classes.container}>
       <TextInput
         type="text"
         name={name}

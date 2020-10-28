@@ -7,8 +7,8 @@ import { ReactComponent as AddIcon } from 'assets/icons/add.svg';
 import classes from './AddButton.module.css';
 
 const AddButton = ({ onClick, children }) => (
-  <button onClick={onClick} className={classes.addButton}>
-    <AddIcon className={classes.addIcon} />
+  <button onClick={onClick} className={classes.button}>
+    <AddIcon className={classes.icon} />
     <div>{children}</div>
   </button>
 );

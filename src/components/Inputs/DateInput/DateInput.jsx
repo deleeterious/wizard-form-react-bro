@@ -28,7 +28,7 @@ const DateInput = ({ control, rules, label, errorMessage, name }) => (
         render={({ onChange, value }) => {
           return (
             <DatePicker
-              className={classes.dataPicker}
+              className={classes.datePicker}
               tileClassName={classes.tile}
               calendarClassName={classes.calendar}
               format="dd/M/y"

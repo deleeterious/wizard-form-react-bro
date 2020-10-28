@@ -9,22 +9,22 @@
   position: relative;
 }
 
-.popupText {
+.popupTextContent {
   font-weight: 500;
   margin-right: 10px;
 }
 
-.popupBtn {
+.button {
   font-weight: 800;
   cursor: pointer;
 }
 
-.close {
+.closeButton {
   position: absolute;
   right: 25px;
   cursor: pointer;
 }
 
-.close:hover path {
+.closeButton:hover path {
   stroke: #fff;
 }

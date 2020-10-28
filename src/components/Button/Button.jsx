@@ -7,7 +7,7 @@ import { concatStyles } from 'utils';
 import classes from './Button.module.css';
 
 const Button = ({ children, className, handleClick, disabled = true }) => (
-  <div className={classes.btnCont}>
+  <div className={classes.buttonContainer}>
     <button
       disabled={disabled}
       onClick={handleClick}

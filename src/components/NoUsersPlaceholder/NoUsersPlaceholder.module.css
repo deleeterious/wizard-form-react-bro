@@ -1,4 +1,4 @@
-.indicatorCont {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,13 +6,13 @@
   margin-top: 150px;
 }
 
-.indicatorTitle {
+.title {
   font-size: 35px;
   font-weight: 700;
   color: #9bb0cb;
 }
 
-.newUserBtn {
+.button {
   width: 160px;
   height: 40px;
   border: none;
@@ -26,6 +26,8 @@
 }
 
 .link {
+  width: 100%;
+  height: 100%;
   color: #fff;
   font-size: 14px;
   font-weight: 500;

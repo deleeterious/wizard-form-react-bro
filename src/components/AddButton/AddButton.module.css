@@ -1,4 +1,4 @@
-.addButton {
+.button {
   margin-top: 15px;
   background: none;
   border: none;
@@ -8,10 +8,10 @@
   font-size: 14px;
 }
 
-.addButton:hover {
+.button:hover {
   cursor: pointer;
 }
 
-.addIcon {
+.icon {
   margin-right: 10px;
 }

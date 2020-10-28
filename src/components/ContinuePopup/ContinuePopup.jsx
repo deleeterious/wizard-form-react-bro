@@ -7,13 +7,13 @@ import classes from './ContinuePopup.module.css';
 
 const ContinuePopup = ({ handleContinue, handleClose }) => (
   <div className={classes.popup}>
-    <div className={classes.popupText}>
+    <div className={classes.popupTextContent}>
       You have an unsaved user data. Do you want to complete it?
     </div>
-    <div className={classes.popupBtn} onClick={handleContinue}>
+    <div className={classes.button} onClick={handleContinue}>
       Continue
     </div>
-    <div className={classes.close} onClick={handleClose}>
+    <div className={classes.closeButton} onClick={handleClose}>
       <CloseIcon />
     </div>
   </div>

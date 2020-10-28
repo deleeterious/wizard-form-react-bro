@@ -35,14 +35,14 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
   };
 
   return (
-    <div className={classes.avatarCont}>
+    <div className={classes.avatarContainer}>
       <AvatarImage avatar={watch('avatarData')} />
 
-      <label htmlFor="avatar" className={classes.fileLabel}>
+      <label htmlFor="avatar" className={classes.fileInputLabel}>
         <input
           name="avatarData"
           ref={refRegister}
-          className={classes.avatarData}
+          className={classes.textInput}
         />
         <input
           type="file"

@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import classes from './NoUsersPlaceholder.module.css';
 
 const NoUsersPlaceholder = () => (
-  <div className={classes.indicatorCont}>
-    <h2 className={classes.indicatorTitle}>No users here :(</h2>
-    <div className={classes.newUserBtn}>
+  <div className={classes.container}>
+    <h2 className={classes.title}>No users here :(</h2>
+    <div className={classes.button}>
       <Link className={classes.link} to="/new-user">
         Create new user
       </Link>

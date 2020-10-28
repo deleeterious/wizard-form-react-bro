@@ -50,7 +50,7 @@ const PhoneInput = ({ isEdit }) => {
   return (
     <>
       {phones?.map((phone, i) => (
-        <div className={classes.phoneCont} key={i}>
+        <div className={classes.itemContainer} key={i}>
           <MaskInput
             value={phone}
             title={`Phone #${i + 1}`}
@@ -66,7 +66,7 @@ const PhoneInput = ({ isEdit }) => {
           {phones?.length === 1 || (
             <DeletePhoneBtn
               onClick={() => handleDeletePhone(i)}
-              className={classes.deletePhoneBtn}
+              className={classes.deleteButton}
             />
           )}
         </div>

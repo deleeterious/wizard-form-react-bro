@@ -7,7 +7,7 @@
   z-index: -1;
 }
 
-.fileLabel {
+.fileInputLabel {
   font-size: 14px;
   color: #9bb0cb;
   display: flex;
@@ -18,11 +18,11 @@
   margin-bottom: 10px;
 }
 
-.avatarData {
+.textInput {
   display: none;
 }
 
-.avatarCont {
+.avatarContainer {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,15 +1,15 @@
-.phoneCont {
+.itemContainer {
   position: relative;
   margin-top: 45px;
 }
 
-.deletePhoneBtn {
+.deleteButton {
   position: absolute;
   right: -20px;
   top: 14px;
   cursor: pointer;
 }
 
-.deletePhoneBtn:hover path {
+.deleteButton:hover path {
   stroke: #a5a5a5;
 }
