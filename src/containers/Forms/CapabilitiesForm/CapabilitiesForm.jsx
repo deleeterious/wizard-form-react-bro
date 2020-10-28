@@ -79,7 +79,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
             </Button>
           )}
           <Button
-            disabled={isEdit ? !formState.isDirty : !formState.isValid}
+            disabled={isEdit ? !formState.isDirty : false}
             handleClick={isEdit ? handleSave : null}
             className={concatStyles(
               commonStyles.positionRight,

@@ -41,12 +41,15 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
     shouldUnregister: false,
   });
 
-  const { getValues, handleSubmit, reset, watch, formState } = methods;
+  const { getValues, handleSubmit, reset, watch, formState, trigger } = methods;
 
   // User is added in last form stage (CapabilitiesForm) on click 'Finish'
-  const onSubmit = (data) => {
-    dispatch(addUser({ ...data, lastUpdate: new Date() }));
-    history.push('/');
+  const onSubmit = async (data) => {
+    const result = trigger();
+    if (result) {
+      dispatch(addUser({ ...data, lastUpdate: new Date() }));
+      history.push('/');
+    }
   };
 
   // Popup: reset data if confirm continue
