@@ -1,16 +1,14 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 // lodash
 import isEmpty from 'lodash/isEmpty';
 // prop-types
 import T from 'prop-types';
-// react-router-dom
-import { useHistory } from 'react-router-dom';
 // react-redux
 import { useSelector } from 'react-redux';
 // useForm
 import { useFormContext } from 'react-hook-form';
 // constants
-import { ACCOUNT_FORM_STAGE, CONTACTS_FORM_STAGE } from 'constants.js';
+import { ACCOUNT_FORM_STAGE } from 'constants.js';
 // helpers
 import {
   getFromLocalStorage,
@@ -29,24 +27,19 @@ import RadioInput from 'components/Inputs/RadioInput';
 // css
 import commonStyles from 'containers/Forms/common/style.module.css';
 
-const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
-  const history = useHistory();
-
+const ProfileForm = ({
+  setSubmittedStages,
+  onClickForward,
+  onClickBack,
+  isEdit,
+  handleSave,
+}) => {
   const { data } = useSelector((state) => state.currentUser);
 
-  const { register, trigger, errors, control, formState } = useFormContext();
+  const { register, errors, control, formState } = useFormContext();
 
-  const handleClickForward = async (e) => {
-    e.preventDefault();
-    const result = await trigger([
-      'firstName',
-      'lastName',
-      'birthDate',
-      'email',
-    ]);
-    if (result) {
-      setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE);
-
+  useEffect(
+    () => () => {
       setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
         PROFILE_FORM_STAGE: true,
@@ -56,16 +49,9 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
         ...prevState,
         PROFILE_FORM_STAGE: true,
       }));
-
-      history.push('/new-user/contacts');
-    }
-  };
-
-  const handleClickBack = (e) => {
-    e.preventDefault();
-    setToLocalStorage('newUserStage', ACCOUNT_FORM_STAGE);
-    history.push('/new-user/account');
-  };
+    },
+    [setSubmittedStages]
+  );
 
   return (
     <div className={commonStyles.form}>
@@ -115,7 +101,10 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
         <div className={commonStyles.buttons}>
           {isEdit || (
-            <Button disabled={false} handleClick={handleClickBack}>
+            <Button
+              disabled={false}
+              handleClick={() => onClickBack(ACCOUNT_FORM_STAGE)}
+            >
               Back
             </Button>
           )}
@@ -123,7 +112,7 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
           <Button
             disabled={isEdit ? !formState.isDirty : !isEmpty(errors)}
             className={commonStyles.positionRight}
-            handleClick={isEdit ? handleSave : handleClickForward}
+            handleClick={isEdit ? handleSave : onClickForward}
           >
             {isEdit ? 'Save' : 'Forward'}
           </Button>
@@ -135,8 +124,10 @@ const ProfileForm = ({ setSubmittedStages, isEdit, handleSave }) => {
 
 ProfileForm.propTypes = {
   setSubmittedStages: T.func,
+  onClickForward: T.func,
   handleSave: T.func,
   isEdit: T.bool,
+  onClickBack: T.func,
 };
 
 export default memo(ProfileForm);

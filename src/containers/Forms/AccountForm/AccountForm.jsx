@@ -1,8 +1,6 @@
 import React, { memo, useEffect } from 'react';
 // lodash
 import isEmpty from 'lodash/isEmpty';
-// react-router-dom
-import { useHistory } from 'react-router-dom';
 // prop-types
 import T from 'prop-types';
 // react-hook-form
@@ -11,8 +9,6 @@ import { useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 // utils
 import { concatStyles } from 'utils';
-// constants
-import { PROFILE_FORM_STAGE } from 'constants.js';
 // helpers
 import {
   getFromLocalStorage,
@@ -32,28 +28,18 @@ import PasswordInput from 'components/Inputs/PasswordInput';
 import commonStyles from 'containers/Forms/common/style.module.css';
 import classes from './AccountForm.module.css';
 
-const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
-  const history = useHistory();
-
+const AccountForm = ({
+  setSubmittedStages,
+  onClickForward,
+  handleSave,
+  isEdit,
+}) => {
   const { data } = useSelector((state) => state.currentUser);
 
-  const {
-    register,
-    trigger,
-    watch,
-    getValues,
-    errors,
-    formState,
-  } = useFormContext();
+  const { register, watch, getValues, errors, formState } = useFormContext();
 
-  useEffect(() => {}, []);
-
-  const handleClickForward = async (e) => {
-    e.preventDefault();
-    const isValid = await trigger(['userName', 'password', 'passwordRepeat']);
-    if (isValid) {
-      setToLocalStorage('newUserStage', PROFILE_FORM_STAGE);
-
+  useEffect(
+    () => () => {
       setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
         ACCOUNT_FORM_STAGE: true,
@@ -63,10 +49,9 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         ...prevState,
         ACCOUNT_FORM_STAGE: true,
       }));
-
-      history.push('/new-user/profile');
-    }
-  };
+    },
+    [setSubmittedStages]
+  );
 
   return (
     <div className={classes.form}>
@@ -102,13 +87,14 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
         <div className={commonStyles.buttons}>
           <Button
+            type="button"
             className={commonStyles.positionRight}
             disabled={
               isEdit
                 ? !formState.isDirty
                 : isEmpty(getValues()) || !isEmpty(errors)
             }
-            handleClick={isEdit ? handleSave : handleClickForward}
+            handleClick={isEdit ? handleSave : onClickForward}
           >
             {isEdit ? 'Save' : 'Forward'}
           </Button>
@@ -120,6 +106,7 @@ const AccountForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
 AccountForm.propTypes = {
   setSubmittedStages: T.func,
+  onClickForward: T.func,
   handleSave: T.func,
   isEdit: T.bool,
 };

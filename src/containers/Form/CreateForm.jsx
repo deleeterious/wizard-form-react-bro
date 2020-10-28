@@ -43,6 +43,20 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
 
   const { getValues, handleSubmit, reset, watch, formState, trigger } = methods;
 
+  const onClickForward = (inputsToTrigger, nextStage) => async () => {
+    const isValid = await trigger(inputsToTrigger);
+    if (isValid) {
+      setToLocalStorage('newUserStage', nextStage);
+
+      history.push(`/new-user/${nextStage}`);
+    }
+  };
+
+  const onClickBack = (stage) => {
+    setToLocalStorage('newUserStage', stage);
+    history.push(`/new-user/${stage}`);
+  };
+
   // User is added in last form stage (CapabilitiesForm) on click 'Finish'
   const onSubmit = async (data) => {
     const result = trigger();
@@ -99,18 +113,40 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {activeFormStage === ACCOUNT_FORM_STAGE && (
-          <AccountForm setSubmittedStages={setSubmittedStages} />
+          <AccountForm
+            onClickForward={onClickForward(
+              ['userName', 'password', 'passwordRepeat'],
+              PROFILE_FORM_STAGE
+            )}
+            setSubmittedStages={setSubmittedStages}
+          />
         )}
 
         {activeFormStage === PROFILE_FORM_STAGE && (
-          <ProfileForm setSubmittedStages={setSubmittedStages} />
+          <ProfileForm
+            onClickBack={onClickBack}
+            onClickForward={onClickForward(
+              ['firstName', 'lastName', 'birthDate', 'email'],
+              CONTACTS_FORM_STAGE
+            )}
+            setSubmittedStages={setSubmittedStages}
+          />
         )}
 
         {activeFormStage === CONTACTS_FORM_STAGE && (
-          <ContactsForm setSubmittedStages={setSubmittedStages} />
+          <ContactsForm
+            onClickBack={onClickBack}
+            onClickForward={onClickForward(
+              ['company', 'language'],
+              CAPABILITIES_FORM_STAGE
+            )}
+            setSubmittedStages={setSubmittedStages}
+          />
         )}
 
-        {activeFormStage === CAPABILITIES_FORM_STAGE && <CapabilitiesForm />}
+        {activeFormStage === CAPABILITIES_FORM_STAGE && (
+          <CapabilitiesForm onClickBack={onClickBack} />
+        )}
       </form>
     </FormProvider>
   );

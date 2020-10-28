@@ -1,10 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 // lodash
 import isEmpty from 'lodash/isEmpty';
 // prop-types
 import T from 'prop-types';
-// react-router-dom
-import { useHistory } from 'react-router-dom';
 // react-hook-form
 import { useFormContext } from 'react-hook-form';
 // helpers
@@ -14,12 +12,7 @@ import {
 } from 'helpers/localStorageHelper';
 import { faxValidation, requiredValidation } from 'helpers/validations';
 // constants
-import {
-  CAPABILITIES_FORM_STAGE,
-  languages,
-  PHONE_MASK,
-  PROFILE_FORM_STAGE,
-} from 'constants.js';
+import { languages, PHONE_MASK, PROFILE_FORM_STAGE } from 'constants.js';
 // components
 import TextInput from 'components/Inputs/TextInput';
 import SelectInput from 'components/Inputs/SelectInput';
@@ -29,24 +22,17 @@ import Button from 'components/Button';
 // css
 import commonStyles from 'containers/Forms/common/style.module.css';
 
-const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
-  const history = useHistory();
+const ContactsForm = ({
+  setSubmittedStages,
+  onClickForward,
+  onClickBack,
+  handleSave,
+  isEdit,
+}) => {
+  const { register, getValues, errors, control, formState } = useFormContext();
 
-  const {
-    register,
-    trigger,
-    getValues,
-    errors,
-    control,
-    formState,
-  } = useFormContext();
-
-  const handleClickForward = async (e) => {
-    e.preventDefault();
-    const result = await trigger(['company', 'language']);
-    if (result) {
-      setToLocalStorage('newUserStage', CAPABILITIES_FORM_STAGE);
-
+  useEffect(
+    () => () => {
       setToLocalStorage('submittedStages', {
         ...getFromLocalStorage('submittedStages'),
         CONTACTS_FORM_STAGE: true,
@@ -56,16 +42,9 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
         ...prevState,
         CONTACTS_FORM_STAGE: true,
       }));
-
-      history.push('/new-user/capabilities');
-    }
-  };
-
-  const handleClickBack = (e) => {
-    e.preventDefault();
-    setToLocalStorage('newUserStage', PROFILE_FORM_STAGE);
-    history.push('/new-user/profile');
-  };
+    },
+    [setSubmittedStages]
+  );
 
   return (
     <div className={commonStyles.form}>
@@ -117,7 +96,10 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
         <div className={commonStyles.buttons}>
           {isEdit || (
-            <Button disabled={false} handleClick={handleClickBack}>
+            <Button
+              disabled={false}
+              handleClick={() => onClickBack(PROFILE_FORM_STAGE)}
+            >
               Back
             </Button>
           )}
@@ -129,7 +111,7 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
                 : isEmpty(getValues()) || !isEmpty(errors)
             }
             className={commonStyles.positionRight}
-            handleClick={isEdit ? handleSave : handleClickForward}
+            handleClick={isEdit ? handleSave : onClickForward}
           >
             {isEdit ? 'Save' : 'Forward'}
           </Button>
@@ -141,8 +123,10 @@ const ContactsForm = ({ setSubmittedStages, handleSave, isEdit }) => {
 
 ContactsForm.propTypes = {
   setSubmittedStages: T.func,
+  onClickForward: T.func,
   handleSave: T.func,
   isEdit: T.bool,
+  onClickBack: T.func,
 };
 
 export default memo(ContactsForm);

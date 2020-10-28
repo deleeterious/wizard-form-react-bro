@@ -3,10 +3,7 @@ import React, { memo } from 'react';
 import T from 'prop-types';
 // react-hook-form
 import { useFormContext } from 'react-hook-form';
-// react-router-dom
-import { useHistory } from 'react-router-dom';
 // helpers
-import { setToLocalStorage } from 'helpers/localStorageHelper';
 import { additionInfoValidation } from 'helpers/validations';
 // constants
 import { CONTACTS_FORM_STAGE, skillsList, CHECKBOXES } from 'constants.js';
@@ -21,16 +18,8 @@ import Checkbox from 'components/Inputs/Checkbox';
 import commonStyles from 'containers/Forms/common/style.module.css';
 import classes from './CapabilitiesForm.module.css';
 
-const CapabilitiesForm = ({ handleSave, isEdit }) => {
-  const history = useHistory();
-
+const CapabilitiesForm = ({ handleSave, onClickBack, isEdit }) => {
   const { register, errors, formState } = useFormContext();
-
-  const handleClickBack = (e) => {
-    e.preventDefault();
-    setToLocalStorage('newUserStage', CONTACTS_FORM_STAGE);
-    history.push('/new-user/contacts');
-  };
 
   return (
     <div className={commonStyles.form}>
@@ -74,7 +63,11 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
 
         <div className={commonStyles.buttons}>
           {isEdit || (
-            <Button disabled={false} handleClick={handleClickBack}>
+            <Button
+              disabled={false}
+              type="button"
+              handleClick={() => onClickBack(CONTACTS_FORM_STAGE)}
+            >
               Back
             </Button>
           )}
@@ -97,6 +90,7 @@ const CapabilitiesForm = ({ handleSave, isEdit }) => {
 CapabilitiesForm.propTypes = {
   isEdit: T.bool,
   handleSave: T.func,
+  onClickBack: T.func,
 };
 
 export default memo(CapabilitiesForm);
