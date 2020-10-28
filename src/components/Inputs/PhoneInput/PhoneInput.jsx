@@ -59,9 +59,7 @@ const PhoneInput = ({ isEdit }) => {
             placeholder="+38 (XXX) XXX XX XX"
             mask={PHONE_MASK}
             rules={phoneValidation()}
-            errorMessage={
-              errors.phones && errors.phones[i] ? errors.phones[i].message : ''
-            }
+            errorMessage={errors.phones[i].message}
           />
           {phones?.length === 1 || (
             <DeletePhoneBtn
