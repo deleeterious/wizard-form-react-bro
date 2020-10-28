@@ -1,10 +1,16 @@
 import {
-  ADD_USER,
-  DELETE_USER,
+  ADD_USER_FAILED,
+  ADD_USER_PENDING,
+  ADD_USER_SUCCESS,
+  DELETE_USER_FAILED,
+  DELETE_USER_PENDING,
+  DELETE_USER_SUCCESS,
   LOAD_USERS_FAILED,
   LOAD_USERS_PENDING,
   LOAD_USERS_SUCCESS,
-  UPDATE_USER,
+  UPDATE_USER_FAILED,
+  UPDATE_USER_PENDING,
+  UPDATE_USER_SUCCESS,
 } from 'redux/types';
 
 const initialState = {
@@ -34,12 +40,26 @@ export default (state = initialState, { type, payload }) => {
         error: payload,
       };
     }
-    case ADD_USER:
+    case ADD_USER_SUCCESS:
       return {
         ...state,
         data: [...state.data, payload],
+        isFetching: false,
       };
-    case UPDATE_USER: {
+    case ADD_USER_PENDING: {
+      return {
+        ...state,
+        isFetching: true,
+      };
+    }
+    case ADD_USER_FAILED: {
+      return {
+        ...state,
+        isFetching: false,
+        error: payload,
+      };
+    }
+    case UPDATE_USER_SUCCESS: {
       return {
         ...state,
         data: [
@@ -51,11 +71,37 @@ export default (state = initialState, { type, payload }) => {
         ],
       };
     }
-    case DELETE_USER:
+    case UPDATE_USER_PENDING: {
+      return {
+        ...state,
+        isFetching: true,
+      };
+    }
+    case UPDATE_USER_FAILED: {
+      return {
+        ...state,
+        isFetching: false,
+        error: payload,
+      };
+    }
+    case DELETE_USER_SUCCESS:
       return {
         ...state,
         data: [...state.data.filter((user) => user.id !== payload)],
       };
+    case DELETE_USER_PENDING: {
+      return {
+        ...state,
+        isFetching: true,
+      };
+    }
+    case DELETE_USER_FAILED: {
+      return {
+        ...state,
+        isFetching: false,
+        error: payload,
+      };
+    }
     default:
       return state;
   }
