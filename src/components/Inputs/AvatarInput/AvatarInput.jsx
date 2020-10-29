@@ -83,6 +83,8 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
             />
 
             <Button
+              type="button"
+              disabled={false}
               className={classes.applyCropBtn}
               handleClick={handleApplyCrop}
             >
