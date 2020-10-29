@@ -74,21 +74,21 @@ export class FakeUser {
 
 const createImage = (url) =>
   new Promise((resolve, reject) => {
-    const image = new Image()
-    image.addEventListener('load', () => resolve(image))
-    image.addEventListener('error', (error) => reject(error))
-    image.src = url
-  })
+    const image = new Image();
+    image.addEventListener('load', () => resolve(image));
+    image.addEventListener('error', (error) => reject(error));
+    image.src = url;
+  });
 
 export default async function getCroppedImg(imageSrc, pixelCrop) {
-  const image = await createImage(imageSrc)
-  const canvas = document.createElement('canvas')
-  canvas.width = pixelCrop.width
-  canvas.height = pixelCrop.height
-  const ctx = canvas.getContext('2d')
+  const image = await createImage(imageSrc);
+  const canvas = document.createElement('canvas');
+  canvas.width = pixelCrop.width;
+  canvas.height = pixelCrop.height;
+  const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = '#ffffff'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(
     image,
     pixelCrop.x,
@@ -99,6 +99,6 @@ export default async function getCroppedImg(imageSrc, pixelCrop) {
     0,
     pixelCrop.width,
     pixelCrop.height
-  )
-  return canvas.toDataURL('image/jpeg')
+  );
+  return canvas.toDataURL('image/jpeg');
 }
