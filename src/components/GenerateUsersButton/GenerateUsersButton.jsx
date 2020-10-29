@@ -12,14 +12,18 @@ import classes from './GenerateUsersButton.module.css';
 const GenerateUsersButton = () => {
   const dispatch = useDispatch();
 
-  const handleGenerateUsers = (e) => {
-    e.preventDefault();
+  const handleGenerateUsers = () => {
     const newUsers = Array.from({ length: 50 }, () => ({ ...new FakeUser() }));
     dispatch(generateUsers(newUsers));
   };
 
   return (
-    <Button handleClick={handleGenerateUsers} className={classes.generateBtn}>
+    <Button
+      type="button"
+      disabled={false}
+      handleClick={handleGenerateUsers}
+      className={classes.generateBtn}
+    >
       Generate users
     </Button>
   );
