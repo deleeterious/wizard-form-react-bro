@@ -40,17 +40,19 @@ const AccountForm = ({
 
   useEffect(
     () => () => {
-      setToLocalStorage('submittedStages', {
-        ...getFromLocalStorage('submittedStages'),
-        ACCOUNT_FORM_STAGE: true,
-      });
+      if (!isEdit) {
+        setToLocalStorage('submittedStages', {
+          ...getFromLocalStorage('submittedStages'),
+          ACCOUNT_FORM_STAGE: true,
+        });
 
-      setSubmittedStages((prevState) => ({
-        ...prevState,
-        ACCOUNT_FORM_STAGE: true,
-      }));
+        setSubmittedStages((prevState) => ({
+          ...prevState,
+          ACCOUNT_FORM_STAGE: true,
+        }));
+      }
     },
-    [setSubmittedStages]
+    [setSubmittedStages, isEdit]
   );
 
   return (

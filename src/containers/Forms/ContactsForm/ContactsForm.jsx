@@ -33,17 +33,19 @@ const ContactsForm = ({
 
   useEffect(
     () => () => {
-      setToLocalStorage('submittedStages', {
-        ...getFromLocalStorage('submittedStages'),
-        CONTACTS_FORM_STAGE: true,
-      });
+      if (!isEdit) {
+        setToLocalStorage('submittedStages', {
+          ...getFromLocalStorage('submittedStages'),
+          CONTACTS_FORM_STAGE: true,
+        });
 
-      setSubmittedStages((prevState) => ({
-        ...prevState,
-        CONTACTS_FORM_STAGE: true,
-      }));
+        setSubmittedStages((prevState) => ({
+          ...prevState,
+          CONTACTS_FORM_STAGE: true,
+        }));
+      }
     },
-    [setSubmittedStages]
+    [setSubmittedStages, isEdit]
   );
 
   return (

@@ -1,7 +1,4 @@
 import React, { useEffect } from 'react';
-// prop-types
-import T from 'prop-types';
-
 // react-hook-form
 import { useFieldArray, useFormContext } from 'react-hook-form';
 // components
@@ -60,10 +57,6 @@ const PhoneInput = () => {
       )}
     </>
   );
-};
-
-PhoneInput.propTypes = {
-  isEdit: T.bool,
 };
 
 export default PhoneInput;

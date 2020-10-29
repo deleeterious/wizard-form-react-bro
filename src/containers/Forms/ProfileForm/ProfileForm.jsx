@@ -40,17 +40,19 @@ const ProfileForm = ({
 
   useEffect(
     () => () => {
-      setToLocalStorage('submittedStages', {
-        ...getFromLocalStorage('submittedStages'),
-        PROFILE_FORM_STAGE: true,
-      });
+      if (!isEdit) {
+        setToLocalStorage('submittedStages', {
+          ...getFromLocalStorage('submittedStages'),
+          PROFILE_FORM_STAGE: true,
+        });
 
-      setSubmittedStages((prevState) => ({
-        ...prevState,
-        PROFILE_FORM_STAGE: true,
-      }));
+        setSubmittedStages((prevState) => ({
+          ...prevState,
+          PROFILE_FORM_STAGE: true,
+        }));
+      }
     },
-    [setSubmittedStages]
+    [setSubmittedStages, isEdit]
   );
 
   return (
