@@ -1,4 +1,4 @@
-.pagination {
+.innerClass {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -6,22 +6,21 @@
   width: 50%;
 }
 
-.button {
-  outline: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 2px 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #4a82e1;
+.itemClass {
+  list-style: none;
 }
 
-.button:hover {
+.linkClass {
+  text-decoration: none;
+  color: #4a82e1;
+  padding: 3px;
+}
+
+.linkClass:hover {
   color: #8fabda;
 }
 
-.active {
+.activeClass {
   border: 1px solid #4a82e1;
   border-radius: 2px;
 }
