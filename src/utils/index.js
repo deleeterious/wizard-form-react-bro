@@ -40,14 +40,14 @@ export class FakeUser {
   constructor() {
     this.additionInfo = faker.lorem.words(15);
     this.address = faker.address.city();
-    this.avatarData = faker.image.imageUrl();
-    this.birthDate = faker.date.recent();
+    this.avatarData = faker.image.avatar();
+    this.birthDate = new Date('2000-01-01');
     this.company = faker.company.companyName();
     this.email = faker.internet.email();
     this.facebookLink = faker.internet.url();
     this.fax = faker.phone.phoneNumber('+38 (###) ### ## ##');
     this.firstName = faker.name.firstName();
-    this.gender = faker.name.gender();
+    this.gender = faker.random.boolean() ? 'Male' : 'Female';
     this.githubLink = faker.internet.url();
     this.hobbies = [
       faker.random.boolean(),
