@@ -29,13 +29,24 @@
 }
 
 .cropperCont {
-  z-index: 100;
+  z-index: 1;
 }
 
-.applyCropBtn {
+.buttons {
+  width: 220px;
   position: absolute;
   top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 101;
+  z-index: 1;
+}
+
+.applyCropBtn {
+  z-index: 1;
+  left: 0;
+}
+
+.closeCropButton {
+  z-index: 1;
+  right: 0;
 }

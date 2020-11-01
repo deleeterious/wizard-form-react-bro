@@ -50,12 +50,14 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
     if (file) reader.readAsDataURL(file);
   };
 
-  const handleApplyCrop = async (e) => {
-    e.preventDefault();
-
+  const handleApplyCrop = async () => {
     const croppedImage = await getCroppedImg(image, croppedAreaPixelsState);
-
     setValue('avatarData', croppedImage, { shouldDirty: true });
+    setIsCrop(false);
+  };
+
+  const handleCloseCrop = (e) => {
+    e.preventDefault(); // really need here
     setIsCrop(false);
   };
 
@@ -82,14 +84,25 @@ const AvatarInput = ({ refRegister, errorMessage }) => {
               classes={{ containerClassName: classes.cropperCont }}
             />
 
-            <Button
-              type="button"
-              disabled={false}
-              className={classes.applyCropBtn}
-              handleClick={handleApplyCrop}
-            >
-              Apply
-            </Button>
+            <div className={classes.buttons}>
+              <Button
+                type="button"
+                disabled={false}
+                className={classes.closeCropButton}
+                handleClick={handleCloseCrop}
+              >
+                Close
+              </Button>
+
+              <Button
+                type="button"
+                disabled={false}
+                className={classes.applyCropBtn}
+                handleClick={handleApplyCrop}
+              >
+                Apply
+              </Button>
+            </div>
           </>
         )}
         {!isCrop && (
