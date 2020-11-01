@@ -1,20 +1,25 @@
 import React, { memo, useEffect, useState } from 'react';
+// react-router-dom
+import { Link } from 'react-router-dom';
 // react-redux
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUsers } from 'redux/actions/users';
+// helpers
+import {
+  getFromLocalStorage,
+  setToLocalStorage,
+} from 'helpers/localStorageHelper';
 // components
 import Title from 'components/Title';
-import NoUsersPlaceholder from 'components/NoUsersPlaceholder';
+import Placeholder from 'components/Placeholder';
 import Spinner from 'components/Spinner';
 import Pagination from 'components/Pagination';
 // containers
 import UserList from 'containers/UserList';
 import GenerateUsersButton from 'components/GenerateUsersButton';
-import Search from 'components/Inputs/Search/Search';
-import {
-  getFromLocalStorage,
-  setToLocalStorage,
-} from 'helpers/localStorageHelper';
+import Search from 'components/Inputs/Search';
+// css
+import classes from './UserListPage.module.css';
 
 const UserListPage = () => {
   const dispatch = useDispatch();
@@ -68,10 +73,21 @@ const UserListPage = () => {
       {data.length ? (
         <>
           <Search handleSearch={onSearch} />
-          <UserList users={searchValue ? foundUsers : currentUsers} />
+          {foundUsers.length ? (
+            <UserList users={searchValue ? foundUsers : currentUsers} />
+          ) : (
+            <Placeholder title="No search results" />
+          )}
         </>
       ) : (
-        <NoUsersPlaceholder />
+        <>
+          <Placeholder title="No users here :(" />
+          <div className={classes.button}>
+            <Link className={classes.link} to="/new-user">
+              Create new user
+            </Link>
+          </div>
+        </>
       )}
 
       <GenerateUsersButton />
