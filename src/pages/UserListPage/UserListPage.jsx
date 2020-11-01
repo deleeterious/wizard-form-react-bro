@@ -1,4 +1,6 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+// lodash
+import debounce from 'lodash/debounce';
 // react-router-dom
 import { Link } from 'react-router-dom';
 // react-redux
@@ -61,7 +63,12 @@ const UserListPage = () => {
       .includes(searchValue.trim().toLowerCase())
   );
 
-  const onSearch = (e) => setSearchValue(e.target.value);
+  // debounce func
+  const delayedQuery = useCallback(
+    debounce((e) => setSearchValue(e), 300),
+    []
+  );
+  const onSearch = (e) => delayedQuery(e.target.value);
 
   if (isFetching) {
     return <Spinner />;

@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 65px;
+  margin: 65px auto 0 auto;
 }
 
 .link {
@@ -18,4 +18,6 @@
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
+  text-align: center;
+  padding: 12px;
 }
