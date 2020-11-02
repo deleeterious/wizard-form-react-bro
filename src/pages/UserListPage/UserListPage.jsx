@@ -48,13 +48,9 @@ const UserListPage = () => {
   }, [dispatch]);
 
   // Save currentPage to localStorage
-  useEffect(() => {
-    setToLocalStorage('currentPage', currentPage);
-  }, [currentPage]);
+  useEffect(() => setToLocalStorage('currentPage', currentPage), [currentPage]);
 
-  const onChangePage = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const onChangePage = (pageNumber) => setCurrentPage(pageNumber);
 
   const foundUsers = data?.filter((user) =>
     `${user.firstName} ${user.lastName}`
@@ -63,11 +59,12 @@ const UserListPage = () => {
       .includes(searchValue.trim().toLowerCase())
   );
 
-  // debounce func
+  // debounce search func
   const delayedQuery = useCallback(
     debounce((e) => setSearchValue(e), 300),
     []
   );
+
   const onSearch = (e) => delayedQuery(e.target.value);
 
   if (isFetching) {
