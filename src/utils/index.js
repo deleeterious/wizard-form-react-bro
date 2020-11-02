@@ -50,12 +50,12 @@ export class FakeUser {
     this.gender = faker.random.boolean() ? 'Male' : 'Female';
     this.githubLink = faker.internet.url();
     this.hobbies = [
-      faker.random.boolean(),
-      faker.random.boolean(),
-      faker.random.boolean(),
-      faker.random.boolean(),
-      faker.random.boolean(),
-      faker.random.boolean(),
+      faker.random.word(),
+      faker.random.word(),
+      faker.random.word(),
+      faker.random.word(),
+      faker.random.word(),
+      faker.random.word(),
     ];
     this.language = { value: 'null', label: faker.random.word() };
     this.lastName = faker.name.lastName();

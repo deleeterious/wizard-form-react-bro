@@ -90,7 +90,7 @@ const UserListPage = () => {
         <>
           <Placeholder title="No users here :(" />
           <div className={classes.button}>
-            <Link className={classes.link} to="/new-user">
+            <Link className={classes.link} to="/new-user/account">
               Create new user
             </Link>
           </div>
@@ -99,7 +99,7 @@ const UserListPage = () => {
 
       <GenerateUsersButton />
 
-      {!searchValue.length ? (
+      {!searchValue.length && (
         <Pagination
           activePage={currentPage}
           itemsCountPerPage={usersPerPage}
@@ -107,7 +107,7 @@ const UserListPage = () => {
           onChange={onChangePage}
           hideDisabled
         />
-      ) : null}
+      )}
     </main>
   );
 };
