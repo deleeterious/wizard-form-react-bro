@@ -28,6 +28,7 @@ import AccountForm from 'containers/Forms/AccountForm';
 import ProfileForm from 'containers/Forms/ProfileForm';
 import ContactsForm from 'containers/Forms/ContactsForm';
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm';
+import { saveSubmittedStage } from 'helpers/saveSubmittedStage';
 
 const Form = ({ submittedStages, setSubmittedStages }) => {
   const dispatch = useDispatch();
@@ -51,10 +52,16 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
     clearErrors,
   } = methods;
 
-  const onClickForward = (inputsToTrigger, nextStage) => async () => {
+  const onClickForward = (
+    inputsToTrigger,
+    currentStage,
+    nextStage
+  ) => async () => {
     const isValid = await trigger(inputsToTrigger);
     if (isValid) {
       setToLocalStorage('newUserStage', nextStage);
+
+      saveSubmittedStage(setSubmittedStages, currentStage);
 
       history.push(`/new-user/${nextStage}`);
     }
@@ -125,9 +132,9 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
           <AccountForm
             onClickForward={onClickForward(
               ['userName', 'password', 'passwordRepeat'],
+              ACCOUNT_FORM_STAGE,
               PROFILE_FORM_STAGE
             )}
-            setSubmittedStages={setSubmittedStages}
           />
         )}
 
@@ -136,9 +143,9 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
             onClickBack={onClickBack}
             onClickForward={onClickForward(
               ['firstName', 'lastName', 'birthDate', 'email'],
+              PROFILE_FORM_STAGE,
               CONTACTS_FORM_STAGE
             )}
-            setSubmittedStages={setSubmittedStages}
           />
         )}
 
@@ -147,9 +154,9 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
             onClickBack={onClickBack}
             onClickForward={onClickForward(
               ['company', 'language'],
+              CONTACTS_FORM_STAGE,
               CAPABILITIES_FORM_STAGE
             )}
-            setSubmittedStages={setSubmittedStages}
           />
         )}
 

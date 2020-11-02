@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 // lodash
 import isEmpty from 'lodash/isEmpty';
 // prop-types
@@ -10,10 +10,6 @@ import { useSelector } from 'react-redux';
 // utils
 import { concatStyles } from 'utils';
 // helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage,
-} from 'helpers/localStorageHelper';
 import {
   passwordRepeatValidation,
   passwordValidation,
@@ -28,32 +24,10 @@ import PasswordInput from 'components/Inputs/PasswordInput';
 import commonStyles from 'containers/Forms/common/style.module.css';
 import classes from './AccountForm.module.css';
 
-const AccountForm = ({
-  setSubmittedStages,
-  onClickForward,
-  handleSave,
-  isEdit,
-}) => {
+const AccountForm = ({ onClickForward, handleSave, isEdit }) => {
   const { data } = useSelector((state) => state.currentUser);
 
   const { register, watch, getValues, errors, formState } = useFormContext();
-
-  useEffect(
-    () => () => {
-      if (!isEdit) {
-        setToLocalStorage('submittedStages', {
-          ...getFromLocalStorage('submittedStages'),
-          ACCOUNT_FORM_STAGE: true,
-        });
-
-        setSubmittedStages((prevState) => ({
-          ...prevState,
-          ACCOUNT_FORM_STAGE: true,
-        }));
-      }
-    },
-    [setSubmittedStages, isEdit]
-  );
 
   return (
     <div className={classes.form}>
@@ -107,7 +81,6 @@ const AccountForm = ({
 };
 
 AccountForm.propTypes = {
-  setSubmittedStages: T.func,
   onClickForward: T.func,
   handleSave: T.func,
   isEdit: T.bool,

@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 // lodash
 import isEmpty from 'lodash/isEmpty';
 // prop-types
@@ -10,10 +10,6 @@ import { useFormContext } from 'react-hook-form';
 // constants
 import { ACCOUNT_FORM_STAGE } from 'constants.js';
 // helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage,
-} from 'helpers/localStorageHelper';
 import {
   birthDateValidation,
   emailValidation,
@@ -27,33 +23,10 @@ import RadioInput from 'components/Inputs/RadioInput';
 // css
 import commonStyles from 'containers/Forms/common/style.module.css';
 
-const ProfileForm = ({
-  setSubmittedStages,
-  onClickForward,
-  onClickBack,
-  isEdit,
-  handleSave,
-}) => {
+const ProfileForm = ({ onClickForward, onClickBack, isEdit, handleSave }) => {
   const { data } = useSelector((state) => state.currentUser);
 
   const { register, errors, control, formState } = useFormContext();
-
-  useEffect(
-    () => () => {
-      if (!isEdit) {
-        setToLocalStorage('submittedStages', {
-          ...getFromLocalStorage('submittedStages'),
-          PROFILE_FORM_STAGE: true,
-        });
-
-        setSubmittedStages((prevState) => ({
-          ...prevState,
-          PROFILE_FORM_STAGE: true,
-        }));
-      }
-    },
-    [setSubmittedStages, isEdit]
-  );
 
   return (
     <div className={commonStyles.form}>

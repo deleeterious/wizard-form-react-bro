@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 // lodash
 import isEmpty from 'lodash/isEmpty';
 // prop-types
@@ -6,10 +6,6 @@ import T from 'prop-types';
 // react-hook-form
 import { useFormContext } from 'react-hook-form';
 // helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage,
-} from 'helpers/localStorageHelper';
 import { faxValidation, requiredValidation } from 'helpers/validations';
 // constants
 import { languages, PHONE_MASK, PROFILE_FORM_STAGE } from 'constants.js';
@@ -22,31 +18,8 @@ import Button from 'components/Button';
 // css
 import commonStyles from 'containers/Forms/common/style.module.css';
 
-const ContactsForm = ({
-  setSubmittedStages,
-  onClickForward,
-  onClickBack,
-  handleSave,
-  isEdit,
-}) => {
+const ContactsForm = ({ onClickForward, onClickBack, handleSave, isEdit }) => {
   const { register, getValues, errors, control, formState } = useFormContext();
-
-  useEffect(
-    () => () => {
-      if (!isEdit) {
-        setToLocalStorage('submittedStages', {
-          ...getFromLocalStorage('submittedStages'),
-          CONTACTS_FORM_STAGE: true,
-        });
-
-        setSubmittedStages((prevState) => ({
-          ...prevState,
-          CONTACTS_FORM_STAGE: true,
-        }));
-      }
-    },
-    [setSubmittedStages, isEdit]
-  );
 
   return (
     <div className={commonStyles.form}>
@@ -126,7 +99,6 @@ const ContactsForm = ({
 };
 
 ContactsForm.propTypes = {
-  setSubmittedStages: T.func,
   onClickForward: T.func,
   handleSave: T.func,
   isEdit: T.bool,

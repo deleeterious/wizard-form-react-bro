@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 // prop-types
-import T from 'prop-types'
+import T from 'prop-types';
 // css
-import classes from './Search.module.css'
+import classes from './Search.module.css';
 
 const Search = ({ handleSearch }) => (
   <div className={classes.search}>
@@ -12,10 +12,10 @@ const Search = ({ handleSearch }) => (
       onChange={(e) => handleSearch(e)}
     />
   </div>
-)
+);
 
 Search.propTypes = {
-  handleSearch: T.func
-}
+  handleSearch: T.func,
+};
 
-export default Search
+export default Search;
