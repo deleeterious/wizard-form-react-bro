@@ -64,9 +64,9 @@ export class FakeUser {
     this.passwordRepeat = 'password1';
     this.phones = [faker.phone.phoneNumber('+38 (###) ### ## ##')];
     this.skills = [
-      { value: 'null', label: faker.random.word() },
-      { value: 'null', label: faker.random.word() },
-      { value: 'null', label: faker.random.word() },
+      { value: 'html', label: 'HTML' },
+      { value: 'css', label: 'CSS' },
+      { value: 'js', label: 'Javascript' },
     ];
     this.userName = faker.random.word();
   }
