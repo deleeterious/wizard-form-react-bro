@@ -76,6 +76,7 @@ const ContactsForm = ({
         <SelectInput
           title="Main languages"
           name="language"
+          validate={requiredValidation()}
           isEdit={isEdit}
           options={languages}
           errorMessage={errors?.language?.message}

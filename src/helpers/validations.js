@@ -74,6 +74,7 @@ export const phoneValidation = () => ({
 // Capabilities form validation
 
 export const skillsValidation = () => ({
+  required: 'This field is required',
   validate: (value) => value?.length >= 3 || 'Choose three or more skills',
 });
 

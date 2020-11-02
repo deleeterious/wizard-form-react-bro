@@ -41,7 +41,15 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
     shouldUnregister: false,
   });
 
-  const { getValues, handleSubmit, reset, watch, formState, trigger } = methods;
+  const {
+    getValues,
+    handleSubmit,
+    reset,
+    watch,
+    formState,
+    trigger,
+    clearErrors,
+  } = methods;
 
   const onClickForward = (inputsToTrigger, nextStage) => async () => {
     const isValid = await trigger(inputsToTrigger);
@@ -53,13 +61,14 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
   };
 
   const onClickBack = (stage) => {
+    clearErrors();
     setToLocalStorage('newUserStage', stage);
     history.push(`/new-user/${stage}`);
   };
 
   // User is added in last form stage (CapabilitiesForm) on click 'Finish'
   const onSubmit = async (data) => {
-    const result = trigger();
+    const result = await trigger();
     if (result) {
       dispatch(addUser({ ...data, lastUpdate: new Date() }));
       history.push('/');

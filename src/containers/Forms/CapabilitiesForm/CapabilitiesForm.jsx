@@ -4,7 +4,7 @@ import T from 'prop-types';
 // react-hook-form
 import { useFormContext } from 'react-hook-form';
 // helpers
-import { additionInfoValidation } from 'helpers/validations';
+import { additionInfoValidation, skillsValidation } from 'helpers/validations';
 // constants
 import { CONTACTS_FORM_STAGE, skillsList, CHECKBOXES } from 'constants.js';
 // utils
@@ -28,6 +28,7 @@ const CapabilitiesForm = ({ handleSave, onClickBack, isEdit }) => {
           title="Skills"
           name="skills"
           options={skillsList}
+          validate={skillsValidation()}
           isMulti
           isEdit={isEdit}
           errorMessage={errors?.skills?.message}

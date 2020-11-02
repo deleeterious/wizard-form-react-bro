@@ -11,7 +11,6 @@ import ReactSelect from 'react-select';
 import commonStyles from 'components/Inputs/common/styles.module.css';
 import ValidationError from 'components/ValidationError';
 // helpers
-import { skillsValidation } from 'helpers/validations';
 import {
   getFromLocalStorage,
   setToLocalStorage,
@@ -21,6 +20,7 @@ const SelectInput = ({
   options,
   title,
   name,
+  validate,
   isMulti,
   errorMessage,
   isEdit,
@@ -73,9 +73,9 @@ const SelectInput = ({
       {
         name,
       },
-      { required: true, validate: isMulti && skillsValidation() }
+      { ...validate }
     );
-  }, [isMulti, name, register]);
+  }, [isMulti, name, register, validate]);
 
   return (
     <div className={commonStyles.inputCont}>
@@ -105,6 +105,7 @@ const SelectInput = ({
 
 SelectInput.propTypes = {
   options: T.array,
+  validate: T.object,
   title: T.string,
   name: T.string,
   isMulti: T.bool,
