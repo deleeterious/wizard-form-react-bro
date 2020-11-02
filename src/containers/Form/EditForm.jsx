@@ -23,8 +23,8 @@ import ContactsForm from 'containers/Forms/ContactsForm';
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm';
 
 const Form = () => {
-  const isEdit = true;
   const dispatch = useDispatch();
+
   const history = useHistory();
   const { id, activeFormStage } = useParams();
 
@@ -38,8 +38,7 @@ const Form = () => {
   const { getValues, reset, trigger } = methods;
 
   // On click "Save" trigger validation, if form valid update user
-  const onSave = async (e) => {
-    e.preventDefault();
+  const onSave = async () => {
     const result = await trigger();
     if (result) {
       dispatch(updateUser(data.id, { ...getValues(), lastUpdate: new Date() }));
@@ -49,13 +48,13 @@ const Form = () => {
 
   // When component did mount, push to form inputs data from redux
   useEffect(() => {
-    if (isEdit) reset({ ...data });
+    reset({ ...data });
   }, [data]);
 
   // If you go other stage and don't save form, reset values, on component unmount
   useEffect(
     () => () => {
-      if (isEdit) reset({ ...data });
+      reset({ ...data });
     },
     [activeFormStage, data]
   );
@@ -66,21 +65,19 @@ const Form = () => {
         <Switch>
           <Route
             path={`/edit/${id}/${ACCOUNT_FORM_STAGE}`}
-            render={() => <AccountForm handleSave={onSave} isEdit={isEdit} />}
+            render={() => <AccountForm handleSave={onSave} isEdit />}
           />
           <Route
             path={`/edit/${id}/${PROFILE_FORM_STAGE}`}
-            render={() => <ProfileForm handleSave={onSave} isEdit={isEdit} />}
+            render={() => <ProfileForm handleSave={onSave} isEdit />}
           />
           <Route
             path={`/edit/${id}/${CONTACTS_FORM_STAGE}`}
-            render={() => <ContactsForm handleSave={onSave} isEdit={isEdit} />}
+            render={() => <ContactsForm handleSave={onSave} isEdit />}
           />
           <Route
             path={`/edit/${id}/${CAPABILITIES_FORM_STAGE}`}
-            render={() => (
-              <CapabilitiesForm handleSave={onSave} isEdit={isEdit} />
-            )}
+            render={() => <CapabilitiesForm handleSave={onSave} isEdit />}
           />
         </Switch>
       </form>
