@@ -57,7 +57,7 @@ const Form = () => {
     () => () => {
       if (isEdit) reset({ ...data });
     },
-    [activeFormStage]
+    [activeFormStage, data]
   );
 
   return (

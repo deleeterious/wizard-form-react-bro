@@ -2,6 +2,7 @@ import {
   LOAD_USER_FAILED,
   LOAD_USER_PENDING,
   LOAD_USER_SUCCESS,
+  RESET_USER,
 } from 'redux/types';
 
 const initialState = {
@@ -29,6 +30,11 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         data: payload,
         isFetching: false,
+      };
+    case RESET_USER:
+      return {
+        ...state,
+        data: {},
       };
 
     default:

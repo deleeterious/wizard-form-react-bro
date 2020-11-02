@@ -3,7 +3,7 @@ import React, { memo, useEffect } from 'react';
 import T from 'prop-types';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from 'redux/actions/currentUser';
+import { getUser, resetUser } from 'redux/actions/currentUser';
 // components
 import Title from 'components/Title';
 import UserInfo from 'components/UserInfo';
@@ -16,6 +16,9 @@ const ProfilePage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id));
+    return () => {
+      dispatch(resetUser());
+    };
   }, [dispatch, match.params.id]);
 
   return (

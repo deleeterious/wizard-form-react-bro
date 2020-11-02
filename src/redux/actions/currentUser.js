@@ -3,6 +3,7 @@ import {
   LOAD_USER_FAILED,
   LOAD_USER_PENDING,
   LOAD_USER_SUCCESS,
+  RESET_USER,
 } from 'redux/types';
 
 export const getUser = (id) => {
@@ -22,3 +23,7 @@ export const getUser = (id) => {
       });
   };
 };
+
+export const resetUser = () => ({
+  type: RESET_USER,
+});
