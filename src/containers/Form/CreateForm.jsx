@@ -8,7 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { addUser } from 'redux/actions/users';
 // react-router-dom
-import { useHistory, useParams } from 'react-router-dom';
+import { Route, Switch, useHistory, useParams } from 'react-router-dom';
 // constants
 import {
   ACCOUNT_FORM_STAGE,
@@ -128,41 +128,53 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {activeFormStage === ACCOUNT_FORM_STAGE && (
-          <AccountForm
-            onClickForward={onClickForward(
-              ['userName', 'password', 'passwordRepeat'],
-              ACCOUNT_FORM_STAGE,
-              PROFILE_FORM_STAGE
+        <Switch>
+          <Route
+            path={`/new-user/${ACCOUNT_FORM_STAGE}`}
+            render={() => (
+              <AccountForm
+                onClickForward={onClickForward(
+                  ['userName', 'password', 'passwordRepeat'],
+                  ACCOUNT_FORM_STAGE,
+                  PROFILE_FORM_STAGE
+                )}
+              />
             )}
           />
-        )}
 
-        {activeFormStage === PROFILE_FORM_STAGE && (
-          <ProfileForm
-            onClickBack={onClickBack}
-            onClickForward={onClickForward(
-              ['firstName', 'lastName', 'birthDate', 'email'],
-              PROFILE_FORM_STAGE,
-              CONTACTS_FORM_STAGE
+          <Route
+            path={`/new-user/${PROFILE_FORM_STAGE}`}
+            render={() => (
+              <ProfileForm
+                onClickBack={onClickBack}
+                onClickForward={onClickForward(
+                  ['firstName', 'lastName', 'birthDate', 'email'],
+                  PROFILE_FORM_STAGE,
+                  CONTACTS_FORM_STAGE
+                )}
+              />
             )}
           />
-        )}
 
-        {activeFormStage === CONTACTS_FORM_STAGE && (
-          <ContactsForm
-            onClickBack={onClickBack}
-            onClickForward={onClickForward(
-              ['company', 'language'],
-              CONTACTS_FORM_STAGE,
-              CAPABILITIES_FORM_STAGE
+          <Route
+            path={`/new-user/${CONTACTS_FORM_STAGE}`}
+            render={() => (
+              <ContactsForm
+                onClickBack={onClickBack}
+                onClickForward={onClickForward(
+                  ['company', 'language'],
+                  CONTACTS_FORM_STAGE,
+                  CAPABILITIES_FORM_STAGE
+                )}
+              />
             )}
           />
-        )}
 
-        {activeFormStage === CAPABILITIES_FORM_STAGE && (
-          <CapabilitiesForm onClickBack={onClickBack} />
-        )}
+          <Route
+            path={`/new-user/${CONTACTS_FORM_STAGE}`}
+            render={() => <CapabilitiesForm onClickBack={onClickBack} />}
+          />
+        </Switch>
       </form>
     </FormProvider>
   );

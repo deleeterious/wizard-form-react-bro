@@ -83,7 +83,7 @@ const SelectInput = ({
         <div className={commonStyles.inputLabel}>{title}</div>
         <ReactSelect
           defaultValue={
-            isEdit ? data[name] : getFromLocalStorage('newUser')[name]
+            isEdit ? data?.[name] : getFromLocalStorage('newUser')?.[name]
           }
           hideSelectedOptions
           options={options}
