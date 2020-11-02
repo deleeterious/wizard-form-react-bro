@@ -8,7 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from 'redux/actions/users';
 // react-router-dom
-import { useHistory, useParams } from 'react-router-dom';
+import { Route, Switch, useHistory, useParams } from 'react-router-dom';
 // constants
 import {
   ACCOUNT_FORM_STAGE,
@@ -26,7 +26,7 @@ const Form = () => {
   const isEdit = true;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { activeFormStage } = useParams();
+  const { id, activeFormStage } = useParams();
 
   const { data } = useSelector((state) => state.currentUser);
 
@@ -63,21 +63,26 @@ const Form = () => {
   return (
     <FormProvider {...methods}>
       <form>
-        {activeFormStage === ACCOUNT_FORM_STAGE && (
-          <AccountForm handleSave={onSave} isEdit={isEdit} />
-        )}
-
-        {activeFormStage === PROFILE_FORM_STAGE && (
-          <ProfileForm handleSave={onSave} isEdit={isEdit} />
-        )}
-
-        {activeFormStage === CONTACTS_FORM_STAGE && (
-          <ContactsForm handleSave={onSave} isEdit={isEdit} />
-        )}
-
-        {activeFormStage === CAPABILITIES_FORM_STAGE && (
-          <CapabilitiesForm handleSave={onSave} isEdit={isEdit} />
-        )}
+        <Switch>
+          <Route
+            path={`/edit/${id}/${ACCOUNT_FORM_STAGE}`}
+            render={() => <AccountForm handleSave={onSave} isEdit={isEdit} />}
+          />
+          <Route
+            path={`/edit/${id}/${PROFILE_FORM_STAGE}`}
+            render={() => <ProfileForm handleSave={onSave} isEdit={isEdit} />}
+          />
+          <Route
+            path={`/edit/${id}/${CONTACTS_FORM_STAGE}`}
+            render={() => <ContactsForm handleSave={onSave} isEdit={isEdit} />}
+          />
+          <Route
+            path={`/edit/${id}/${CAPABILITIES_FORM_STAGE}`}
+            render={() => (
+              <CapabilitiesForm handleSave={onSave} isEdit={isEdit} />
+            )}
+          />
+        </Switch>
       </form>
     </FormProvider>
   );
