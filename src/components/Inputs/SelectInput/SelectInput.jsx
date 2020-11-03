@@ -28,16 +28,6 @@ const SelectInput = ({
   const { data } = useSelector((state) => state.currentUser);
 
   const customStyles = {
-    clearIndicator: () => ({
-      display: 'none',
-    }),
-    dropdownIndicator: () => ({
-      display: 'none',
-    }),
-    indicatorSeparator: (provided) => ({
-      ...provided,
-      display: 'none',
-    }),
     container: (provided) => ({
       ...provided,
       border: '1px solid #e7f0ff',
@@ -87,6 +77,8 @@ const SelectInput = ({
           }
           hideSelectedOptions
           options={options}
+          menuPosition="absolute"
+          menuPlacement="auto"
           styles={customStyles}
           isMulti={isMulti}
           onChange={(value) => {
