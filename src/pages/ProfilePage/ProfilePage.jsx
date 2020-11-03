@@ -16,6 +16,7 @@ const ProfilePage = ({ match }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id));
+
     return () => {
       dispatch(resetUser());
     };

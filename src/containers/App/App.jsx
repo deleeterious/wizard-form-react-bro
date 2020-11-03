@@ -24,8 +24,8 @@ const App = () => (
         <Route exact path="/profile/:id" component={ProfilePage} />
         <Route exact path="/edit/:id/:activeFormStage" component={EditPage} />
         <Route exact path="/new-user/:activeFormStage" component={FormsPage} />
-        <Route exact path="/" component={UserListPage} />
-        <Redirect to="/" />
+        <Route exact path="/:num" component={UserListPage} />
+        <Redirect to="/1" />
       </Switch>
     </Router>
   </div>

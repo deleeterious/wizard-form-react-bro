@@ -2,15 +2,10 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 // lodash
 import debounce from 'lodash/debounce';
 // react-router-dom
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 // react-redux
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUsers } from 'redux/actions/users';
-// helpers
-import {
-  getFromLocalStorage,
-  setToLocalStorage,
-} from 'helpers/localStorageHelper';
 // components
 import Title from 'components/Title';
 import Placeholder from 'components/Placeholder';
@@ -25,32 +20,36 @@ import classes from './UserListPage.module.css';
 
 const UserListPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { num } = useParams();
 
   const { data, isFetching } = useSelector((state) => state.users);
 
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
   const usersPerPage = 5;
 
-  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfLastUser = num * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = data?.slice(indexOfFirstUser, indexOfLastUser);
 
   // Change currentPage, if currentPage don't have items
   if (data.length && !currentUsers.length) {
-    setCurrentPage(currentPage - 1);
+    history.push(`/${num - 1}`);
   }
 
-  // Load users, load currentPage from localStorage
+  useEffect(() => {
+    if (num > data.length / usersPerPage + 1) {
+      history.push('/1');
+    }
+  }, [data.length, history, num]);
+
   useEffect(() => {
     dispatch(loadUsers());
-    setCurrentPage(getFromLocalStorage('currentPage'));
   }, [dispatch]);
 
-  // Save currentPage to localStorage
-  useEffect(() => setToLocalStorage('currentPage', currentPage), [currentPage]);
-
-  const onChangePage = (pageNumber) => setCurrentPage(pageNumber);
+  const onChangePage = (pageNumber) => {
+    history.push(`/${pageNumber}`);
+  };
 
   const foundUsers = data?.filter((user) =>
     `${user.firstName} ${user.lastName}`
@@ -67,45 +66,44 @@ const UserListPage = () => {
 
   const onSearch = (e) => delayedQuery(e.target.value);
 
-  if (isFetching) {
-    return <Spinner />;
-  }
-
   return (
-    <main className="container">
-      <Title>List of users</Title>
-      {data.length ? (
-        <>
-          <Search handleSearch={onSearch} />
-          {foundUsers.length ? (
-            <UserList users={searchValue ? foundUsers : currentUsers} />
-          ) : (
-            <Placeholder title="No search results" />
-          )}
-        </>
-      ) : (
-        <>
-          <Placeholder title="No users here :(" />
-          <div className={classes.button}>
-            <Link className={classes.link} to="/new-user/account">
-              Create new user
-            </Link>
-          </div>
-        </>
-      )}
+    <>
+      {isFetching && <Spinner />}
+      <main className="container">
+        <Title>List of users</Title>
+        {data.length ? (
+          <>
+            <Search handleSearch={onSearch} />
+            {foundUsers.length ? (
+              <UserList users={searchValue ? foundUsers : currentUsers} />
+            ) : (
+              <Placeholder title="No search results" />
+            )}
+          </>
+        ) : (
+          <>
+            <Placeholder title="No users here :(" />
+            <div className={classes.button}>
+              <Link className={classes.link} to="/new-user/account">
+                Create new user
+              </Link>
+            </div>
+          </>
+        )}
 
-      <GenerateUsersButton />
+        <GenerateUsersButton />
 
-      {!searchValue.length && (
-        <Pagination
-          activePage={currentPage}
-          itemsCountPerPage={usersPerPage}
-          totalItemsCount={data.length}
-          onChange={onChangePage}
-          hideDisabled
-        />
-      )}
-    </main>
+        {!searchValue.length && (
+          <Pagination
+            activePage={+num}
+            itemsCountPerPage={usersPerPage}
+            totalItemsCount={data.length}
+            onChange={onChangePage}
+            hideDisabled
+          />
+        )}
+      </main>
+    </>
   );
 };
 
