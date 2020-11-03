@@ -171,7 +171,7 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
           />
 
           <Route
-            path={`/new-user/${CONTACTS_FORM_STAGE}`}
+            path={`/new-user/${CAPABILITIES_FORM_STAGE}`}
             render={() => <CapabilitiesForm onClickBack={onClickBack} />}
           />
         </Switch>
