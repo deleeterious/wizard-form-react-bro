@@ -21,6 +21,8 @@ import AccountForm from 'containers/Forms/AccountForm';
 import ProfileForm from 'containers/Forms/ProfileForm';
 import ContactsForm from 'containers/Forms/ContactsForm';
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm';
+// css
+import classes from './Form.module.css';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -61,7 +63,7 @@ const Form = () => {
 
   return (
     <FormProvider {...methods}>
-      <form>
+      <form className={classes.form}>
         <Switch>
           <Route
             path={`/edit/${id}/${ACCOUNT_FORM_STAGE}`}

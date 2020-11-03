@@ -29,6 +29,8 @@ import ProfileForm from 'containers/Forms/ProfileForm';
 import ContactsForm from 'containers/Forms/ContactsForm';
 import CapabilitiesForm from 'containers/Forms/CapabilitiesForm';
 import { saveSubmittedStage } from 'helpers/saveSubmittedStage';
+// css
+import classes from './Form.module.css';
 
 const Form = ({ submittedStages, setSubmittedStages }) => {
   const dispatch = useDispatch();
@@ -127,7 +129,7 @@ const Form = ({ submittedStages, setSubmittedStages }) => {
         />
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <Switch>
           <Route
             path={`/new-user/${ACCOUNT_FORM_STAGE}`}

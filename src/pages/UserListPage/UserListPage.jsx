@@ -34,12 +34,12 @@ const UserListPage = () => {
 
   // Change currentPage, if currentPage don't have items
   if (data.length && !currentUsers.length) {
-    history.push(`/${num - 1}`);
+    history.push(`/page/${num - 1}`);
   }
 
   useEffect(() => {
     if (data.length && num > data.length / usersPerPage + 1) {
-      history.push('/1');
+      history.push('/page/1');
     }
   }, [data, history, num]);
 
@@ -48,7 +48,7 @@ const UserListPage = () => {
   }, [dispatch]);
 
   const onChangePage = (pageNumber) => {
-    history.push(`/${pageNumber}`);
+    history.push(`/page/${pageNumber}`);
   };
 
   const foundUsers = data?.filter((user) =>

@@ -13,22 +13,24 @@ import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
 
 const Header = () => (
-  <header className={concatStyles('container', classes.header)}>
-    <div className={classes.logo}>
-      <Link to="/">
-        <HeaderLogo />
-      </Link>
-    </div>
-    <div className={classes.links}>
-      <LinkIcon
-        text="Add new user"
-        icon={<NewUserIcon />}
-        to="/new-user/account"
-      />
+  <div className={classes.headerContainer}>
+    <header className={concatStyles('container', classes.header)}>
+      <div className={classes.logo}>
+        <Link to="/">
+          <HeaderLogo />
+        </Link>
+      </div>
+      <div className={classes.links}>
+        <LinkIcon
+          text="Add new user"
+          icon={<NewUserIcon />}
+          to="/new-user/account"
+        />
 
-      <LinkIcon text="List of users" icon={<ListUsersIcon />} to="/" />
-    </div>
-  </header>
+        <LinkIcon text="List of users" icon={<ListUsersIcon />} to="/" />
+      </div>
+    </header>
+  </div>
 );
 
 export default memo(Header);
