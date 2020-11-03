@@ -33,6 +33,7 @@ const UserInfo = ({ user }) => {
     phones,
     skills,
     hobbies,
+    additionInfo,
     id,
   } = user;
 
@@ -126,9 +127,14 @@ const UserInfo = ({ user }) => {
           </SectionInfoTitle>
 
           <SectionInfoList
+            className={classes.additionInfo}
             data={[
               { label: 'Skills', value: skillsRender(skills) },
               { label: 'Hobbies', value: hobbiesRender(hobbies) },
+              {
+                label: 'Addition info',
+                value: additionInfo,
+              },
             ]}
           />
         </div>
@@ -153,6 +159,7 @@ UserInfo.propTypes = {
     phones: T.arrayOf(T.string),
     skills: T.arrayOf(T.object),
     hobbies: T.array,
+    additionInfo: T.string,
     id: T.number,
   }),
 };

@@ -16,4 +16,5 @@
 .infoListItemValue {
   width: 50%;
   color: #657c9a;
+  white-space: pre-wrap;
 }
