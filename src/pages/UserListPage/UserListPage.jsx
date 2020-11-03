@@ -38,10 +38,10 @@ const UserListPage = () => {
   }
 
   useEffect(() => {
-    if (num > data.length / usersPerPage + 1) {
+    if (data.length && num > data.length / usersPerPage + 1) {
       history.push('/1');
     }
-  }, [data.length, history, num]);
+  }, [data, history, num]);
 
   useEffect(() => {
     dispatch(loadUsers());
